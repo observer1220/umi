@@ -6,7 +6,7 @@
         <button class="closeBtn" @click="closeBtn">
           <TheIcon icon="close" />
         </button>
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </Teleport>

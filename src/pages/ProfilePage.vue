@@ -4,10 +4,9 @@
       <TheAvatar :width="186" :height="186" :src="user.avatar" />
       <div class="profile">
         <p class="name">
-          <span>{{ user.name }}</span
-          ><router-link to="/profile/edit">編輯個人資料</router-link>
+          <router-link to="/profile/edit">編輯個人資料</router-link>
         </p>
-        <p class="handle">@{{ user.username }}</p>
+        <p class="handle">@{{ user.user_metadata.fullName }}</p>
         <div class="description">
           <pre>{{ user.intro }}</pre>
         </div>
@@ -27,7 +26,7 @@
       </div>
     </div>
     <div class="tabContent">
-      <p>{{ myPosts[currentTab].length }}</p>
+      <p>總貼文數：{{ myPosts[currentTab].length }}篇</p>
       <div class="posts">
         <img
           v-for="post in myPosts[currentTab]"
@@ -47,7 +46,7 @@ import { computed, ref, reactive, watch } from "vue";
 import {
   loadPostsByMe,
   loadPostsLikedOrFavoredByMe,
-} from "../apis/post";
+} from "../services/apiPost";
 import { useUserStore } from "../store/user";
 
 const userStore = useUserStore();
@@ -74,6 +73,9 @@ const myPosts = reactive({
   1: [],
   2: [],
 });
+
+console.log('user', user);
+
 
 watch(currentTab,
   async () => {
@@ -123,7 +125,6 @@ watch(currentTab,
 .profile .name > a {
   color: #1da0ff;
   text-decoration: none;
-  margin-left: 26px;
 }
 .profile .handle {
   margin-top: 4px;
@@ -189,3 +190,4 @@ watch(currentTab,
   object-fit: cover;
 }
 </style>
+../services/post../services/apiPost

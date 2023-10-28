@@ -1,55 +1,47 @@
 <template>
-  <nav class="navbar">
-    <!-- LOGO -->
-    <router-link to="/"><img src="../assets/logo.svg" /></router-link>
-    <!-- 搜尋框 -->
-    <div class="searchInput">
-      <input 
-        type="text" 
-        @change="searchPosts" 
-        placeholder="搜尋"
-      />
-      <TheIcon icon="search" />
-    </div>
-    <!-- 右側欄位 -->
-    <div class="navItems">
-      <router-link to="/"><TheIcon icon="home" /></router-link>
-      <button @click="publishPost()">
-        <TheIcon icon="publish" />
-      </button>
-      <!-- 下拉選單 -->
-      <div class="profileDropDown">
-        <TheAvatar
-          :width="42"
-          :height="42"
-          style="cursor: pointer"
-          @click="showDropdown = !showDropdown"
-          :src="user.avatar"
-        />
-        <!-- :src="user.avatar" -->
-        <div
-          class="dropdownMenu"
-          v-show="showDropdown"
-          @click="showDropdown = false"
-        >
-          <ul class="profileMenu">
-            <li><router-link to="/profile">個人主頁</router-link></li>
-            <li @click="logout">退出登入</li>
-          </ul>
+  <header class="header">
+    <nav class="navbar">
+      <!-- LOGO -->
+      <router-link to="/">
+        <img src="../assets/logo.svg" />
+      </router-link>
+      <!-- 搜尋框 -->
+      <div class="searchInput">
+        <input type="text" @change="searchPosts" placeholder="搜尋" />
+        <TheIcon icon="search" />
+      </div>
+      <!-- 右側欄位 -->
+      <div class="navItems">
+        <router-link to="/">
+          <TheIcon icon="home" />
+        </router-link>
+        <button @click="publishPost()">
+          <TheIcon icon="publish" />
+        </button>
+        <!-- 下拉選單 -->
+        <div class="profileDropDown">
+          <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="showDropdown = !showDropdown"
+            :src="user.avatar" />
+          <div class="dropdownMenu" v-show="showDropdown" @click="showDropdown = false">
+            <ul class="profileMenu">
+              <li><router-link to="/profile">個人主頁</router-link></li>
+              <li @click="logout">登出</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import TheIcon from "./TheIcon.vue";
-import TheAvatar from "./TheAvatar.vue";
+import TheIcon from "../TheIcon.vue";
+import TheAvatar from "../TheAvatar.vue";
 import { useRouter } from "vue-router";
-import { useGeneralStore } from '../store/general'
-import { usePostStore } from '../store/post'
-import { useUserStore } from '../store/user'
+import { useGeneralStore } from '../../store/general'
+import { usePostStore } from '../../store/post'
+import { useUserStore } from '../../store/user'
 
 const router = useRouter();
 const generalStore = useGeneralStore();
@@ -63,12 +55,12 @@ function publishPost() {
   generalStore.changeShowPostUpload(true);
 }
 
-async function searchPosts(e) {
-  await postStore.searchPosts(e.target.value);
+async function searchPosts(event) {
+  await postStore.searchPosts(event.target.value);
   router.push({
     name: "search_result",
     params: {
-      term: e.target.value,
+      term: event.target.value,
     },
   });
 }
@@ -80,6 +72,11 @@ async function logout() {
 </script>
 
 <style scoped>
+.header {
+  height: 80px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+}
+
 .navbar {
   width: 80vw;
   height: 80px;
@@ -88,6 +85,7 @@ async function logout() {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
 }
+
 .navbar svg {
   width: 38px;
   height: 38px;
@@ -107,7 +105,7 @@ async function logout() {
   border: none;
 }
 
-.searchInput > svg {
+.searchInput>svg {
   position: absolute;
   left: 0;
   top: 11px;
@@ -121,7 +119,7 @@ async function logout() {
   align-items: center;
 }
 
-.navItems > button {
+.navItems>button {
   border: none;
   background: none;
 }

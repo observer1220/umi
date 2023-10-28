@@ -41,9 +41,11 @@
           type="reset"
           reverse
           @click.prevent="router.push('/profile')"
-          >取消</TheButton
-        >
-        <TheButton type="submit">確認</TheButton>
+          >取消
+        </TheButton>
+        <TheButton type="submit">
+          確認
+        </TheButton>
       </div>
     </form>
   </div>
@@ -52,7 +54,7 @@
 import TheButton from "../components/TheButton.vue";
 import TheAvatar from "../components/TheAvatar.vue";
 import { computed, reactive } from "vue";
-import { uploadFile } from "../apis/file";
+import { uploadFile } from "../services/apiFile";
 import { useRouter } from "vue-router";
 import { useUserStore } from '../store/user'
 
@@ -71,13 +73,15 @@ const profileData = reactive({
   website: user.value.website,
 });
 
-async function uploadAvatar(e) {
-  const file = e.target.files[0];
+async function uploadAvatar(event) {
+  const file = event.target.files[0];
   const url = await uploadFile(file);
   profileData.avatar = url;
 }
 
 async function updateUser() {
+  console.log('測試');
+  console.log('profileData', profileData);
   await userStore.updateUser(profileData);
   router.push("/profile");
 }
@@ -129,3 +133,4 @@ async function updateUser() {
   gap: 16px;
 }
 </style>
+../services/file../services/apiFile

@@ -5,18 +5,18 @@
       <div class="postMeta">
         <div class="author">
           <!-- <TheAvatar :src="post.user.avatar" /> -->
-          <!-- <span>{{ post.user.name }}</span> -->
+          <span>@{{ post.username }}</span>
         </div>
-        <pre class="postDesc"
-          >{{ post?.description }}
+        <pre class="postDesc">
+          {{ post?.description }}
         </pre>
         <div class="comments">
           <div class="comment" v-for="comment in comments">
             <TheAvatar :src="comment.user?.avatar" />
-            <span class="user">{{ comment.user?.name }}</span>
-            <span class="commentDate">{{
-              dateToRelative(comment.pubDate)
-            }}</span>
+            <span class="user">@{{ comment.user?.username }}</span>
+            <span class="commentDate">
+              {{ dateToRelative(comment.created_at) }}
+            </span>
             <p class="commentContent">{{ comment.content }}</p>
           </div>
         </div>
@@ -25,14 +25,17 @@
             :likes="post.liked_bies"
             :comments="post.comments"
             :favors="post.favored_bies"
-            @likeClick="usePost.toggleLike(post.id)"
+            @likeClick="()=>{
+              console.log('test');
+              usePost.toggleLike(post.id)
+            }"
             @favorClick="usePost.toggleFavor(post.id)"
             :likedByMe="post.likedByMe"
             :favoredByMe="post.favoredByMe"
           />
-          <span class="postPubDate">{{
-            dateToRelative(post.publishedAt)
-          }}</span>
+          <span class="postPubDate">
+            {{ dateToRelative(post.created_at)}}
+          </span>
           <input
             type="text"
             name="comment"
@@ -42,12 +45,7 @@
             placeholder="寫一條評論吧！"
           />
           <button
-            @click="
-              store.dispatch('addComment', {
-                content,
-                postId: post.id,
-              })
-            "
+            @click="useComment.addComment(content, post.id)"
             class="commentPubBtn"
           >
             發佈
@@ -81,8 +79,8 @@ const comments = computed(() => useComment.list);
   display: grid;
   grid-template-columns: 1fr minmax(auto, 300px);
   grid-template-rows: minmax(0, 1fr);
-  width: 80vw;
-  height: 80vh;
+  width: 90vw;
+  height: 90vh;
 }
 .postImage {
   width: 100%;

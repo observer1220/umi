@@ -1,9 +1,10 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia';
-import { changeUser } from "../apis/user";
-import { getUser, login, logout, register } from "../apis/auth";
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { changeUser } from "../services/apiUser";
+import { login, logout, register } from "../services/apiAuth";
+import { getUser } from "../utils/localStorage";
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   const user = ref(getUser() || {});
 
   const setUser = (user) => {
@@ -42,4 +43,4 @@ export const useUserStore = defineStore('user', () => {
     updateUser,
     logoutUser,
   };
-})
+});

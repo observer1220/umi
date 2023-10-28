@@ -1,6 +1,6 @@
 <template>
   <svg>
-    <use :href="`${sprite}#icon-${icon}`"></use>
+    <use :href="`${sprite}#icon-${icon}`" />
   </svg>
 </template>
 <script setup lang="ts">

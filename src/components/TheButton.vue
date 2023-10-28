@@ -3,7 +3,7 @@
     class="button"
     :class="{ primary: color === 'primary', reverse }"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
 

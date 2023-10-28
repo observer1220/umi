@@ -52,6 +52,7 @@ const username = ref("");
 const password = ref("");
 const agreementChecked = ref(false);
 
+// 登入
 async function login () { 
   await useUser.loginUser({
     email: email.value,

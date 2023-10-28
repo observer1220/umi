@@ -1,14 +1,15 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia';
-import { createComment, loadComments } from '../apis/comment';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { createComment, loadComments } from "../services/apiComment";
 
-export const useCommentStore = defineStore('comment', () => {
+export const useCommentStore = defineStore("comment", () => {
   const list = ref([]);
 
   const initializeComments = (comments) => {
     list.value = comments;
   };
 
+  // 新增評論
   const addComment = async (content, postId) => {
     await createComment(content, postId);
     loadAllComments(postId);

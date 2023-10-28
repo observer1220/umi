@@ -1,17 +1,17 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia';
+import { ref } from "vue";
+import { defineStore } from "pinia";
 
-export const useGeneralStore = defineStore('general', () => {
+export const useGeneralStore = defineStore("general", () => {
   const showPostUpload = ref(false);
   const showPostDetails = ref(false);
 
-  const changeShowPostUpload = (show) => {
+  const changeShowPostUpload = (show: boolean) => {
     showPostUpload.value = show;
-  }
+  };
 
-  const changeShowPostDetails = (show, id) => {
+  const changeShowPostDetails = (show: boolean, id) => {
     showPostDetails.value = show;
-  }
+  };
 
   return {
     showPostUpload,

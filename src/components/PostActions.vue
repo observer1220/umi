@@ -5,7 +5,8 @@
       @click="emit('likeClick')"
       :fill="likedByMe ? '#FF3C3C' : 'none'"
       :stroke="likedByMe ? '#FF3C3C' : '#000000'"
-    /><span>{{ likes || "" }}</span>
+    />
+    <span>{{ likes || "" }}</span>
     <TheIcon
       icon="comment"
       @click="emit('commentsClick')"
@@ -17,7 +18,8 @@
       @click="emit('favorClick')"
       :fill="favoredByMe ? '#FFD12E' : 'none'"
       :stroke="favoredByMe ? '#FFD12E' : '#000000'"
-    /><span>{{ favors || "" }}</span>
+    />
+    <span>{{ favors || "" }}</span>
   </div>
 </template>
 

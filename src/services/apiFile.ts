@@ -1,7 +1,7 @@
-import { getJwtToken } from "./auth";
 import axios from "axios";
+import { getJwtToken } from "../utils/localStorage";
 
-export async function uploadFile (file) {
+export async function uploadFile(file) {
   const formData = new FormData();
   formData.append("files", file);
 

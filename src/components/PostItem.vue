@@ -1,20 +1,17 @@
 <template>
   <div class="postItem">
     <img
+      class="postImage"
       :src="post.image"
       @click="usePost.showPostDetails(post.id)"
-      alt=""
-      width="100%"
-      height="100%"
-      style="background: #eee, object-fit: contain"
     />
     <div class="postInfo">
       <div class="postMeta">
         <TheAvatar :src="post?.user?.avatar" />
-        <span>{{ post?.user?.name }}</span>
-        <span class="postPubDate">{{
-          dateToRelative(post.publishedAt)
-        }}</span>
+        <span class="postUsername">{{ post.username }}</span>
+        <span class="postPubDate">
+          {{ dateToRelative(post.created_at) }}
+        </span>
         <PostActions
           :likes="post.liked_bies"
           :comments="post.comments"
@@ -32,7 +29,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script setup lang="ts">
@@ -40,7 +37,6 @@ import TheAvatar from "../components/TheAvatar.vue";
 import PostActions from "../components/PostActions.vue";
 import { dateToRelative } from "../utils/date";
 import { usePostStore } from "../store/post";
-
 const usePost = usePostStore();
 
 defineProps({
@@ -49,10 +45,10 @@ defineProps({
     default: {},
   },
 });
-
 </script>
 
 <style scoped>
+
 .postItem {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
@@ -64,8 +60,8 @@ defineProps({
 
 .postItem > img {
   width: 100%;
-  height: 400px;
-  object-fit: cover;
+  height: 300px;
+  object-fit: contain;
   background: #eee;
   cursor: pointer;
 }
@@ -80,6 +76,11 @@ defineProps({
 }
 .postMeta .avatar {
   grid-area: avatar;
+}
+
+.postMeta .postUsername {
+  display: flex;
+  align-items: center;
 }
 
 .postMeta .postPubDate {

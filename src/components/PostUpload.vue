@@ -1,5 +1,5 @@
 <template>
-  <TheModal @close="store.commit('changeShowPostUpload', false)">
+  <TheModal @close="store.changeShowPostUpload(false)">
     <div class="postUpload">
       <label class="upload">
         <img v-if="imageObjUrl" :src="imageObjUrl" class="preview" />
@@ -17,8 +17,12 @@
           class="postContentInput"
           v-model="description"
         ></textarea>
-        <TheButton class="pubBtn" @click="publishPost"
-          >發佈</TheButton
+        <TheButton 
+          class="pubBtn" 
+          @click="publishPost"
+        >
+          發佈
+        </TheButton
         >
       </div>
     </div>
@@ -30,17 +34,21 @@ import TheIcon from "./TheIcon.vue";
 import TheModal from "./TheModal.vue";
 import TheButton from "./TheButton.vue";
 import { usePostStore } from "../store/post";
+import { useGeneralStore } from "../store/general";
+import { useUserStore } from "../store/user";
 import { ref } from "vue";
 
 const usePost = usePostStore();
+const useUser = useUserStore();
+const store = useGeneralStore();
 
 const imageObjUrl = ref("");
 const image = ref(null);
 const description = ref("");
 
-async function handleImageUpload(e) {
+async function handleImageUpload(event) {
   // 暫時只允許上傳一張圖片
-  const imageFile = e.target.files[0];
+  const imageFile = event.target.files[0];
   if (imageFile) {
     // 設置預覽
     imageObjUrl.value = URL.createObjectURL(imageFile);
@@ -49,10 +57,13 @@ async function handleImageUpload(e) {
   }
 }
 
-function publishPost () {
+function publishPost() {
+  console.log('useUser', useUser);
+  
   usePost.uploadPost({
     image: image.value,
     description: description.value,
+    user_id: useUser.user.user_metadata.userId,
   });
 }
 </script>
