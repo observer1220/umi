@@ -3,24 +3,21 @@
     <img src="../assets/phone.png" alt="" class="phoneImage" />
     <div class="loginForm">
       <img src="../assets/logo.svg" alt="" />
-      <form @submit.prevent>
-        <input type="email" placeholder="EMAIL" v-model="email" />
-        <input
-          v-if="!isLogin"
-          type="text"
-          placeholder="用户名"
-          v-model="username"
-        />
-        <input
-          type="password"
-          placeholder="密碼"
-          v-model="password"
-        />
-        <button
-          type="submit"
-          class="loginButton"
-          @click="isLogin ? login() : register()"
-        >
+      <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" :size="formSize" @submit.prevent>
+        <el-form-item prop="email">
+          <el-input v-model="ruleForm.email" placeholder="EMAIL" size="large" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="ruleForm.password" placeholder="密碼(英文、數字8~20位元)" type="password" autocomplete="off"
+            size="large" />
+        </el-form-item>
+        <el-form-item prop="username" v-if="!isLogin">
+          <el-input v-model="ruleForm.username" placeholder="用戶名稱" size="large" />
+        </el-form-item>
+        <div v-if="!isLogin" class="agreement">
+          <el-checkbox v-model="agreementChecked" label="勾選表示同意隱私協議和使用規範" size="large" border />
+        </div>
+        <button type="submit" class="loginButton" @click="isLogin ? login(ruleFormRef) : register(ruleFormRef)">
           {{ isLogin ? "登入" : "註冊" }}
         </button>
         <p @click="isLogin = !isLogin" class="info">
@@ -28,50 +25,111 @@
             isLogin ? "還沒有帳號？點擊註冊" : "已有帳號？點擊登入"
           }}
         </p>
-        <div v-if="!isLogin" class="agreement">
-          <input
-            type="checkbox"
-            v-model="agreementChecked"
-          />勾選表示同意隱私協議和使用規範
-        </div>
-      </form>
+      </el-form>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
+import type { FormInstance, FormRules } from 'element-plus'
+import type { RuleForm } from '../types/form'
 
 const router = useRouter();
 const useUser = useUserStore();
 
+const formSize = ref('default')
 const isLogin = ref(true);
-const email = ref("");
-const username = ref("");
-const password = ref("");
 const agreementChecked = ref(false);
+const ruleFormRef = ref<FormInstance>()
+const ruleForm = reactive<RuleForm>({
+  email: '',
+  password: '',
+  username: '',
+})
 
-// 登入
-async function login () { 
-  await useUser.loginUser({
-    email: email.value,
-    password: password.value,
-  });
-  router.replace("/");
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('請輸入密碼'))
+  } else {
+    if (!/^(?=.*[a-z])(?=.*\d)[^]{8,20}$/.test(value)) {
+      callback(new Error('需包含英文與數字，長度介於8~20位元'))
+    } else {
+      callback()
+    }
+  }
 }
 
-async function register () { 
+const rules = reactive<FormRules<RuleForm>>({
+  email: [
+    {
+      required: true,
+      message: '請輸入您的EMAIL',
+      trigger: 'blur',
+    },
+    {
+      type: 'email',
+      message: '請輸入正確的EMAIL格式',
+      trigger: ['blur', 'change'],
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: '請輸入您的密碼',
+      trigger: 'change',
+    },
+    {
+      validator: validatePass,
+      trigger: 'change',
+    },
+  ],
+  username: [
+    {
+      required: true,
+      message: '請輸入用戶名稱', trigger: 'blur'
+    },
+    { min: 2, max: 5, message: '長度需介於2~5位元', trigger: 'blur' },
+  ],
+})
+
+async function login(formEl: FormInstance | undefined) {
+  if (!formEl) return
+  await formEl.validate(async (valid, fields) => {
+    if (valid) {
+      console.log('登入成功', ruleForm);
+      await useUser.loginUser({
+        email: ruleForm.email,
+        password: ruleForm.password,
+      });
+      await router.replace("/");
+    } else {
+      console.log('登入失敗', fields)
+    }
+  })
+}
+
+async function register(formEl: FormInstance | undefined) {
   if (!agreementChecked.value) {
     alert("請先閱讀並同意隱私協議和使用規範");
     return;
   }
-  await useUser.registerUser({
-    email: email.value,
-    username: username.value,
-    password: password.value,
-  });
-  router.replace("/");
+
+  if (!formEl) return
+  await formEl.validate(async (valid, fields) => {
+    if (valid) {
+      console.log('註冊成功', ruleForm);
+      await useUser.registerUser({
+        email: ruleForm.email,
+        username: ruleForm.username,
+        password: ruleForm.password,
+      });
+      await router.replace("/");
+    } else {
+      console.log('註冊失敗', fields)
+    }
+  })
 }
 </script>
 <style scoped>
@@ -107,7 +165,8 @@ async function register () {
   row-gap: 52px;
   width: 380px;
 }
-.loginForm > form {
+
+.loginForm>form {
   display: grid;
   row-gap: 24px;
   width: 100%;
@@ -125,11 +184,9 @@ input::placeholder {
 }
 
 .loginButton {
-  background: linear-gradient(
-    89.93deg,
-    #00c2ff 0.06%,
-    #0047ff 105.68%
-  );
+  background: linear-gradient(89.93deg,
+      #00c2ff 0.06%,
+      #0047ff 105.68%);
   padding: 12px 0;
   color: white;
   border: none;

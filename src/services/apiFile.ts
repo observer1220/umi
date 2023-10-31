@@ -1,19 +1,17 @@
-import axios from "axios";
-import { getJwtToken } from "../utils/localStorage";
+import supabase, { supabaseUrl } from "./supabase";
 
 export async function uploadFile(file) {
-  const formData = new FormData();
-  formData.append("files", file);
+  const imageName = `${Math.random()}-${file.name}`.replace("/", "");
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/avatar-image/${imageName}`;
 
-  const { data: result } = await axios({
-    method: "POST",
-    url: "/api/upload",
-    data: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-      authorization: `Bearer ${getJwtToken()}`,
-    },
-  });
+  const { error } = await supabase.storage
+    .from("avatar-image")
+    .upload(imageName, file);
 
-  return result[0].url;
+  if (error) {
+    console.error(error);
+    throw new Error("uploadFile has error");
+  }
+
+  return imagePath;
 }

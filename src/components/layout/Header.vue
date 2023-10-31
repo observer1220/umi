@@ -3,7 +3,7 @@
     <nav class="navbar">
       <!-- LOGO -->
       <router-link to="/">
-        <img src="../assets/logo.svg" />
+        <img src="../../assets/logo.svg" />
       </router-link>
       <!-- 搜尋框 -->
       <div class="searchInput">
@@ -65,8 +65,8 @@ async function searchPosts(event) {
   });
 }
 
-async function logout() {
-  await userStore.logoutUser();
+function logout() {
+  userStore.logoutUser();
   router.push("/login");
 }
 </script>

@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
-export async function createComment(content, postId) {
-  console.log(content, postId);
+export async function createComment(content, postId, userId) {
+  console.log(content, postId, userId);
 
   const { data, error } = await supabase
     .from("comment")
@@ -9,6 +9,7 @@ export async function createComment(content, postId) {
       {
         content,
         post_id: postId,
+        user_id: userId,
       },
     ])
     .select();

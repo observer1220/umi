@@ -34,13 +34,24 @@ export async function createUser(email, username, role) {
 
 // 編輯使用者
 export async function changeUser(user) {
-  // const { data, error } = await supabase
-  //   .from("user")
-  //   .update(user)
-  //   .eq("id", user.id);
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error("ChangeUser has error");
-  // }
-  // return data;
+  console.log("user", user);
+
+  const { data, error } = await supabase
+    .from("user")
+    .update({
+      username: user.username,
+      brief: user.brief,
+      mobile: user.mobile,
+      gender: user.gender,
+      avatar: user.avatar,
+    })
+    .eq("role", user.id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("ChangeUser has error");
+  }
+
+  return data;
 }

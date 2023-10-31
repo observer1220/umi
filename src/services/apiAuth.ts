@@ -3,25 +3,20 @@ import { createUser } from "./apiUser";
 import { saveUser, setJwtToken } from "../utils/localStorage";
 
 // 註冊功能 OK
-export async function register(email, fullName, password) {
+export async function register(email, username, password) {
   try {
-    if (password.length < 6) {
-      alert("密碼長度至少六位元");
-    }
-
-    // 註冊成功後，會自動登入
     let { data } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
-          fullName,
+          username,
           avatar: "",
         },
       },
     });
 
-    if (data) createUser(email, fullName, data.user.id);
+    if (data) createUser(email, username, data.user.id);
     setJwtToken(data.session);
     saveUser(data.user);
     return data.user;
@@ -40,10 +35,16 @@ export async function login(email, password) {
 
     const { data: user, error: userError } = await supabase
       .from("user")
-      .select("username, id")
+      .select("*")
       .eq("role", data.user.id);
-    data.user.user_metadata.fullName = user[0].username;
-    data.user.user_metadata.userId = user[0].id;
+
+    data.user.user_metadata = {
+      username: user[0].username,
+      userId: user[0].id,
+      gender: user[0].gender,
+      mobile: user[0].mobile,
+      brief: user[0].brief,
+    };
 
     if (userError) {
       throw new Error(userError.message);

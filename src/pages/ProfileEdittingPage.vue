@@ -3,48 +3,29 @@
     <h2 class="title">編輯個人資料</h2>
     <div class="changeAvatar">
       <TheAvatar :width="48" :height="48" :src="profileData.avatar" />
-      <TheButton>修改頭像</TheButton>
+      <TheButton>上傳頭像</TheButton>
       <input type="file" class="inputFile" @change="uploadAvatar" />
     </div>
     <form class="profileForm" @submit.prevent="updateUser">
-      <label for="username">用戶名：</label>
+      <label for="username">用戶名稱：</label>
       <input type="text" v-model="profileData.username" />
-      <label for="name">暱稱：</label>
-      <input type="text" v-model="profileData.name" />
-      <label for="intro">簡介：</label>
-      <textarea rows="12" v-model="profileData.intro"></textarea>
-      <label for="mobilePhone">手機號碼：</label>
-      <input type="text" v-model="profileData.mobilePhone" />
+      <label for="brief">簡介：</label>
+      <textarea rows="6" v-model="profileData.brief"></textarea>
+      <label for="mobile">手機號碼：</label>
+      <input type="text" v-model="profileData.mobile" />
       <label>性別：</label>
       <div class="genderRadios">
-        <input
-          type="radio"
-          name="gender"
-          id="M"
-          value="M"
-          v-model="profileData.gender"
-        />
-        男
-        <input
-          type="radio"
-          name="gender"
-          id="F"
-          value="F"
-          v-model="profileData.gender"
-        />
-        女
+        <input type="radio" name="gender" :id="Gender.Male" :value="Gender.Male" v-model="profileData.gender" />
+        {{ Gender.Male }}
+        <input type="radio" name="gender" :id="Gender.Female" :value="Gender.Female" v-model="profileData.gender" />
+        {{ Gender.Female }}
       </div>
-      <label for="website">網站：</label>
-      <input type="text" v-model="profileData.website" />
       <div class="actions">
-        <TheButton
-          type="reset"
-          reverse
-          @click.prevent="router.push('/profile')"
-          >取消
-        </TheButton>
         <TheButton type="submit">
-          確認
+          儲存
+        </TheButton>
+        <TheButton type="reset" reverse @click.prevent="router.push('/profile')">
+          取消
         </TheButton>
       </div>
     </form>
@@ -55,37 +36,38 @@ import TheButton from "../components/TheButton.vue";
 import TheAvatar from "../components/TheAvatar.vue";
 import { computed, reactive } from "vue";
 import { uploadFile } from "../services/apiFile";
-import { useRouter } from "vue-router";
 import { useUserStore } from '../store/user'
+import { useRouter } from "vue-router";
+import { Gender } from "../enum/enum"
 
 const userStore = useUserStore();
 const router = useRouter();
 
 const user = computed(() => userStore.user);
-
 const profileData = reactive({
-  avatar: user.value.avatar,
-  username: user.value.username,
-  name: user.value.name,
-  intro: user.value.intro,
-  mobilePhone: user.value.mobilePhone,
-  gender: user.value.gender,
-  website: user.value.website,
+  id: user.value.id,
+  avatar: user.value.user_metadata.avatar,
+  username: user.value.user_metadata.username,
+  brief: user.value.user_metadata.brief,
+  mobile: user.value.user_metadata.mobile,
+  gender: user.value.user_metadata.gender,
 });
 
+// 上傳頭像
 async function uploadAvatar(event) {
   const file = event.target.files[0];
   const url = await uploadFile(file);
   profileData.avatar = url;
 }
 
+// 更新使用者資料
 async function updateUser() {
-  console.log('測試');
-  console.log('profileData', profileData);
   await userStore.updateUser(profileData);
-  router.push("/profile");
+  window.location.reload();
 }
+
 </script>
+
 <style scoped>
 .title {
   margin-bottom: 42px;
@@ -119,7 +101,7 @@ async function updateUser() {
   margin-top: 38px;
 }
 
-.profileForm > label {
+.profileForm>label {
   grid-column: 1 / 2;
   justify-self: end;
   position: relative;

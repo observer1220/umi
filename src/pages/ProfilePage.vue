@@ -1,26 +1,20 @@
 <template>
   <div>
     <div class="profileContainer">
-      <TheAvatar :width="186" :height="186" :src="user.avatar" />
+      <TheAvatar :width="186" :height="186" :src="user?.user_metadata.avatar" />
       <div class="profile">
         <p class="name">
           <router-link to="/profile/edit">編輯個人資料</router-link>
         </p>
-        <p class="handle">@{{ user.user_metadata.fullName }}</p>
+        <p class="handle">@{{ user?.user_metadata?.username }}</p>
         <div class="description">
-          <pre>{{ user.intro }}</pre>
+          <pre>{{ user?.user_metadata?.brief }}</pre>
         </div>
-        <p class="website">{{ user.website }}</p>
       </div>
     </div>
     <div class="tabs">
-      <div
-        v-for="(tab, index) in tabs"
-        class="tab"
-        :class="{ active: index === currentTab }"
-        :key="index"
-        @click="currentTab = index"
-      >
+      <div v-for="(tab, index) in tabs" class="tab" :class="{ active: index === currentTab }" :key="index"
+        @click="currentTab = index">
         <TheIcon :icon="tab.icon" />
         <p>{{ tab.label }}</p>
       </div>
@@ -28,12 +22,7 @@
     <div class="tabContent">
       <p>總貼文數：{{ myPosts[currentTab].length }}篇</p>
       <div class="posts">
-        <img
-          v-for="post in myPosts[currentTab]"
-          :src="post.image"
-          :key="post.id"
-          class="postImage"
-        />
+        <img v-for="post in myPosts[currentTab]" :src="post.image" :key="post.id" class="postImage" />
       </div>
     </div>
   </div>
@@ -74,9 +63,6 @@ const myPosts = reactive({
   2: [],
 });
 
-console.log('user', user);
-
-
 watch(currentTab,
   async () => {
     switch (currentTab.value) {
@@ -101,6 +87,7 @@ watch(currentTab,
   },
   { immediate: true }
 );
+
 </script>
 
 <style scoped>
@@ -119,13 +106,15 @@ watch(currentTab,
   align-items: center;
 }
 
-.profile .name > span {
+.profile .name>span {
   font-size: 26px;
 }
-.profile .name > a {
+
+.profile .name>a {
   color: #1da0ff;
   text-decoration: none;
 }
+
 .profile .handle {
   margin-top: 4px;
   color: #848484;
@@ -151,7 +140,8 @@ watch(currentTab,
   padding: 12px 0;
   cursor: pointer;
 }
-.tab > svg {
+
+.tab>svg {
   width: 32px;
   height: 32px;
   stroke: #8a9194;
@@ -163,15 +153,16 @@ watch(currentTab,
   border-radius: 18px;
 }
 
-.tab.active > svg {
+.tab.active>svg {
   stroke: #1787d9;
   fill: #1787d9;
 }
-.tab.active > p {
+
+.tab.active>p {
   color: #1787d9;
 }
 
-.tabContent > p {
+.tabContent>p {
   text-align: center;
   font-weight: 600;
   margin-bottom: 32px;
@@ -180,14 +171,14 @@ watch(currentTab,
 .posts {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
+  gap: 20px;
 }
 
 .postImage {
   width: 100%;
-  height: 321px;
+  height: 300px;
   background: #eee;
-  object-fit: cover;
+  object-fit: contain;
 }
 </style>
 ../services/post../services/apiPost

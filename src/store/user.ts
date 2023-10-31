@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { changeUser } from "../services/apiUser";
 import { login, logout, register } from "../services/apiAuth";
-import { getUser } from "../utils/localStorage";
+import { getUser, updateLocalUser } from "../utils/localStorage";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref(getUser() || {});
@@ -27,7 +27,7 @@ export const useUserStore = defineStore("user", () => {
 
   const updateUser = async (user) => {
     const updatedUser = await changeUser(user);
-    setUser(updatedUser);
+    updateLocalUser(updatedUser[0]);
   };
 
   const logoutUser = () => {

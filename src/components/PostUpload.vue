@@ -3,40 +3,29 @@
     <div class="postUpload">
       <label class="upload">
         <img v-if="imageObjUrl" :src="imageObjUrl" class="preview" />
-        <TheIcon v-else icon="upload-image" />
-        <input
-          type="file"
-          accept="image/*"
-          class="fileChooser"
-          @change="handleImageUpload"
-        />
+        <div class="readyUpload" v-else>
+          <img src="../assets/upload.png" />
+          <input type="file" accept="image/*" class="fileChooser" @change="handleImageUpload" />
+          <div class="uploadText">點擊上傳圖片</div>
+        </div>
       </label>
       <div class="postContent">
-        <textarea
-          placeholder="寫點什麼吧..."
-          class="postContentInput"
-          v-model="description"
-        ></textarea>
-        <TheButton 
-          class="pubBtn" 
-          @click="publishPost"
-        >
+        <textarea placeholder="請留下您的評論..." class="postContentInput" v-model="description"></textarea>
+        <TheButton class="pubBtn" @click="publishPost">
           發佈
-        </TheButton
-        >
+        </TheButton>
       </div>
     </div>
   </TheModal>
 </template>
 
 <script setup lang="ts">
-import TheIcon from "./TheIcon.vue";
+import { ref } from "vue";
 import TheModal from "./TheModal.vue";
 import TheButton from "./TheButton.vue";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import { useUserStore } from "../store/user";
-import { ref } from "vue";
 
 const usePost = usePostStore();
 const useUser = useUserStore();
@@ -58,8 +47,6 @@ async function handleImageUpload(event) {
 }
 
 function publishPost() {
-  console.log('useUser', useUser);
-  
   usePost.uploadPost({
     image: image.value,
     description: description.value,
@@ -79,18 +66,34 @@ function publishPost() {
 .preview {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   min-height: 0;
 }
+
 .upload {
   display: grid;
   place-items: center;
   cursor: pointer;
   min-height: 0;
 }
-.upload > svg {
+
+.upload>svg {
   width: 254px;
   height: 316px;
+}
+
+.readyUpload {
+  width: 70%;
+  height: 70%;
+  border: 3px dashed #8c939d;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+}
+
+.readyUpload>img {
+  width: 100px;
+  height: 100px;
 }
 
 .fileChooser {
@@ -101,6 +104,7 @@ function publishPost() {
 .postContent {
   display: grid;
 }
+
 .postContentInput {
   border-bottom: none;
   resize: none;

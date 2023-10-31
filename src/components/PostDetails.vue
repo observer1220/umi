@@ -13,7 +13,7 @@
         <div class="comments">
           <div class="comment" v-for="comment in comments">
             <TheAvatar :src="comment.user?.avatar" />
-            <span class="user">@{{ comment.user?.username }}</span>
+            <span class="user">@{{ comment.username }}</span>
             <span class="commentDate">
               {{ dateToRelative(comment.created_at) }}
             </span>
@@ -21,33 +21,14 @@
           </div>
         </div>
         <div class="actions">
-          <PostActions
-            :likes="post.liked_bies"
-            :comments="post.comments"
-            :favors="post.favored_bies"
-            @likeClick="()=>{
-              console.log('test');
-              usePost.toggleLike(post.id)
-            }"
-            @favorClick="usePost.toggleFavor(post.id)"
-            :likedByMe="post.likedByMe"
-            :favoredByMe="post.favoredByMe"
-          />
+          <PostActions :likes="post.liked_bies" :comments="post.comments" :favors="post.favored_bies" @likeClick="() => {
+            usePost.toggleLike(post.id)
+          }" @favorClick="usePost.toggleFavor(post.id)" :likedByMe="post.likedByMe" :favoredByMe="post.favoredByMe" />
           <span class="postPubDate">
-            {{ dateToRelative(post.created_at)}}
+            {{ dateToRelative(post.created_at) }}
           </span>
-          <input
-            type="text"
-            name="comment"
-            v-model="content"
-            id=""
-            class="commentInput"
-            placeholder="寫一條評論吧！"
-          />
-          <button
-            @click="useComment.addComment(content, post.id)"
-            class="commentPubBtn"
-          >
+          <input type="text" name="comment" v-model="content" id="" class="commentInput" placeholder="請輸入您的留言..." />
+          <button @click="createComment()" class="commentPubBtn">
             發佈
           </button>
         </div>
@@ -57,20 +38,31 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import TheAvatar from "./TheAvatar.vue";
 import TheModal from "./TheModal.vue";
 import PostActions from "./PostActions.vue";
 import { dateToRelative } from "../utils/date";
 import { usePostStore } from "../store/post";
 import { useCommentStore } from "../store/comment";
+import { useUserStore } from "../store/user";
 
 const usePost = usePostStore();
 const useComment = useCommentStore();
+const useUser = useUserStore();
 
 const content = ref("");
 const post = usePost.postDetails();
 const comments = computed(() => useComment.list);
+const user = useUser.user;
+
+async function createComment() {
+  await useComment.addComment(content.value, post.id, user.user_metadata.id)
+}
+
+watch(comments, () => {
+  content.value = "";
+});
 
 </script>
 
@@ -82,11 +74,13 @@ const comments = computed(() => useComment.list);
   width: 90vw;
   height: 90vh;
 }
+
 .postImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .postMeta {
   padding: 24px;
   padding-top: 36px;
@@ -102,11 +96,13 @@ const comments = computed(() => useComment.list);
   align-items: center;
   gap: 10px;
 }
+
 .postDesc {
   width: 100%;
   white-space: pre-wrap;
   margin-top: 24px;
 }
+
 .comments {
   display: grid;
   grid-template-columns: 1fr;
@@ -116,6 +112,7 @@ const comments = computed(() => useComment.list);
   overflow-y: auto;
   height: 100%;
 }
+
 .comment {
   display: grid;
   grid-template-areas:
@@ -126,11 +123,13 @@ const comments = computed(() => useComment.list);
   column-gap: 10px;
   row-gap: 14px;
 }
+
 .commentDate {
   grid-area: date;
   justify-self: end;
   color: #a7a7a7;
 }
+
 .commentContent {
   grid-area: comment;
 }
@@ -145,25 +144,29 @@ const comments = computed(() => useComment.list);
   row-gap: 16px;
 }
 
-.postActions > :deep(svg) {
+.postActions> :deep(svg) {
   transform: scale(0.8125);
 }
+
 .postPubDate {
   color: #9f9f9f;
   grid-column: 2 / 6;
   justify-self: end;
   font-size: 14px;
 }
+
 .commentInput {
   background: #f7f7f7;
   border-radius: 16px;
   border: none;
   grid-column: 1 / 4;
 }
+
 .commentInput::placeholder {
   color: #b9b9b9;
   border: none;
 }
+
 .commentPubBtn {
   color: #1da0ff;
   border: none;

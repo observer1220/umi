@@ -1,9 +1,9 @@
 <template>
   <template v-if="$route.name !== 'login'">
     <Header />
-    <TheLayout>
+    <Container>
       <router-view />
-    </TheLayout>
+    </Container>
     <Footer :class="{ inside: $route.name === 'login' }" />
   </template>
   <template v-else>
@@ -14,8 +14,8 @@
 <script setup lang="ts">
 import "./assets/base.css";
 import Header from "./components/layout/Header.vue";
+import Container from "./components/layout/Container.vue";
 import Footer from "./components/layout/Footer.vue";
-import TheLayout from "./components/layout/TheLayout.vue";
 </script>
 
 

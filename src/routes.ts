@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 import { getJwtToken } from "./utils/localStorage";
+import { watch, watchEffect } from "vue";
 
 const routes = [
   {
