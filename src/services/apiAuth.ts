@@ -36,7 +36,7 @@ export async function login(email, password) {
     const { data: user, error: userError } = await supabase
       .from("user")
       .select("*")
-      .eq("role", data.user.id);
+      .eq("auth_id", data.user.id);
 
     data.user.user_metadata = {
       username: user[0].username,

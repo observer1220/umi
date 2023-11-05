@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="actions">
-          <PostActions :likes="post.liked_bies" :comments="post.comments" :favors="post.favored_bies" @likeClick="() => {
+          <PostActions :likes="post.liked_sum" :comments="post.comments" :favors="post.favored_sum" @likeClick="() => {
             usePost.toggleLike(post.id)
           }" @favorClick="usePost.toggleFavor(post.id)" :likedByMe="post.likedByMe" :favoredByMe="post.favoredByMe" />
           <span class="postPubDate">

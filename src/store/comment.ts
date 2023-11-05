@@ -21,8 +21,8 @@ export const useCommentStore = defineStore("comment", () => {
     initializeComments(comments);
   };
 
-  const increaseCommentCount = (id) => {
-    const post = list.value.find((post) => post.id === id);
+  const increaseCommentCount = (postId) => {
+    const post = list.value.find((post) => post.id === postId);
     post.comments++;
   };
 

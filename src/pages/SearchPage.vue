@@ -1,16 +1,13 @@
 <template>
   <div>
     <h2 class="title">搜尋結果：{{ term }}</h2>
-    <PostList>
-      <PostItem v-for="post in searchResult" :post="post" />
-    </PostList>
+    <PostList v-for="post in searchResult" :post="post" />
   </div>
 </template>
 
 <script setup lang="ts">
-import PostList from "../components/PostList.vue";
-import PostItem from "../components/PostItem.vue";
 import { computed } from "vue";
+import PostList from "../components/PostList.vue";
 import { useRoute } from "vue-router";
 import { usePostStore } from "../store/post";
 

@@ -1,24 +1,12 @@
 <template>
   <div class="postActions">
-    <TheIcon
-      icon="like"
-      @click="emit('likeClick')"
-      :fill="likedByMe ? '#FF3C3C' : 'none'"
-      :stroke="likedByMe ? '#FF3C3C' : '#000000'"
-    />
+    <TheIcon icon="like" @click="emit('likeClick')" :fill="likedByMe ? '#FF3C3C' : 'none'"
+      :stroke="likedByMe ? '#FF3C3C' : '#000000'" />
     <span>{{ likes || "" }}</span>
-    <TheIcon
-      icon="comment"
-      @click="emit('commentsClick')"
-      fill="none"
-      stroke="#000000"
-    /><span>{{ comments || "" }}</span>
-    <TheIcon
-      icon="favorite"
-      @click="emit('favorClick')"
-      :fill="favoredByMe ? '#FFD12E' : 'none'"
-      :stroke="favoredByMe ? '#FFD12E' : '#000000'"
-    />
+    <TheIcon icon="comment" @click="emit('commentsClick')" fill="none" stroke="#000000" /><span>{{ comments || ""
+    }}</span>
+    <TheIcon icon="favorite" @click="emit('favorClick')" :fill="favoredByMe ? '#FFD12E' : 'none'"
+      :stroke="favoredByMe ? '#FFD12E' : '#000000'" />
     <span>{{ favors || "" }}</span>
   </div>
 </template>
@@ -50,14 +38,14 @@ const emit = defineEmits([
   row-gap: 4px;
 }
 
-.postActions > svg {
+.postActions>svg {
   width: 32px;
   height: 32px;
   grid-row: 1 / 2;
   cursor: pointer;
 }
 
-.postActions > span {
+.postActions>span {
   font-size: 14px;
 }
 </style>

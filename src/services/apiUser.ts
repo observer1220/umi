@@ -19,10 +19,10 @@ export async function loadUser() {
 }
 
 // 新增使用者
-export async function createUser(email, username, role) {
+export async function createUser(email, username, auth_id) {
   const { data, error } = await supabase
     .from("user")
-    .insert([{ email, username, role }]);
+    .insert([{ email, username, auth_id }]);
 
   if (error) {
     console.error(error);
@@ -45,7 +45,7 @@ export async function changeUser(user) {
       gender: user.gender,
       avatar: user.avatar,
     })
-    .eq("role", user.id)
+    .eq("auth_id", user.id)
     .select();
 
   if (error) {

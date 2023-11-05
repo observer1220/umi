@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="tabContent">
-      <p>總貼文數：{{ myPosts[currentTab].length }}篇</p>
+      <!-- <p>總貼文數：{{ myPosts[currentTab].length }}篇</p> -->
       <div class="posts">
         <img v-for="post in myPosts[currentTab]" :src="post.image" :key="post.id" class="postImage" />
       </div>
@@ -34,7 +34,8 @@ import TheAvatar from "../components/TheAvatar.vue";
 import { computed, ref, reactive, watch } from "vue";
 import {
   loadPostsByMe,
-  loadPostsLikedOrFavoredByMe,
+  loadPostLikedByMe,
+  loadPostFavoredByMe,
 } from "../services/apiPost";
 import { useUserStore } from "../store/user";
 
@@ -46,7 +47,7 @@ const tabs = ref([
     icon: "posts",
   },
   {
-    label: "讚過",
+    label: "喜歡",
     icon: "like",
   },
   {
@@ -68,17 +69,17 @@ watch(currentTab,
     switch (currentTab.value) {
       case 0:
         if (myPosts[0].length === 0) {
-          myPosts[0] = await loadPostsByMe();
+          myPosts[0] = await loadPostsByMe(user.value.user_metadata.userId);
         }
         break;
       case 1:
         if (myPosts[1].length === 0) {
-          myPosts[1] = await loadPostsLikedOrFavoredByMe();
+          myPosts[1] = await loadPostLikedByMe(user.value.user_metadata.username);
         }
         break;
       case 2:
         if (myPosts[2].length === 0) {
-          myPosts[2] = await loadPostsLikedOrFavoredByMe("favors");
+          myPosts[2] = await loadPostFavoredByMe(user.value.user_metadata.username);
         }
         break;
       default:

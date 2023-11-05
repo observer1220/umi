@@ -9,7 +9,7 @@ export const useGeneralStore = defineStore("general", () => {
     showPostUpload.value = show;
   };
 
-  const changeShowPostDetails = (show: boolean, id) => {
+  const changeShowPostDetails = (show: boolean) => {
     showPostDetails.value = show;
   };
 

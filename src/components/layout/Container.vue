@@ -9,6 +9,6 @@
   width: 80vw;
   max-width: 1124px;
   margin: 0 auto;
-  margin-top: 88px;
+  margin-top: 24px;
 }
 </style>

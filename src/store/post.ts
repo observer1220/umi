@@ -21,40 +21,20 @@ export const usePostStore = defineStore("post", () => {
     list.value = posts;
   };
 
-  const toggleLike = async (id) => {
-    console.log("Like", id);
-
-    const isLike = await likePost(id);
-
-    const post = list.value.find((post) => post.id === id);
-    if (isLike) {
-      post.liked_bies = (post.liked_bies || 0) + 1;
-    } else {
-      post.liked_bies--;
-    }
-    post.likedByMe = isLike;
+  // 按讚貼文
+  const toggleLike = async (postId, username) => {
+    await likePost(postId, username);
+    await loadAllPosts();
   };
 
-  const toggleFavor = async (id) => {
-    console.log("Favor", id);
-
-    const isFavor = await favorPost(id);
-    const post = list.value.find((post) => post.id === id);
-    if (isFavor) {
-      post.favored_bies = (post.favored_bies || 0) + 1;
-    } else {
-      post.favored_bies--;
-    }
-    post.favoredByMe = isFavor;
+  // 收藏貼文
+  const toggleFavor = async (postId, username) => {
+    await favorPost(postId, username);
+    await loadAllPosts();
   };
 
   const setCurrentId = (id) => {
     currentId.value = id;
-  };
-
-  const increaseCommentCount = (id) => {
-    const post = list.value.find((post) => post.id === id);
-    post.comments++;
   };
 
   const setPostsSearchResult = (posts) => {
@@ -105,7 +85,6 @@ export const usePostStore = defineStore("post", () => {
     toggleLike,
     toggleFavor,
     setCurrentId,
-    increaseCommentCount,
     setPostsSearchResult,
     uploadPost,
     loadAllPosts,
