@@ -36,7 +36,9 @@ export async function loadPostLikedByMe(username) {
     throw new Error("LoadPostLikedByMe has error");
   }
 
-  const likedPosts = posts.filter((post) => post.liked_list.includes(username));
+  const likedPosts = posts.filter((post) =>
+    post.liked_list?.includes(username)
+  );
   return likedPosts;
 }
 
@@ -51,7 +53,7 @@ export async function loadPostFavoredByMe(username) {
   }
 
   const favoredPosts = posts.filter((post) =>
-    post.favored_list.includes(username)
+    post.favored_list?.includes(username)
   );
   return favoredPosts;
 }
@@ -61,9 +63,13 @@ export async function createPost(image, description, user_id) {
   const imageName = `${Math.random()}-${image.name}`.replace("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/bored-images/${imageName}`;
 
-  const { data, error } = await supabase
-    .from("post")
-    .insert([{ image: imagePath, description, user_id }]);
+  const { data, error } = await supabase.from("post").insert([
+    {
+      image: imagePath,
+      description,
+      user_id,
+    },
+  ]);
 
   if (error) {
     console.error(error);

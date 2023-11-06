@@ -24,12 +24,12 @@
 
 ### Debug
 
+- [x] 優化新增貼文彈跳視窗
+- [x] post 表格中的 liked_list, favored_list 欄位，預設值為 null 所產生錯誤
 - [ ] 上傳圖片只接受中文名稱的問題
 - [ ] 未限制上傳圖片的檔案大小，將導致資料庫空間不足的問題
-- [ ] 將 post 表格中的 liked_list, favored_list 欄位 預設值為 null 改為空陣列
 - [ ] 登入失敗未顯示錯誤訊息
 - [ ] 限制文字上限為 140 字
-- [x] 優化新增貼文彈跳視窗
 
 ### UI 設計
 
@@ -39,8 +39,8 @@
 
 ### 測試帳號
 
-- 帳號：observer1220@gmail.comｍ
+- 帳號：observer1220@gmail.com
 - 密碼：test1234
 
-- 帳號：test@gmail.comｍ
+- 帳號：test@gmail.com
 - 密碼：test1234
