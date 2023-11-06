@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div class="modal">
-      <div class="backdrop"></div>
+      <div class="backdrop" />
       <div class="modalContent">
         <button class="closeBtn" @click="closeBtn">
           <TheIcon icon="close" />
@@ -34,6 +34,7 @@ const closeBtn = () => {
   display: grid;
   place-items: center;
 }
+
 .backdrop {
   background: rgba(0, 0, 0, 0.56);
   position: absolute;
@@ -42,12 +43,14 @@ const closeBtn = () => {
   left: 0;
   top: 0;
 }
+
 .modalContent {
   position: relative;
   background: white;
   border-radius: 52px;
   overflow: hidden;
 }
+
 .closeBtn {
   position: absolute;
   background: none;
@@ -55,6 +58,7 @@ const closeBtn = () => {
   right: 14px;
   top: 10px;
 }
+
 .closeBtn svg {
   width: 54px;
   height: 54px;

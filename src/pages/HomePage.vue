@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <PostList v-for="post in posts" :post="post" :key="post.id" />
     <PostDetails v-if="showPostDetails" />
     <PostUpload v-if="showPostUpload" />
@@ -24,4 +24,10 @@ onMounted(() => {
   usePost.loadAllPosts();
 });
 </script>
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
