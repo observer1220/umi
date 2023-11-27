@@ -8,7 +8,6 @@
 .footer {
   text-align: center;
   padding: 38px 0;
-  color: #828282;
 }
 
 .footer.inside {

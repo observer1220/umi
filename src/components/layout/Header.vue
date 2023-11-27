@@ -24,11 +24,21 @@
             :src="user.avatar" />
           <div class="dropdownMenu" v-show="showDropdown" @click="showDropdown = false">
             <ul class="profileMenu">
-              <li><router-link to="/profile">個人主頁</router-link></li>
+              <li><router-link to="/profile">個人檔案</router-link></li>
               <li @click="logout">登出</li>
             </ul>
           </div>
         </div>
+        <!-- Dark Mode -->
+        <button :class="generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'"
+          @click="generalStore.toggleBackgroundMode()">
+          <el-icon v-if="generalStore.backgroundMode == 'sun'" size="36">
+            <Sunrise />
+          </el-icon>
+          <el-icon v-else size="36">
+            <Moon />
+          </el-icon>
+        </button>
       </div>
     </nav>
   </header>
@@ -55,7 +65,7 @@ function publishPost() {
   generalStore.changeShowPostUpload(true);
 }
 
-async function searchPosts(event) {
+async function searchPosts(event: any) {
   await postStore.searchPosts(event.target.value);
   router.push({
     name: "search_result",
@@ -163,5 +173,23 @@ function logout() {
 
 .profileMenu a:visited {
   color: initial;
+}
+
+.sunMode {
+  border: none;
+  background: none;
+}
+
+.sunMode svg {
+  color: #f1440f;
+}
+
+.backgroundMode {
+  border: none;
+  background: none;
+}
+
+.backgroundMode svg {
+  color: #f1c40f;
 }
 </style>

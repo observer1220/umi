@@ -4,7 +4,9 @@
       <div class="backdrop" />
       <div class="modalContent">
         <button class="closeBtn" @click="closeBtn">
-          <TheIcon icon="close" />
+          <el-icon size="36">
+            <Close />
+          </el-icon>
         </button>
         <slot />
       </div>
@@ -13,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import TheIcon from "./TheIcon.vue";
 
 const emit = defineEmits(["close"]);
 
@@ -55,12 +56,7 @@ const closeBtn = () => {
   position: absolute;
   background: none;
   border: none;
-  right: 14px;
+  right: 24px;
   top: 10px;
-}
-
-.closeBtn svg {
-  width: 54px;
-  height: 54px;
 }
 </style>

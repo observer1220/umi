@@ -35,7 +35,7 @@ const imageObjUrl = ref("");
 const image = ref(null);
 const description = ref("");
 
-async function handleImageUpload(event) {
+async function handleImageUpload(event: any) {
   // 暫時只允許上傳一張圖片
   const imageFile = event.target.files[0];
   if (imageFile) {

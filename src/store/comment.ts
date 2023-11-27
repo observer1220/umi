@@ -11,6 +11,7 @@ export const useCommentStore = defineStore("comment", () => {
 
   // 新增評論
   const addComment = async (content, postId, userId) => {
+    // console.log("addComment", content, postId, userId);
     await createComment(content, postId, userId);
     loadAllComments(postId);
     increaseCommentCount(postId);
@@ -22,7 +23,7 @@ export const useCommentStore = defineStore("comment", () => {
   };
 
   const increaseCommentCount = (postId) => {
-    const post = list.value.find((post) => post.id === postId);
+    const post = list.value.find((post) => post.post_id === postId);
     post.comments++;
   };
 

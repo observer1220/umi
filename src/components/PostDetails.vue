@@ -4,22 +4,25 @@
       <img class="postImage" :src="post.image" alt="" />
       <div class="postMeta">
         <div class="author">
-          <!-- <TheAvatar :src="post.user.avatar" /> -->
-          <span>@{{ post.username }}</span>
+          <TheAvatar :src="post?.user?.avatar" />
+          <span>{{ post.username }}</span>
         </div>
         <pre class="postDesc">
           {{ post?.description }}
         </pre>
-        <div class="comments">
-          <div class="comment" v-for="comment in comments">
-            <TheAvatar :src="comment.user?.avatar" />
-            <span class="user">@{{ comment.username }}</span>
-            <span class="commentDate">
-              {{ dateToRelative(comment.created_at) }}
-            </span>
-            <p class="commentContent">{{ comment.content }}</p>
+        <el-scrollbar>
+          <div class="comments">
+            <div class="comment" v-for="comment in comments">
+              <TheAvatar :src="comment.user?.avatar" />
+              <span class="user">{{ comment.username }}</span>
+              <span class="commentDate">
+                {{ dateToRelative(comment.created_at) }}
+              </span>
+              <p class="commentContent">{{ comment.content }}</p>
+            </div>
           </div>
-        </div>
+        </el-scrollbar>
+
         <div class="actions">
           <PostActions :likes="post.liked_sum" :comments="post.comments" :favors="post.favored_sum" @likeClick="() => {
             usePost.toggleLike(post.id)
@@ -27,7 +30,8 @@
           <span class="postPubDate">
             {{ dateToRelative(post.created_at) }}
           </span>
-          <input type="text" name="comment" v-model="content" id="" class="commentInput" placeholder="請輸入您的留言..." />
+          <input type="text" name="comment" v-model="content" id="" class="commentInput" placeholder="請輸入您的留言..."
+            v-on:keyup.enter="createComment" />
           <button @click="createComment()" class="commentPubBtn">
             發佈
           </button>
@@ -57,7 +61,7 @@ const comments = computed(() => useComment.list);
 const user = useUser.user;
 
 async function createComment() {
-  await useComment.addComment(content.value, post.id, user.user_metadata.id)
+  await useComment.addComment(content.value, post.id, user.user_metadata.userId)
 }
 
 watch(comments, () => {
@@ -69,10 +73,10 @@ watch(comments, () => {
 <style scoped>
 .postDetails {
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 300px);
+  grid-template-columns: 1fr minmax(auto, 350px);
   grid-template-rows: minmax(0, 1fr);
-  width: 90vw;
-  height: 90vh;
+  width: 95vw;
+  height: 95vh;
 }
 
 .postImage {
@@ -82,8 +86,7 @@ watch(comments, () => {
 }
 
 .postMeta {
-  padding: 24px;
-  padding-top: 36px;
+  padding: 20px;
   display: grid;
   align-items: start;
   grid-template-rows: max-content max-content 1fr max-content;

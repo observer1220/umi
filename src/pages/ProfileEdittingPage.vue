@@ -54,7 +54,7 @@ const profileData = reactive({
 });
 
 // 上傳頭像
-async function uploadAvatar(event) {
+async function uploadAvatar(event: any) {
   const file = event.target.files[0];
   const url = await uploadFile(file);
   profileData.avatar = url;

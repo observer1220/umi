@@ -13,6 +13,8 @@ export async function createComment(content, postId, userId) {
       },
     ])
     .select();
+
+  console.log(data);
 }
 
 export async function loadComments(postId) {

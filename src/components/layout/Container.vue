@@ -1,14 +1,16 @@
 <template>
-  <div class="content">
+  <div class="container">
     <slot />
   </div>
 </template>
-<script setup lang="ts"></script>
+
+
+
+
 <style scoped>
-.content {
-  width: 80vw;
-  max-width: 1124px;
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  margin-top: 24px;
+  padding: 20px;
 }
 </style>

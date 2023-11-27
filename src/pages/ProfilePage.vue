@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <div class="profileContainer">
-      <TheAvatar :width="186" :height="186" :src="user?.user_metadata.avatar" />
-      <div class="profile">
-        <p class="name">
-          <router-link to="/profile/edit">編輯個人資料</router-link>
-        </p>
-        <p class="handle">@{{ user?.user_metadata?.username }}</p>
-        <div class="description">
-          <pre>{{ user?.user_metadata?.brief }}</pre>
-        </div>
+  <div class="profileContainer">
+    <TheAvatar :width="186" :height="186" :src="user?.user_metadata.avatar" />
+    <div class="profile">
+      <p class="name">
+        <router-link to="/profile/edit">編輯個人資料</router-link>
+      </p>
+      <p class="handle">@{{ user?.user_metadata?.username }}</p>
+      <div class="description">
+        <pre>{{ user?.user_metadata?.brief }}</pre>
       </div>
     </div>
-    <div class="tabs">
-      <div v-for="(tab, index) in tabs" class="tab" :class="{ active: index === currentTab }" :key="index"
-        @click="currentTab = index">
-        <TheIcon :icon="tab.icon" />
-        <p>{{ tab.label }}</p>
-      </div>
+  </div>
+  <div class="tabs">
+    <div v-for="(tab, index) in tabs" class="tab" :class="{ active: index === currentTab }" :key="index"
+      @click="currentTab = index">
+      <TheIcon :icon="tab.icon" />
+      <p>{{ tab.label }}</p>
     </div>
-    <div class="tabContent">
-      <!-- <p>總貼文數：{{ myPosts[currentTab].length }}篇</p> -->
-      <div class="posts">
-        <img v-for="post in myPosts[currentTab]" :src="post.image" :key="post.id" class="postImage" />
-      </div>
+  </div>
+  <div class="tabContent">
+    <!-- <p>總貼文數：{{ myPosts[currentTab].length }}篇</p> -->
+    <div class="posts">
+      <img v-for="post in myPosts[currentTab]" :src="post.image" :key="post.id" class="postImage" />
     </div>
   </div>
 </template>
