@@ -106,6 +106,8 @@ export async function loadPostsByMe(userId) {
 
 // 喜歡貼文
 export async function likePost(postId, username) {
+  console.log("嗨嗨 username哪裡來的!???", postId, username);
+
   const { data: post, error } = await supabase
     .from("post")
     .select("liked_list")

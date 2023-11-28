@@ -34,6 +34,7 @@ const closeBtn = () => {
   top: 0;
   display: grid;
   place-items: center;
+
 }
 
 .backdrop {

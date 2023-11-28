@@ -57,7 +57,7 @@ const useUser = useUserStore();
 
 const content = ref("");
 const post = usePost.postDetails();
-const comments = computed(() => useComment.list);
+const comments: any = computed(() => useComment.list);
 const user = useUser.user;
 
 async function createComment() {

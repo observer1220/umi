@@ -3,7 +3,8 @@
     <nav class="navbar">
       <!-- LOGO -->
       <router-link to="/">
-        <img src="../../assets/logo.svg" />
+        <!-- <img src="../../assets/logo.svg" /> -->
+        阿瀚的梗圖倉庫
       </router-link>
       <!-- 搜尋框 -->
       <div class="searchInput">
@@ -22,12 +23,10 @@
         <div class="profileDropDown">
           <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="showDropdown = !showDropdown"
             :src="user.avatar" />
-          <div class="dropdownMenu" v-show="showDropdown" @click="showDropdown = false">
-            <ul class="profileMenu">
-              <li><router-link to="/profile">個人檔案</router-link></li>
-              <li @click="logout">登出</li>
-            </ul>
-          </div>
+          <ul v-show="showDropdown" @click="showDropdown = false" class="profileMenu">
+            <li><router-link to="/profile">個人檔案</router-link></li>
+            <li @click="logout">登出</li>
+          </ul>
         </div>
         <!-- Dark Mode -->
         <button :class="generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'"
@@ -101,6 +100,11 @@ function logout() {
   height: 38px;
 }
 
+.navbar a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .searchInput {
   position: relative;
 }
@@ -143,7 +147,6 @@ function logout() {
   width: max-content;
   padding: 24px 26px;
   list-style: none;
-  background: white;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   right: 0;
@@ -172,22 +175,13 @@ function logout() {
 }
 
 .profileMenu a:visited {
-  color: initial;
-}
-
-.sunMode {
-  border: none;
-  background: none;
+  color: inherit;
 }
 
 .sunMode svg {
   color: #f1440f;
 }
 
-.backgroundMode {
-  border: none;
-  background: none;
-}
 
 .backgroundMode svg {
   color: #f1c40f;
