@@ -8,6 +8,7 @@ import {
 } from "../services/apiPost";
 import { useGeneralStore } from "./general";
 import { useCommentStore } from "./comment";
+import { Id, Username } from "../types/form";
 
 export const usePostStore = defineStore("post", () => {
   const { changeShowPostUpload, changeShowPostDetails } = useGeneralStore();
@@ -17,32 +18,32 @@ export const usePostStore = defineStore("post", () => {
   const searchResult = ref([]);
   const currentId = ref(null);
 
-  const initializePosts = (posts) => {
+  const initializePosts = (posts: any) => {
     list.value = posts;
   };
 
   // 按讚貼文
-  const toggleLike = async (postId, username) => {
+  const toggleLike = async (postId: Id, username: Username) => {
     await likePost(postId, username);
     await loadAllPosts();
   };
 
   // 收藏貼文
-  const toggleFavor = async (postId, username) => {
+  const toggleFavor = async (postId: Id, username: Username) => {
     await favorPost(postId, username);
     await loadAllPosts();
   };
 
-  const setCurrentId = (id) => {
+  const setCurrentId = (id: any) => {
     currentId.value = id;
   };
 
-  const setPostsSearchResult = (posts) => {
+  const setPostsSearchResult = (posts: any) => {
     searchResult.value = posts;
   };
 
   // 上傳貼文
-  const uploadPost = async ({ image, description, user_id }) => {
+  const uploadPost = async ({ image, description, user_id }: any) => {
     await createPost(image, description, user_id);
     loadAllPosts();
     // 關閉對話框並清空上傳的圖片
@@ -66,7 +67,7 @@ export const usePostStore = defineStore("post", () => {
     return list.value.find((post) => post.id === currentId.value);
   };
 
-  const showPostDetails = (id) => {
+  const showPostDetails = (id: Id) => {
     setCurrentId(id);
     loadAllComments(id);
     changeShowPostDetails(true);

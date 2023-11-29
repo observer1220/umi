@@ -51,7 +51,7 @@ const ruleForm = reactive<RuleForm>({
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
-    callback(new Error('請輸入密碼'))
+    callback(new Error(`${rule.field} cannot be empty`))
   } else {
     if (!/^(?=.*[a-z])(?=.*\d)[^]{8,20}$/.test(value)) {
       callback(new Error('需包含英文與數字，長度介於8~20位元'))
@@ -90,7 +90,7 @@ const rules = reactive<FormRules<RuleForm>>({
       required: true,
       message: '請輸入用戶名稱', trigger: 'blur'
     },
-    { min: 2, max: 5, message: '長度需介於2~5位元', trigger: 'blur' },
+    { min: 2, max: 8, message: '長度需介於2~8位元', trigger: 'blur' },
   ],
 })
 
@@ -122,8 +122,8 @@ async function register(formEl: FormInstance | undefined) {
       console.log('註冊成功', ruleForm);
       await useUser.registerUser({
         email: ruleForm.email,
-        username: ruleForm.username,
         password: ruleForm.password,
+        username: ruleForm.username,
       });
       await router.replace("/");
     } else {

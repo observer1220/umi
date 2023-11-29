@@ -56,7 +56,7 @@ const tabs = ref([
 
 const currentTab = ref(0);
 
-const myPosts = reactive({
+const myPosts: any = reactive({
   0: [],
   1: [],
   2: [],

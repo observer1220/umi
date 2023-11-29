@@ -1,6 +1,6 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function uploadFile(file) {
+export async function uploadFile(file: any) {
   const imageName = `${Math.random()}-${file.name}`.replace("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/avatar-image/${imageName}`;
 

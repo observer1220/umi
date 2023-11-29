@@ -7,16 +7,16 @@ import { getUser, updateLocalUser } from "../utils/localStorage";
 export const useUserStore = defineStore("user", () => {
   const user = ref(getUser() || {});
 
-  const setUser = (user) => {
+  const setUser = (user: any) => {
     user.value = user;
   };
 
-  const registerUser = async ({ email, username, password }) => {
+  const registerUser = async (email: any, username: any, password: any) => {
     const user = await register(email, username, password);
     setUser(user);
   };
 
-  const loginUser = async ({ email, password }) => {
+  const loginUser = async (email: any, password: any) => {
     try {
       const user = await login(email, password);
       setUser(user);
@@ -25,7 +25,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updateUser = async (user) => {
+  const updateUser = async (user: any) => {
     const updatedUser = await changeUser(user);
     updateLocalUser(updatedUser[0]);
   };

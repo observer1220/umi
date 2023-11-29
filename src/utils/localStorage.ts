@@ -1,20 +1,24 @@
 export function getUser() {
-  return JSON.parse(localStorage.getItem("user"));
+  const userString = localStorage.getItem("user");
+  if (userString !== null) {
+    return JSON.parse(userString);
+  }
+  return null;
 }
 
 export function getJwtToken() {
   return localStorage.getItem("jwtToken");
 }
 
-export function setJwtToken(jwt) {
+export function setJwtToken(jwt: string) {
   localStorage.setItem("jwtToken", jwt);
 }
 
-export function saveUser(user) {
+export function saveUser(user: string) {
   localStorage.setItem("user", JSON.stringify(user));
 }
 
-export function updateLocalUser(user) {
+export function updateLocalUser(user: string) {
   const localStorageUser = getUser();
   localStorageUser.user_metadata = user;
   saveUser(localStorageUser);

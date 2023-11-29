@@ -25,8 +25,9 @@
 
         <div class="actions">
           <PostActions :likes="post.liked_sum" :comments="post.comments" :favors="post.favored_sum" @likeClick="() => {
-            usePost.toggleLike(post.id)
-          }" @favorClick="usePost.toggleFavor(post.id)" :likedByMe="post.likedByMe" :favoredByMe="post.favoredByMe" />
+            usePost.toggleLike(post.id, user.user_metadata?.username)
+          }" @favorClick="usePost.toggleFavor(post.id, user.user_metadata?.username)" :likedByMe="post.likedByMe"
+            :favoredByMe="post.favoredByMe" />
           <span class="postPubDate">
             {{ dateToRelative(post.created_at) }}
           </span>

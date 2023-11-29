@@ -3,3 +3,6 @@ export interface RuleForm {
   password: string;
   username: string;
 }
+
+export type Id = number;
+export type Username = string;

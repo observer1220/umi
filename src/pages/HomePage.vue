@@ -18,7 +18,7 @@ const usePost = usePostStore();
 
 const showPostUpload = computed(() => useGeneral.showPostUpload);
 const showPostDetails = computed(() => useGeneral.showPostDetails);
-const posts = computed(() => usePost.list);
+const posts: any = computed(() => usePost.list);
 
 onMounted(() => {
   usePost.loadAllPosts();
