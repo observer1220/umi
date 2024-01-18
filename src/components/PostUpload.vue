@@ -5,7 +5,8 @@
     </template>
     <div class="container">
       <div class="postContent">
-        <el-input v-model="state.description" type="textarea" class="postContentInput" placeholder="有什麼新鮮事?" autosize />
+        <el-input v-model="state.description" type="textarea" class="postContentInput" placeholder="有什麼新鮮事?"
+          :autosize="{ minRows: 3 }" />
         <span v-if="state.description.length === state.contentLimit" class="contentLimit">Can't excess {{
           state.contentLimit }} words</span>
       </div>

@@ -61,8 +61,15 @@ export async function loadPostFavoredByMe(username: Username) {
 
 // 建立貼文
 export async function createPost(image, description, user_id: Id) {
-  const imageName = `${Math.random()}-${image?.name}`.replace("/", "");
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/bored-images/${imageName}`;
+  let imageName;
+  let imagePath;
+  if (image) {
+    imageName = `${Math.random()}-${image.name}`.replace("/", "");
+    imagePath = `${supabaseUrl}/storage/v1/object/public/bored-images/${imageName}`;
+  } else {
+    imageName = "";
+    imagePath = "";
+  }
 
   const { data, error } = await supabase.from("post").insert([
     {
@@ -77,14 +84,16 @@ export async function createPost(image, description, user_id: Id) {
     throw new Error("CreatePost has error");
   }
 
-  const { error: storageError } = await supabase.storage
-    .from("bored-images")
-    .upload(imageName, image);
+  if (image) {
+    const { error: storageError } = await supabase.storage
+      .from("bored-images")
+      .upload(imageName, image);
 
-  if (storageError) {
-    throw new Error(
-      "Cabin image could not be uploaded and the cabin was not to created"
-    );
+    if (storageError) {
+      throw new Error(
+        "Cabin image could not be uploaded and the cabin was not to created"
+      );
+    }
   }
 
   return data;

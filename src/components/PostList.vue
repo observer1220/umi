@@ -1,6 +1,5 @@
 <template>
   <div class="postList">
-    <img class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
     <div class="postInfo">
       <div class="postMeta">
         <TheAvatar :src="post?.user?.avatar" />
@@ -19,6 +18,7 @@
         </p>
       </div>
     </div>
+    <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
   </div>
 </template>
 
