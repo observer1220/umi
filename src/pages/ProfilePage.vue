@@ -1,27 +1,27 @@
 <template>
   <div class="profileContainer">
-    <TheAvatar :width="186" :height="186" :src="user?.user_metadata.avatar" />
+    <TheAvatar :width="186" :height="186" :src="state.user?.user_metadata.avatar" />
     <div class="profile">
       <p class="name">
         <router-link to="/profile/edit">編輯個人資料</router-link>
       </p>
-      <p class="handle">@{{ user?.user_metadata?.username }}</p>
+      <p class="handle">@{{ state.user?.user_metadata?.username }}</p>
       <div class="description">
-        <pre>{{ user?.user_metadata?.brief }}</pre>
+        <pre>{{ state.user?.user_metadata?.brief }}</pre>
       </div>
     </div>
   </div>
   <div class="tabs">
-    <div v-for="(tab, index) in tabs" class="tab" :class="{ active: index === currentTab }" :key="index"
-      @click="currentTab = index">
+    <div v-for="(tab, index) in state.tabs" class="tab" :class="{ active: index === state.currentTab }" :key="index"
+      @click="state.currentTab = index">
       <TheIcon :icon="tab.icon" />
       <p>{{ tab.label }}</p>
     </div>
   </div>
   <div class="tabContent">
-    <!-- <p>總貼文數：{{ myPosts[currentTab].length }}篇</p> -->
+    <p>總貼文數：{{ state.myPosts[state.currentTab].length }}篇</p>
     <div class="posts">
-      <img v-for="post in myPosts[currentTab]" :src="post.image" :key="post.id" class="postImage" />
+      <img v-for="post in state.myPosts[state.currentTab]" :src="post.image" :key="post.id" class="postImage" />
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import TheIcon from "../components/TheIcon.vue";
 import TheAvatar from "../components/TheAvatar.vue";
-import { computed, ref, reactive, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import {
   loadPostsByMe,
   loadPostLikedByMe,
@@ -38,55 +38,43 @@ import {
 import { useUserStore } from "../store/user";
 
 const userStore = useUserStore();
-const user = computed(() => userStore.user);
-const tabs = ref([
-  {
-    label: "我的",
-    icon: "posts",
-  },
-  {
-    label: "喜歡",
-    icon: "like",
-  },
-  {
-    label: "收藏",
-    icon: "favorite",
-  },
-]);
+const TABS = {
+  MY: 0,
+  LIKED: 1,
+  FAVORED: 2,
+};
 
-const currentTab = ref(0);
-
-const myPosts: any = reactive({
-  0: [],
-  1: [],
-  2: [],
+const state = reactive({
+  user: computed(() => userStore.user),
+  tabs: [
+    { label: "我的", icon: "posts" },
+    { label: "喜歡", icon: "like" },
+    { label: "收藏", icon: "favorite" },
+  ],
+  currentTab: TABS.MY,
+  myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] },
 });
 
-watch(currentTab,
+watch(
+  () => state.currentTab,
   async () => {
-    switch (currentTab.value) {
-      case 0:
-        if (myPosts[0].length === 0) {
-          myPosts[0] = await loadPostsByMe(user.value.user_metadata.userId);
-        }
-        break;
-      case 1:
-        if (myPosts[1].length === 0) {
-          myPosts[1] = await loadPostLikedByMe(user.value.user_metadata.username);
-        }
-        break;
-      case 2:
-        if (myPosts[2].length === 0) {
-          myPosts[2] = await loadPostFavoredByMe(user.value.user_metadata.username);
-        }
-        break;
-      default:
-        return;
+    const currentTabPosts: any = state.myPosts[state.currentTab];
+    if (currentTabPosts.length === 0) {
+      switch (state.currentTab) {
+        case TABS.MY:
+          currentTabPosts.push(...await loadPostsByMe(state.user.user_metadata.userId));
+          break;
+        case TABS.LIKED:
+          currentTabPosts.push(...await loadPostLikedByMe(state.user.user_metadata.username));
+          break;
+        case TABS.FAVORED:
+          currentTabPosts.push(...await loadPostFavoredByMe(state.user.user_metadata.username));
+          break;
+      }
     }
   },
   { immediate: true }
 );
-
 </script>
 
 <style scoped>

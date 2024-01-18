@@ -1,18 +1,18 @@
 <template>
   <TheModal @close="usePost.hidePostDetails">
     <div class="postDetails">
-      <img class="postImage" :src="post.image" alt="" />
+      <img class="postImage" :src="state.post.image" alt="" />
       <div class="postMeta">
         <div class="author">
-          <TheAvatar :src="post?.user?.avatar" />
-          <span>{{ post.username }}</span>
+          <TheAvatar :src="state.post?.user?.avatar" />
+          <span>{{ state.post.username }}</span>
         </div>
         <pre class="postDesc">
-          {{ post?.description }}
+          {{ state.post?.description }}
         </pre>
         <el-scrollbar>
           <div class="comments">
-            <div class="comment" v-for="comment in comments">
+            <div class="comment" v-for="comment in state.comments">
               <TheAvatar :src="comment.user?.avatar" />
               <span class="user">{{ comment.username }}</span>
               <span class="commentDate">
@@ -24,16 +24,17 @@
         </el-scrollbar>
 
         <div class="actions">
-          <PostActions :likes="post.liked_sum" :comments="post.comments" :favors="post.favored_sum" @likeClick="() => {
-            usePost.toggleLike(post.id, user.user_metadata?.username)
-          }" @favorClick="usePost.toggleFavor(post.id, user.user_metadata?.username)" :likedByMe="post.likedByMe"
-            :favoredByMe="post.favoredByMe" />
+          <PostActions :likes="state.post.liked_sum" :comments="state.post.comments" :favors="state.post.favored_sum"
+            @likeClick="() => {
+              usePost.toggleLike(state.post.id, state.user.user_metadata?.username)
+            }" @favorClick="usePost.toggleFavor(state.post.id, state.user.user_metadata?.username)"
+            :likedByMe="state.post.likedByMe" :favoredByMe="state.post.favoredByMe" />
           <span class="postPubDate">
-            {{ dateToRelative(post.created_at) }}
+            {{ dateToRelative(state.post.created_at) }}
           </span>
-          <input type="text" name="comment" v-model="content" id="" class="commentInput" placeholder="請輸入您的留言..."
-            v-on:keyup.enter="createComment" />
-          <button @click="createComment()" class="commentPubBtn">
+          <input type="text" name="comment" v-model="state.content" id="" class="commentInput" placeholder="請輸入您的留言..."
+            v-on:keyup.enter="pageAction.createComment" />
+          <button @click="pageAction.createComment" class="commentPubBtn">
             發佈
           </button>
         </div>
@@ -43,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import TheAvatar from "./TheAvatar.vue";
 import TheModal from "./TheModal.vue";
 import PostActions from "./PostActions.vue";
@@ -56,17 +57,21 @@ const usePost = usePostStore();
 const useComment = useCommentStore();
 const useUser = useUserStore();
 
-const content = ref("");
-const post = usePost.postDetails();
-const comments: any = computed(() => useComment.list);
-const user = useUser.user;
+const state = reactive({
+  content: "",
+  user: useUser.user,
+  post: usePost.postDetails(),
+  comments: computed(() => useComment.list),
+});
 
-async function createComment() {
-  await useComment.addComment(content.value, post.id, user.user_metadata.userId)
-}
+const pageAction = reactive({
+  async createComment() {
+    await useComment.addComment(state.content, state.post.id, state.user.user_metadata.userId)
+  },
+});
 
-watch(comments, () => {
-  content.value = "";
+watch(state.comments, () => {
+  state.content = "";
 });
 
 </script>

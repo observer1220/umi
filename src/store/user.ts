@@ -17,6 +17,8 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const loginUser = async (email: any, password: any) => {
+    console.log(email, password);
+
     try {
       const user = await login(email, password);
       setUser(user);

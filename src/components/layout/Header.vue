@@ -4,11 +4,11 @@
       <!-- LOGO -->
       <router-link to="/">
         <!-- <img src="../../assets/logo.svg" /> -->
-        阿瀚的梗圖倉庫
+        Threads
       </router-link>
       <!-- 搜尋框 -->
       <div class="searchInput">
-        <input type="text" @change="searchPosts" placeholder="搜尋" />
+        <input type="text" @change="pageAction.searchPosts" placeholder="搜尋" />
         <TheIcon icon="search" />
       </div>
       <!-- 右側欄位 -->
@@ -16,16 +16,17 @@
         <router-link to="/">
           <TheIcon icon="home" />
         </router-link>
-        <button @click="publishPost()">
+        <button @click="pageAction.publishPost">
           <TheIcon icon="publish" />
         </button>
         <!-- 下拉選單 -->
         <div class="profileDropDown">
-          <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="showDropdown = !showDropdown"
-            :src="user.avatar" />
-          <ul v-show="showDropdown" @click="showDropdown = false" class="profileMenu">
+          <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="state.showDropdown = !state.showDropdown"
+            :src="state.user.avatar" />
+          <ul v-show="state.showDropdown" @click="state.showDropdown = false" class="profileMenu">
             <li><router-link to="/profile">個人檔案</router-link></li>
-            <li @click="logout">登出</li>
+            <li><router-link to="/exchangeRate">匯率計算</router-link></li>
+            <li @click="pageAction.logout">登出</li>
           </ul>
         </div>
         <!-- Dark Mode -->
@@ -44,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { reactive, computed } from "vue";
 import TheIcon from "../TheIcon.vue";
 import TheAvatar from "../TheAvatar.vue";
 import { useRouter } from "vue-router";
@@ -57,27 +58,29 @@ const generalStore = useGeneralStore();
 const postStore = usePostStore();
 const userStore = useUserStore();
 
-const showDropdown = ref(false);
-const user = computed(() => userStore.user);
+const state = reactive({
+  showDropdown: false,
+  user: computed(() => userStore.user),
+});
 
-function publishPost() {
-  generalStore.changeShowPostUpload(true);
-}
-
-async function searchPosts(event: any) {
-  await postStore.searchPosts(event.target.value);
-  router.push({
-    name: "search_result",
-    params: {
-      term: event.target.value,
-    },
-  });
-}
-
-function logout() {
-  userStore.logoutUser();
-  router.push("/login");
-}
+const pageAction = reactive({
+  publishPost() {
+    generalStore.changeShowPostUpload(true);
+  },
+  async searchPosts(event: any) {
+    await postStore.searchPosts(event.target.value);
+    router.push({
+      name: "search_result",
+      params: {
+        term: event.target.value,
+      },
+    });
+  },
+  logout() {
+    userStore.logoutUser();
+    router.push("/login");
+  },
+})
 </script>
 
 <style scoped>

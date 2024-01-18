@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    &copy; 阿瀚的梗圖倉庫. All Rights Reserved.
+    &copy; Threads. All Rights Reserved.
   </footer>
 </template>
 

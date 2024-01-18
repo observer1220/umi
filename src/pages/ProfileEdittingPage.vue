@@ -4,9 +4,9 @@
     <div class="changeAvatar">
       <TheAvatar :width="48" :height="48" :src="profileData.avatar" />
       <TheButton>上傳頭像</TheButton>
-      <input type="file" class="inputFile" @change="uploadAvatar" />
+      <input type="file" class="inputFile" @change="pageAction.uploadAvatar" />
     </div>
-    <form class="profileForm" @submit.prevent="updateUser">
+    <form class="profileForm" @submit.prevent="pageAction.updateUser">
       <label for="username">用戶名稱：</label>
       <input type="text" v-model="profileData.username" />
       <label for="brief">簡介：</label>
@@ -40,32 +40,35 @@ import { useUserStore } from '../store/user'
 import { useRouter } from "vue-router";
 import { Gender } from "../enum/enum"
 
-const userStore = useUserStore();
 const router = useRouter();
+const userStore = useUserStore();
 
-const user = computed(() => userStore.user);
+const state = reactive({
+  user: computed(() => userStore.user),
+})
+
 const profileData = reactive({
-  id: user.value.id,
-  avatar: user.value.user_metadata.avatar,
-  username: user.value.user_metadata.username,
-  brief: user.value.user_metadata.brief,
-  mobile: user.value.user_metadata.mobile,
-  gender: user.value.user_metadata.gender,
+  id: state.user.id,
+  avatar: state.user.user_metadata.avatar,
+  username: state.user.user_metadata.username,
+  brief: state.user.user_metadata.brief,
+  mobile: state.user.user_metadata.mobile,
+  gender: state.user.user_metadata.gender,
 });
 
-// 上傳頭像
-async function uploadAvatar(event: any) {
-  const file = event.target.files[0];
-  const url = await uploadFile(file);
-  profileData.avatar = url;
-}
-
-// 更新使用者資料
-async function updateUser() {
-  await userStore.updateUser(profileData);
-  window.location.reload();
-}
-
+const pageAction = reactive({
+  // 上傳頭像
+  async uploadAvatar(event: any) {
+    const file = event.target.files[0];
+    const url = await uploadFile(file);
+    profileData.avatar = url;
+  },
+  // 更新使用者資料
+  async updateUser() {
+    await userStore.updateUser(profileData);
+    window.location.reload();
+  }
+})
 </script>
 
 <style scoped>

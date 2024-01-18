@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <PostList v-for="post in posts" :post="post" :key="post.id" />
-    <PostDetails v-if="showPostDetails" />
-    <PostUpload v-if="showPostUpload" />
+    <PostList v-for="post in state.posts" :post="post" :key="post.id" />
+    <PostDetails v-if="state.showPostDetails" />
+    <PostUpload v-if="state.showPostUpload" />
   </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { reactive, computed, onMounted } from "vue";
 import PostList from "../components/PostList.vue";
 import PostUpload from "../components/PostUpload.vue";
 import PostDetails from "../components/PostDetails.vue";
@@ -16,9 +16,11 @@ import { usePostStore } from "../store/post";
 const useGeneral = useGeneralStore();
 const usePost = usePostStore();
 
-const showPostUpload = computed(() => useGeneral.showPostUpload);
-const showPostDetails = computed(() => useGeneral.showPostDetails);
-const posts: any = computed(() => usePost.list);
+const state = reactive({
+  showPostUpload: computed(() => useGeneral.showPostUpload),
+  showPostDetails: computed(() => useGeneral.showPostDetails),
+  posts: computed(() => usePost.list),
+});
 
 onMounted(() => {
   usePost.loadAllPosts();

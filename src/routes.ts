@@ -32,6 +32,11 @@ const routes = [
     name: "login",
     component: LoginPage,
   },
+  {
+    path: "/exchangeRate",
+    name: "exchangeRate",
+    component: () => import("./pages/ExchangeRatePage.vue"),
+  },
 ];
 
 const router = createRouter({

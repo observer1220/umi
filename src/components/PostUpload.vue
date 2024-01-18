@@ -4,16 +4,18 @@
       建立新貼文
     </template>
     <div class="container">
-      <img v-if="imageObjUrl" :src="imageObjUrl" class="preview" />
-      <input v-else type="file" accept="image/*" @change="handleImageUpload" />
       <div class="postContent">
-        <textarea class="postContentInput" v-model="description" placeholder="有什麼新鮮事?" rows="3" />
+        <el-input v-model="state.description" type="textarea" class="postContentInput" placeholder="有什麼新鮮事?" autosize />
+        <span v-if="state.description.length === state.contentLimit" class="contentLimit">Can't excess {{
+          state.contentLimit }} words</span>
       </div>
+      <img v-if="state.imageObjUrl" :src="state.imageObjUrl" class="preview" />
+      <input v-else type="file" accept="image/*" @change="pageAction.handleImageUpload" />
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="useGeneral.changeShowPostUpload(false)">取消</el-button>
-        <el-button type="primary" @click="publishPost">
+        <el-button type="primary" @click="pageAction.publishPost">
           發佈
         </el-button>
       </span>
@@ -22,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, watch } from "vue";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import { useUserStore } from "../store/user";
@@ -31,28 +33,40 @@ const usePost = usePostStore();
 const useUser = useUserStore();
 const useGeneral = useGeneralStore();
 
-const imageObjUrl = ref("");
-const image = ref(null);
-const description = ref("");
+const state = reactive({
+  description: "",
+  imageObjUrl: "",
+  image: null,
+  contentLimit: 280,
+});
 
-async function handleImageUpload(event: any) {
-  // 暫時只允許上傳一張圖片
-  const imageFile = event.target.files[0];
-  if (imageFile) {
-    // 設置預覽
-    imageObjUrl.value = URL.createObjectURL(imageFile);
-    // 設置圖片文件
-    image.value = imageFile;
+const pageAction = reactive({
+  handleImageUpload(event: any) {
+    // 暫時只允許上傳一張圖片
+    const imageFile = event.target.files[0];
+    if (imageFile) {
+      // 設置預覽
+      state.imageObjUrl = URL.createObjectURL(imageFile);
+      // 設置圖片文件
+      state.image = imageFile;
+    }
+  },
+  // 發布貼文
+  publishPost() {
+    usePost.uploadPost({
+      image: state.image,
+      description: state.description,
+      user_id: useUser.user.user_metadata.userId,
+    });
+  },
+})
+
+// 監聽貼文內容，超過140字則截斷
+watch(() => state.description, (newVal) => {
+  if (newVal.length > state.contentLimit) {
+    state.description = newVal.slice(0, state.contentLimit);
   }
-}
-
-function publishPost() {
-  usePost.uploadPost({
-    image: image.value,
-    description: description.value,
-    user_id: useUser.user.user_metadata.userId,
-  });
-}
+})
 </script>
 
 <style scoped>
@@ -63,11 +77,16 @@ function publishPost() {
 }
 
 .postContent {
-  margin-top: 10px;
-  display: grid;
+  margin-bottom: 10px;
 }
 
 .postContentInput {
   resize: none;
+}
+
+.contentLimit {
+  color: red;
+  font-size: 12px;
+  margin: 10px;
 }
 </style>
