@@ -68,12 +68,16 @@ const pageAction = {
     if (!formEl) return
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        console.log('登入成功', state.ruleForm);
-        await useUser.loginUser(
+        const loginResult = await useUser.loginUser(
           state.ruleForm.email,
           state.ruleForm.password
         );
-        await router.replace("/");
+
+        if (loginResult === 'success') {
+          await router.replace("/");
+        } else {
+          alert('登入失敗');
+        }
       } else {
         console.log('登入失敗', fields)
       }

@@ -22,6 +22,7 @@ export const useUserStore = defineStore("user", () => {
     try {
       const user = await login(email, password);
       setUser(user);
+      return "success";
     } catch (error) {
       console.log(error);
     }
