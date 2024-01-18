@@ -3,8 +3,7 @@
     <nav class="navbar">
       <!-- LOGO -->
       <router-link to="/">
-        <!-- <img src="../../assets/logo.svg" /> -->
-        Threads
+        <img src="../../assets/logo.png" style="height: 30px;" />
       </router-link>
       <!-- 搜尋框 -->
       <div class="searchInput">

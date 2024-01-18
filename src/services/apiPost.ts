@@ -61,7 +61,7 @@ export async function loadPostFavoredByMe(username: Username) {
 
 // 建立貼文
 export async function createPost(image, description, user_id: Id) {
-  const imageName = `${Math.random()}-${image.name}`.replace("/", "");
+  const imageName = `${Math.random()}-${image?.name}`.replace("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/bored-images/${imageName}`;
 
   const { data, error } = await supabase.from("post").insert([

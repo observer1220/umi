@@ -44,20 +44,29 @@ const pageAction = reactive({
   handleImageUpload(event: any) {
     // 暫時只允許上傳一張圖片
     const imageFile = event.target.files[0];
-    if (imageFile) {
-      // 設置預覽
-      state.imageObjUrl = URL.createObjectURL(imageFile);
-      // 設置圖片文件
-      state.image = imageFile;
+
+    // 限制圖片大小不超過1MB
+    if (imageFile.size > 1048576) {
+      alert("圖片大小不可超過1MB");
+      return;
     }
+
+    // 設置預覽
+    state.imageObjUrl = URL.createObjectURL(imageFile);
+    // 設置圖片文件
+    state.image = imageFile;
   },
   // 發布貼文
   publishPost() {
-    usePost.uploadPost({
-      image: state.image,
-      description: state.description,
-      user_id: useUser.user.user_metadata.userId,
-    });
+    if (state.description) {
+      usePost.uploadPost({
+        image: state.image,
+        description: state.description,
+        user_id: useUser.user.user_metadata.userId,
+      });
+    } else {
+      alert("貼文內容不可為空");
+    }
   },
 })
 
