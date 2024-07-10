@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { reactive } from "vue";
 import { defineStore } from "pinia";
 import {
   createPost,
@@ -14,12 +14,14 @@ export const usePostStore = defineStore("post", () => {
   const { changeShowPostUpload, changeShowPostDetails } = useGeneralStore();
   const { loadAllComments } = useCommentStore();
 
-  const list = ref({});
-  const searchResult = ref([]);
-  const currentId = ref(null);
+  const state = reactive({
+    list: [],
+    searchResult: [],
+    currentId: null,
+  });
 
   const initializePosts = (posts: any) => {
-    list.value = posts;
+    state.list = posts;
   };
 
   // 按讚貼文
@@ -35,11 +37,11 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const setCurrentId = (id: any) => {
-    currentId.value = id;
+    state.currentId = id;
   };
 
   const setPostsSearchResult = (posts: any) => {
-    searchResult.value = posts;
+    state.searchResult = posts;
   };
 
   // 上傳貼文
@@ -56,15 +58,19 @@ export const usePostStore = defineStore("post", () => {
     initializePosts(posts);
   };
 
-  // 搜尋貼文
+  // 搜尋貼文: 尚未完成
   const searchPosts = async (term: string) => {
-    const posts = await loadPosts("filters[description][$contains]=" + term);
+    // 取得所有貼文
+    const posts = await loadPosts();
+
+    console.log("搜尋", term);
+    console.log("posts", posts);
     setPostsSearchResult(posts);
   };
 
   // 取得貼文詳細資料
   const postDetails = () => {
-    return list.value.find((post) => post.id === currentId.value);
+    return state.list.find((post: any) => post.id === state.currentId);
   };
 
   const showPostDetails = (id: Id) => {
@@ -79,9 +85,7 @@ export const usePostStore = defineStore("post", () => {
   };
 
   return {
-    list,
-    searchResult,
-    currentId,
+    state,
     initializePosts,
     toggleLike,
     toggleFavor,

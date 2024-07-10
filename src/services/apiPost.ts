@@ -1,5 +1,5 @@
 import supabase, { supabaseUrl } from "./supabase";
-import { getUser } from "../utils/localStorage";
+// import { getUser } from "../utils/localStorage";
 import { Id, Username } from "../types/form";
 
 // 取得所有貼文
@@ -60,7 +60,7 @@ export async function loadPostFavoredByMe(username: Username) {
 }
 
 // 建立貼文
-export async function createPost(image, description, user_id: Id) {
+export async function createPost(image: any, description: any, user_id: Id) {
   let imageName;
   let imagePath;
   if (image) {
@@ -115,7 +115,7 @@ export async function loadPostsByMe(userId: Id) {
 }
 
 // 喜歡貼文
-export async function likePost(postId, username) {
+export async function likePost(postId: any, username: any) {
   console.log("postId, username", postId, username);
 
   const { data: post, error } = await supabase
@@ -132,7 +132,7 @@ export async function likePost(postId, username) {
   const likedList = post.liked_list || [];
 
   const updatedLikedList = likedList.includes(username)
-    ? likedList.filter((name) => name !== username)
+    ? likedList.filter((name: any) => name !== username)
     : [...likedList, username];
 
   const { error: updateError } = await supabase
@@ -149,7 +149,7 @@ export async function likePost(postId, username) {
 }
 
 // 收藏貼文
-export async function favorPost(postId, username) {
+export async function favorPost(postId: any, username: any) {
   const { data: post, error } = await supabase
     .from("post")
     .select("favored_list")
@@ -164,7 +164,7 @@ export async function favorPost(postId, username) {
   const favoredList = post.favored_list || [];
 
   const updatedFavoredList = favoredList.includes(username)
-    ? favoredList.filter((name) => name !== username)
+    ? favoredList.filter((name: any) => name !== username)
     : [...favoredList, username];
 
   const { error: updateError } = await supabase

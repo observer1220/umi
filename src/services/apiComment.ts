@@ -1,9 +1,9 @@
 import supabase from "./supabase";
 
-export async function createComment(content, postId, userId) {
+export async function createComment(content: any, postId: any, userId: any) {
   console.log(content, postId, userId);
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("comment")
     .insert([
       {
@@ -17,7 +17,7 @@ export async function createComment(content, postId, userId) {
   console.log(data);
 }
 
-export async function loadComments(postId) {
+export async function loadComments(postId: any) {
   try {
     const [commentsResponse, usersResponse] = await Promise.all([
       supabase.from("comment").select("*").eq("post_id", postId),
@@ -33,7 +33,7 @@ export async function loadComments(postId) {
     }
 
     const comments = commentsResponse.data.map((comment) => {
-      const userItem = usersResponse.data.find(
+      const userItem: any = usersResponse.data.find(
         (user) => user.id === comment.user_id
       );
       return {
@@ -43,7 +43,7 @@ export async function loadComments(postId) {
     });
 
     return comments;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.message);
   }
 }

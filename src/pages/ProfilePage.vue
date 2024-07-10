@@ -52,7 +52,7 @@ const state = reactive({
     { label: "收藏", icon: "favorite" },
   ],
   currentTab: TABS.MY,
-  myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] },
+  myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] } as any,
 });
 
 watch(

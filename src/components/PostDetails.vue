@@ -1,6 +1,6 @@
 <template>
   <TheModal @close="usePost.hidePostDetails">
-    <div class="postDetails">
+    <div class="postDetails" v-if="state.post">
       <img class="postImage" :src="state.post.image" alt="" />
       <div class="postMeta">
         <div class="author">
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from "vue";
+import { computed, reactive, watch, onMounted } from "vue";
 import TheAvatar from "./TheAvatar.vue";
 import TheModal from "./TheModal.vue";
 import PostActions from "./PostActions.vue";
@@ -60,9 +60,13 @@ const useUser = useUserStore();
 const state = reactive({
   content: "",
   user: useUser.user,
-  post: usePost.postDetails(),
-  comments: computed(() => useComment.list),
+  post: null as any,
+  comments: computed(() => useComment.list) as any,
 });
+
+onMounted(async () => {
+  state.post = usePost.postDetails();
+})
 
 const pageAction = reactive({
   async createComment() {

@@ -1,8 +1,8 @@
 <template>
   <div class="loginPage">
-    <img src="../assets/phone.png" alt="" class="phoneImage" />
+    <img :src="phoneImage" alt="" class="phoneImage" />
     <div class="loginForm">
-      <img src="../assets/logo.svg" alt="" />
+      <img :src="logo" alt="" />
       <el-form ref="ruleFormRef" :model="state.ruleForm" :rules="rules" :size="state.formSize" @submit.prevent>
         <el-form-item prop="email">
           <el-input v-model="state.ruleForm.email" placeholder="EMAIL" size="large" />
@@ -36,6 +36,8 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
 import type { FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types/form'
+import logo from '../assets/logo.png'
+import phoneImage from '../assets/phone.png'
 
 const router = useRouter();
 const useUser = useUserStore();

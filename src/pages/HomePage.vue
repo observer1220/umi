@@ -19,7 +19,7 @@ const usePost = usePostStore();
 const state = reactive({
   showPostUpload: computed(() => useGeneral.showPostUpload),
   showPostDetails: computed(() => useGeneral.showPostDetails),
-  posts: computed(() => usePost.list),
+  posts: computed(() => usePost.state.list) as any,
 });
 
 onMounted(() => {

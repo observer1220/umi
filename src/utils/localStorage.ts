@@ -14,7 +14,7 @@ export function setJwtToken(jwt: string) {
   localStorage.setItem("jwtToken", jwt);
 }
 
-export function saveUser(user: string) {
+export function saveUser(user: any) {
   localStorage.setItem("user", JSON.stringify(user));
 }
 

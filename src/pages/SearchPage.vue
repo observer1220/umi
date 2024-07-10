@@ -12,7 +12,7 @@ import { useRoute } from "vue-router";
 import { usePostStore } from "../store/post";
 
 const route = useRoute();
-const usePost = usePostStore();
+const usePost: any = usePostStore();
 
 const searchResult = computed(() => usePost.searchResult);
 const term = computed(() => route.params.term);
