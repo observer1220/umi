@@ -1,17 +1,10 @@
 import supabase from "./supabase";
 import { createUser } from "./apiUser";
 import { saveUser, setJwtToken } from "../utils/localStorage";
-
-interface SignUpResponse {
-  data: {
-    user: any;
-    session: any;
-  };
-  error: any;
-}
+import { SignUpResponse, RegisterParams, LoginParams } from "../types/auth";
 
 // 註冊功能 OK
-export async function register(email: any, username: any, password: any) {
+export async function register({ email, username, password }: RegisterParams) {
   try {
     let { data }: SignUpResponse = await supabase.auth.signUp({
       email,
@@ -36,7 +29,7 @@ export async function register(email: any, username: any, password: any) {
 }
 
 // 登入功能 OK
-export async function login(email: any, password: any) {
+export async function login({ email, password }: LoginParams) {
   try {
     const { data, error: authError } = await supabase.auth.signInWithPassword({
       email,

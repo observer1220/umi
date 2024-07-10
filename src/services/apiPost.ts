@@ -115,7 +115,7 @@ export async function loadPostsByMe(userId: Id) {
 }
 
 // 喜歡貼文
-export async function likePost(postId: any, username: any) {
+export async function likePost(postId: number, username: any) {
   console.log("postId, username", postId, username);
 
   const { data: post, error } = await supabase
@@ -149,7 +149,7 @@ export async function likePost(postId: any, username: any) {
 }
 
 // 收藏貼文
-export async function favorPost(postId: any, username: any) {
+export async function favorPost(postId: number, username: any) {
   const { data: post, error } = await supabase
     .from("post")
     .select("favored_list")

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    &copy; Threads. All Rights Reserved.
+    &copy; umi. All Rights Reserved.
   </footer>
 </template>
 

@@ -1,6 +1,5 @@
 <template>
   <div class="loginPage">
-    <img :src="phoneImage" alt="" class="phoneImage" />
     <div class="loginForm">
       <img :src="logo" alt="" />
       <el-form ref="ruleFormRef" :model="state.ruleForm" :rules="rules" :size="state.formSize" @submit.prevent>
@@ -36,8 +35,8 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
 import type { FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types/form'
-import logo from '../assets/logo.png'
-import phoneImage from '../assets/phone.png'
+import logo from '../assets/wave.png'
+// import phoneImage from '../assets/phone.png'
 
 const router = useRouter();
 const useUser = useUserStore();
@@ -70,9 +69,11 @@ const pageAction = {
     if (!formEl) return
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        const loginResult = await useUser.loginUser(
-          state.ruleForm.email,
-          state.ruleForm.password
+        const loginResult = await useUser.loginUser({
+          email: state.ruleForm.email,
+          password: state.ruleForm.password,
+        }
+          
         );
 
         if (loginResult === 'success') {
@@ -95,11 +96,11 @@ const pageAction = {
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         console.log('註冊成功', state.ruleForm);
-        await useUser.registerUser(
-          state.ruleForm.email,
-          state.ruleForm.password,
-          state.ruleForm.username,
-        );
+        await useUser.registerUser({
+          email: state.ruleForm.email,
+          password: state.ruleForm.password,
+          username: state.ruleForm.username,
+        });
         await router.replace("/");
       } else {
         console.log('註冊失敗', fields)
@@ -144,26 +145,16 @@ const rules = reactive<FormRules<RuleForm>>({
 <style scoped>
 .loginPage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
-  gap: 5vw;
+  justify-items: center;
   width: 100vw;
   height: 100vh;
   max-width: 100%;
   background: #f8f9fb;
-
-  padding: 0 10vw;
-}
-
-.phoneImage {
-  max-width: 400px;
-  position: relative;
-  top: 36px;
-  justify-self: end;
 }
 
 .loginForm {
-  justify-self: start;
   box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.06);
   border-radius: 32px;
   background: white;

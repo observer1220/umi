@@ -3,24 +3,23 @@ import { defineStore } from "pinia";
 import { changeUser } from "../services/apiUser";
 import { login, logout, register } from "../services/apiAuth";
 import { getUser, updateLocalUser } from "../utils/localStorage";
+import { RegisterParams, LoginParams } from "../types/auth";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref(getUser() || {});
+  const user = ref(getUser() || {});  
 
   const setUser = (user: any) => {
     user.value = user;
   };
 
-  const registerUser = async (email: any, username: any, password: any) => {
-    const user = await register(email, username, password);
+  const registerUser = async ({ email, username, password}: RegisterParams) => {
+    const user = await register({ email, username, password });
     setUser(user);
   };
 
-  const loginUser = async (email: any, password: any) => {
-    console.log(email, password);
-
+  const loginUser = async ({ email, password }: LoginParams) => {
     try {
-      const user = await login(email, password);
+      const user = await login({ email, password });
       setUser(user);
       return "success";
     } catch (error) {

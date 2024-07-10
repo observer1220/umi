@@ -9,7 +9,6 @@ export async function uploadFile(file: any) {
     .upload(imageName, file);
 
   if (error) {
-    console.error(error);
     throw new Error("uploadFile has error");
   }
 

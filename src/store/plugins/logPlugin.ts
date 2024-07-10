@@ -1,10 +1,4 @@
-interface MutationPayload {
-  type: string;
-  storeId: string;
-  events: {
-    newValue: any;
-  };
-}
+import { MutationPayload } from "../../types/form";
 
 export default function logPlugin({ store }: { store: any })  {
   store.$subscribe((mutation: MutationPayload , state: any) => {

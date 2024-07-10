@@ -1,4 +1,4 @@
-name: Deploy Mivida Project to GitHub Pages
+name: Deploy Umi Project to GitHub Pages
 
 on:
   push:

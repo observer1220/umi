@@ -1,6 +1,7 @@
 import supabase from "./supabase";
+import { Comment } from "../types/comment";
 
-export async function createComment(content: any, postId: any, userId: any) {
+export async function createComment({ content, postId, userId }: Comment) {
   console.log(content, postId, userId);
 
   const { data } = await supabase
@@ -17,7 +18,7 @@ export async function createComment(content: any, postId: any, userId: any) {
   console.log(data);
 }
 
-export async function loadComments(postId: any) {
+export async function loadComments(postId: number) {
   try {
     const [commentsResponse, usersResponse] = await Promise.all([
       supabase.from("comment").select("*").eq("post_id", postId),
