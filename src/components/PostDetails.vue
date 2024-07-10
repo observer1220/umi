@@ -70,7 +70,11 @@ onMounted(async () => {
 
 const pageAction = reactive({
   async createComment() {
-    await useComment.addComment(state.content, state.post.id, state.user.user_metadata.userId)
+    await useComment.addComment({
+      content: state.content,
+      postId: state.post.id,
+      userId: state.user.user_metadata.userId,
+    })
   },
 });
 

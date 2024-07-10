@@ -43,7 +43,7 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const uploadPost = async ({ image, description, user_id }: Post) => {
-    await createPost(image, description, user_id);
+    await createPost({ image, description, user_id });
     await loadAllPosts();
     changeShowPostUpload(false);
   };
@@ -55,6 +55,7 @@ export const usePostStore = defineStore("post", () => {
 
   const searchPosts = async (term: string) => {
     const posts = await loadPosts();
+    console.log('term', term);
     setPostsSearchResult(posts);
   };
 
@@ -69,7 +70,7 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const hidePostDetails = () => {
-    setCurrentId(null);
+    // setCurrentId(null);
     changeShowPostDetails(false);
   };
 

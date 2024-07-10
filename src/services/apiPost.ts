@@ -1,6 +1,6 @@
+import { Post } from "../types/post";
 import supabase, { supabaseUrl } from "./supabase";
 // import { getUser } from "../utils/localStorage";
-import { Id, Username } from "../types/form";
 
 // 取得所有貼文
 export async function loadPosts() {
@@ -28,7 +28,7 @@ export async function loadPosts() {
 }
 
 // 取得我按讚的貼文
-export async function loadPostLikedByMe(username: Username) {
+export async function loadPostLikedByMe(username: string) {
   const { data: posts, error } = await supabase
     .from("post")
     .select("image, liked_list");
@@ -44,7 +44,7 @@ export async function loadPostLikedByMe(username: Username) {
 }
 
 // 取得我收藏的貼文
-export async function loadPostFavoredByMe(username: Username) {
+export async function loadPostFavoredByMe(username: string) {
   const { data: posts, error } = await supabase
     .from("post")
     .select("image, favored_list");
@@ -60,7 +60,7 @@ export async function loadPostFavoredByMe(username: Username) {
 }
 
 // 建立貼文
-export async function createPost(image: any, description: any, user_id: Id) {
+export async function createPost({ image, description, user_id }: Post) {
   let imageName;
   let imagePath;
   if (image) {
@@ -100,7 +100,7 @@ export async function createPost(image: any, description: any, user_id: Id) {
 }
 
 // 取得我撰寫的貼文
-export async function loadPostsByMe(userId: Id) {
+export async function loadPostsByMe(userId: number) {
   console.log("userId", userId);
   const { data: posts, error } = await supabase
     .from("post")
