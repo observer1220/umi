@@ -175,6 +175,10 @@ const rules = reactive<FormRules<RuleForm>>({
   width: 380px;
 }
 
+.loginForm img {
+  width: 100px;
+}
+
 .loginForm>form {
   display: grid;
   row-gap: 24px;
