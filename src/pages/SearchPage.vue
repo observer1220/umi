@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2 class="title">搜尋結果：{{ term }}</h2>
     <PostList v-for="post in searchResult" :post="post" />
   </div>
 </template>
@@ -8,14 +7,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import PostList from "../components/PostList.vue";
-import { useRoute } from "vue-router";
 import { usePostStore } from "../store/post";
 
-const route = useRoute();
 const usePost: any = usePostStore();
 
-const searchResult = computed(() => usePost.searchResult);
-const term = computed(() => route.params.term);
+const searchResult = computed(() => usePost.state.searchResult);
 </script>
 
 <style scoped>

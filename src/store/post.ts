@@ -54,8 +54,13 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const searchPosts = async (term: string) => {
-    const posts = await loadPosts();
-    console.log('term', term);
+    let posts = await loadPosts();
+
+    // 過濾出包含搜尋字串的貼文
+    posts = posts.filter((post) => {
+      return post.description.includes(term);
+    });
+    
     setPostsSearchResult(posts);
   };
 

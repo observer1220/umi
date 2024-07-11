@@ -1,5 +1,5 @@
 <template>
-  <div class="postList">
+  <div class="postContainer">
     <div class="postInfo">
       <div class="postMeta">
         <TheAvatar :src="post?.user?.avatar" />
@@ -14,7 +14,7 @@
       </div>
       <div class="postDesc">
         <p>
-          {{ post.description }}
+          {{ post.description.length > 54 ? post.description.slice(0, 54) + "..." : post.description }}
         </p>
       </div>
     </div>
@@ -78,21 +78,22 @@ const favoredByMe = computed(() => {
 
 </script>
 <style scoped>
-.postList {
-  width: 100%;
+.postContainer {
+  width: 335px;
+  height: 480px;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 0.5em;
 }
 
 .postInfo {
-  padding: 24px;
+  padding: 1em;
 }
 
-.postList>img {
+.postContainer>img {
   width: 100%;
-  height: 300px;
-  object-fit: contain;
+  max-height: 300px;
+  object-fit: cover;
   background: #eee;
   cursor: pointer;
 }
@@ -127,7 +128,8 @@ const favoredByMe = computed(() => {
 }
 
 .postDesc {
-  margin-top: 28px;
+  margin-top: 1em;
+  max-height: 100px;
   white-space: pre-line;
 }
 </style>

@@ -14,6 +14,7 @@
             v-model="state.ruleForm.email"
             placeholder="EMAIL"
             size="large"
+            type="email"
           />
         </el-form-item>
         <el-form-item prop="password">

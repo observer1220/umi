@@ -12,9 +12,6 @@
       </div>
       <!-- 右側欄位 -->
       <div class="navItems">
-        <router-link to="/">
-          <TheIcon icon="home" />
-        </router-link>
         <button @click="pageAction.publishPost">
           <TheIcon icon="publish" />
         </button>
@@ -115,11 +112,10 @@ const pageAction = reactive({
   position: relative;
 }
 
-.searchInput input {
+.searchInput>input {
   width: 100%;
   padding: 12px;
   padding-left: 36px;
-
   background: #f1f1f1;
   border-radius: 14px;
   border: none;
