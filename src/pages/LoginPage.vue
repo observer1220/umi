@@ -54,7 +54,7 @@ const state = reactive({
 })
 
 const pageAction = {
-  validatePass(rule: any, value: any, callback: any) {
+  validatePass(rule: any, value: string, callback: (error?: Error) => void) {
     if (value === '') {
       callback(new Error(`${rule.field} cannot be empty`))
     } else {

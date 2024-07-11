@@ -4,9 +4,6 @@ export interface RuleForm {
   username: string;
 }
 
-
-
-
 export interface User {
   email: string;
   username: string;
@@ -17,6 +14,6 @@ export interface MutationPayload {
   type: string;
   storeId: string;
   events: {
-    newValue: any;
+    newValue: string;
   };
 }

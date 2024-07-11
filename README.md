@@ -45,8 +45,8 @@
 
 ### 測試帳號
 
-- 帳號：observer1220@gmail.com
+- 帳號：test@gmail.com
 - 密碼：test1234
 
-- 帳號：test@gmail.com
+- 帳號：observer1220@gmail.com
 - 密碼：test1234

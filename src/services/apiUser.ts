@@ -1,4 +1,5 @@
 import supabase from "./supabase";
+import { CreateUser, User } from "../types/user";
 // import { getUser, saveUser } from "../utils/localStorage";
 
 // 取得登入使用者
@@ -21,7 +22,7 @@ import supabase from "./supabase";
 // }
 
 // 新增使用者
-export async function createUser(email: any, username: any, auth_id: any) {
+export async function createUser({ email, username, auth_id }: CreateUser) {
   const { data, error } = await supabase
     .from("user")
     .insert([{ email, username, auth_id }]);
@@ -35,7 +36,7 @@ export async function createUser(email: any, username: any, auth_id: any) {
 }
 
 // 編輯使用者
-export async function changeUser(user: any) {
+export async function changeUser(user: User) {
   console.log("user", user);
 
   const { data, error } = await supabase

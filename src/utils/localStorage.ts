@@ -1,3 +1,5 @@
+// import { User } from "../types/user";
+
 export function getUser() {
   const userString = localStorage.getItem("user");
   if (userString !== null) {
@@ -15,6 +17,7 @@ export function setJwtToken(jwt: string) {
 }
 
 export function saveUser(user: any) {
+  console.log('存什麼', user);
   localStorage.setItem("user", JSON.stringify(user));
 }
 

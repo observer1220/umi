@@ -21,16 +21,16 @@ export const usePostStore = defineStore("post", () => {
   });
 
   const initializePosts = (posts: Post[]) => {
-    state.list = posts;
+    state.list = posts; 
   };
 
   const toggleLike = async (postId: number, username: string) => {
-    await likePost(postId, username);
+    await likePost({ postId, username });
     await loadAllPosts();
   };
 
   const toggleFavor = async (postId: number, username: string) => {
-    await favorPost(postId, username);
+    await favorPost({ postId, username});
     await loadAllPosts();
   };
 

@@ -58,10 +58,14 @@ const profileData = reactive({
 
 const pageAction = reactive({
   // 上傳頭像
-  async uploadAvatar(event: any) {
-    const file = event.target.files[0];
-    const url = await uploadFile(file);
-    profileData.avatar = url;
+  async uploadAvatar(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+    
+    if (file) {
+      const url = await uploadFile(file);
+      profileData.avatar = url;
+    }
   },
   // 更新使用者資料
   async updateUser() {

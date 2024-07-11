@@ -17,7 +17,9 @@ export async function register({ email, username, password }: RegisterParams) {
       },
     });
 
-    createUser(email, username, data.user.id);
+    console.log('看一下型別', data)
+
+    createUser({ email, username, auth_id: data.user.id });
     setJwtToken(data.session);
     saveUser(data.user);
     return data.user;

@@ -1,6 +1,10 @@
 <template>
   <div class="profileContainer">
-    <TheAvatar :width="186" :height="186" :src="state.user?.user_metadata.avatar" />
+    <TheAvatar
+      :width="186"
+      :height="186"
+      :src="state.user?.user_metadata.avatar"
+    />
     <div class="profile">
       <p class="name">
         <router-link to="/profile/edit">編輯個人資料</router-link>
@@ -12,8 +16,13 @@
     </div>
   </div>
   <div class="tabs">
-    <div v-for="(tab, index) in state.tabs" class="tab" :class="{ active: index === state.currentTab }" :key="index"
-      @click="state.currentTab = index">
+    <div
+      v-for="(tab, index) in state.tabs"
+      class="tab"
+      :class="{ active: index === state.currentTab }"
+      :key="index"
+      @click="state.currentTab = index"
+    >
       <TheIcon :icon="tab.icon" />
       <p>{{ tab.label }}</p>
     </div>
@@ -21,7 +30,12 @@
   <div class="tabContent">
     <p>總貼文數：{{ state.myPosts[state.currentTab].length }}篇</p>
     <div class="posts">
-      <img v-for="post in state.myPosts[state.currentTab]" :src="post.image" :key="post.id" class="postImage" />
+      <img
+        v-for="post in state.myPosts[state.currentTab]"
+        :src="post.image"
+        :key="post.id"
+        class="postImage"
+      />
     </div>
   </div>
 </template>
@@ -62,13 +76,19 @@ watch(
     if (currentTabPosts.length === 0) {
       switch (state.currentTab) {
         case TABS.MY:
-          currentTabPosts.push(...await loadPostsByMe(state.user.user_metadata.userId));
+          currentTabPosts.push(
+            ...(await loadPostsByMe(state.user.user_metadata.userId))
+          );
           break;
         case TABS.LIKED:
-          currentTabPosts.push(...await loadPostLikedByMe(state.user.user_metadata.username));
+          currentTabPosts.push(
+            ...(await loadPostLikedByMe(state.user.user_metadata.username))
+          );
           break;
         case TABS.FAVORED:
-          currentTabPosts.push(...await loadPostFavoredByMe(state.user.user_metadata.username));
+          currentTabPosts.push(
+            ...(await loadPostFavoredByMe(state.user.user_metadata.username))
+          );
           break;
       }
     }
@@ -93,11 +113,11 @@ watch(
   align-items: center;
 }
 
-.profile .name>span {
+.profile .name > span {
   font-size: 26px;
 }
 
-.profile .name>a {
+.profile .name > a {
   color: #1da0ff;
   text-decoration: none;
 }
@@ -128,7 +148,7 @@ watch(
   cursor: pointer;
 }
 
-.tab>svg {
+.tab > svg {
   width: 32px;
   height: 32px;
   stroke: #8a9194;
@@ -140,16 +160,16 @@ watch(
   border-radius: 18px;
 }
 
-.tab.active>svg {
+.tab.active > svg {
   stroke: #1787d9;
   fill: #1787d9;
 }
 
-.tab.active>p {
+.tab.active > p {
   color: #1787d9;
 }
 
-.tabContent>p {
+.tabContent > p {
   text-align: center;
   font-weight: 600;
   margin-bottom: 32px;

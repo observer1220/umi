@@ -66,12 +66,13 @@ const pageAction = reactive({
   publishPost() {
     generalStore.changeShowPostUpload(true);
   },
-  async searchPosts(event: any) {
-    await postStore.searchPosts(event.target.value);
+  async searchPosts(event: Event) {
+    const target = event.target as HTMLInputElement;
+    await postStore.searchPosts(target.value);
     router.push({
       name: "search_result",
       params: {
-        term: event.target.value,
+        term: target.value,
       },
     });
   },

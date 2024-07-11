@@ -4,6 +4,7 @@ import { changeUser } from "../services/apiUser";
 import { login, logout, register } from "../services/apiAuth";
 import { getUser, updateLocalUser } from "../utils/localStorage";
 import { RegisterParams, LoginParams } from "../types/auth";
+import { User } from "../types/user";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref(getUser() || {});  
@@ -27,7 +28,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updateUser = async (user: any) => {
+  const updateUser = async (user: User) => {
     const updatedUser = await changeUser(user);
     updateLocalUser(updatedUser[0]);
   };

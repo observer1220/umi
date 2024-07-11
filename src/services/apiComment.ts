@@ -2,8 +2,6 @@ import supabase from "./supabase";
 import { Comment } from "../types/comment";
 
 export async function createComment({ content, postId, userId }: Comment) {
-  console.log(content, postId, userId);
-
   const { data } = await supabase
     .from("comment")
     .insert([
@@ -34,12 +32,12 @@ export async function loadComments(postId: number) {
     }
 
     const comments = commentsResponse.data.map((comment) => {
-      const userItem: any = usersResponse.data.find(
+      const userItem = usersResponse.data.find(
         (user) => user.id === comment.user_id
       );
       return {
         ...comment,
-        username: userItem.username,
+        username: userItem?.username,
       };
     });
 

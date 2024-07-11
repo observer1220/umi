@@ -10,3 +10,8 @@ export interface PostState {
   searchResult: Post[];
   currentId: number | null;
 }
+
+export interface PostAction {
+  postId: number, 
+  username: string
+}

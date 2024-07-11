@@ -29,41 +29,59 @@ import { reactive, watch } from "vue";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import { useUserStore } from "../store/user";
+import { getUser } from "../utils/localStorage";
 
 const usePost = usePostStore();
 const useUser = useUserStore();
 const useGeneral = useGeneralStore();
 
-const state = reactive({
+interface State {
+  description: string;
+  imageObjUrl: string;
+  image: File | null;
+  contentLimit: number;
+}
+
+interface PageAction {
+  handleImageUpload(event: Event): void;
+  publishPost(): void;
+}
+
+const state = reactive<State>({
   description: "",
   imageObjUrl: "",
   image: null,
   contentLimit: 280,
 });
 
-const pageAction = reactive({
-  handleImageUpload(event: any) {
+const pageAction = reactive<PageAction>({
+  handleImageUpload(event: Event) {
     // 暫時只允許上傳一張圖片
-    const imageFile = event.target.files[0];
+    const target = event.target as HTMLInputElement;
+    const imageFile = target.files ? target.files[0] : null;
 
     // 限制圖片大小不超過1MB
-    if (imageFile.size > 1048576) {
+    if (imageFile && imageFile.size > 1048576) {
       alert("圖片大小不可超過1MB");
       return;
     }
 
-    // 設置預覽
-    state.imageObjUrl = URL.createObjectURL(imageFile);
-    // 設置圖片文件
-    state.image = imageFile;
+    if (imageFile) {
+      // 設置預覽
+      state.imageObjUrl = URL.createObjectURL(imageFile);
+      // 設置圖片文件
+      state.image = imageFile;
+    }
   },
   // 發布貼文
   publishPost() {
+    const user = getUser();
+    console.log('內容', state, user)
     if (state.description) {
       usePost.uploadPost({
         image: state.image,
         description: state.description,
-        user_id: useUser.user.user_metadata.userId,
+        user_id: user.user_metadata.userId,
       });
     } else {
       alert("貼文內容不可為空");
