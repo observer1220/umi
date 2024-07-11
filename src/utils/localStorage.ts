@@ -17,7 +17,6 @@ export function setJwtToken(jwt: string) {
 }
 
 export function saveUser(user: any) {
-  console.log('存什麼', user);
   localStorage.setItem("user", JSON.stringify(user));
 }
 

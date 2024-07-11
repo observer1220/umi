@@ -41,17 +41,16 @@
 </template>
 
 <script setup lang="ts">
+import { reactive, watch } from "vue";
 import TheIcon from "../components/TheIcon.vue";
 import TheAvatar from "../components/TheAvatar.vue";
-import { computed, reactive, watch } from "vue";
 import {
   loadPostsByMe,
   loadPostLikedByMe,
   loadPostFavoredByMe,
 } from "../services/apiPost";
-import { useUserStore } from "../store/user";
+import { getUser } from "../utils/localStorage";
 
-const userStore = useUserStore();
 const TABS = {
   MY: 0,
   LIKED: 1,
@@ -59,7 +58,7 @@ const TABS = {
 };
 
 const state = reactive({
-  user: computed(() => userStore.user),
+  user: getUser(),
   tabs: [
     { label: "我的", icon: "posts" },
     { label: "喜歡", icon: "like" },

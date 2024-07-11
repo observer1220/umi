@@ -7,7 +7,7 @@ import { RegisterParams, LoginParams } from "../types/auth";
 import { User } from "../types/user";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref(getUser() || {});  
+  const user = ref(getUser() || {});
 
   const setUser = (user: any) => {
     user.value = user;

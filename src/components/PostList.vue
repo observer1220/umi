@@ -79,7 +79,7 @@ const favoredByMe = computed(() => {
 </script>
 <style scoped>
 .postList {
-  width: 450px;
+  width: 100%;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   margin-bottom: 24px;

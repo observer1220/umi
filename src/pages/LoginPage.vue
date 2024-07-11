@@ -2,100 +2,136 @@
   <div class="loginPage">
     <div class="loginForm">
       <img :src="logo" alt="" />
-      <el-form ref="ruleFormRef" :model="state.ruleForm" :rules="rules" :size="state.formSize" @submit.prevent>
+      <el-form
+        ref="ruleFormRef"
+        :model="state.ruleForm"
+        :rules="rules"
+        :size="state.formSize"
+        @submit.prevent
+      >
         <el-form-item prop="email">
-          <el-input v-model="state.ruleForm.email" placeholder="EMAIL" size="large" />
+          <el-input
+            v-model="state.ruleForm.email"
+            placeholder="EMAIL"
+            size="large"
+          />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="state.ruleForm.password" placeholder="密碼(英文、數字8~20位元)" type="password" autocomplete="off"
-            size="large" />
+          <el-input
+            v-model="state.ruleForm.password"
+            placeholder="密碼(英文、數字8~20位元)"
+            type="password"
+            autocomplete="off"
+            size="large"
+          />
         </el-form-item>
         <el-form-item prop="username" v-if="!state.isLogin">
-          <el-input v-model="state.ruleForm.username" placeholder="用戶名稱" size="large" />
+          <el-input
+            v-model="state.ruleForm.username"
+            placeholder="用戶名稱"
+            size="large"
+          />
         </el-form-item>
         <div v-if="!state.isLogin" class="agreement">
-          <el-checkbox v-model="state.agreementChecked" label="勾選表示同意隱私協議和使用規範" size="large" border />
+          <el-checkbox
+            v-model="state.agreementChecked"
+            label="勾選表示同意隱私協議和使用規範"
+            size="large"
+            border
+          />
         </div>
-        <button type="submit" class="loginButton"
-          @click="state.isLogin ? pageAction.login(ruleFormRef) : pageAction.register(ruleFormRef)">
+        <button
+          type="submit"
+          class="loginButton"
+          @click="
+            state.isLogin
+              ? pageAction.login(ruleFormRef)
+              : pageAction.register(ruleFormRef)
+          "
+        >
           {{ state.isLogin ? "登入" : "註冊" }}
         </button>
         <p @click="state.isLogin = !state.isLogin" class="info">
-          {{
-            state.isLogin ? "還沒有帳號？點擊註冊" : "已有帳號？點擊登入"
-          }}
+          {{ state.isLogin ? "還沒有帳號？點擊註冊" : "已有帳號？點擊登入" }}
         </p>
       </el-form>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
-import type { FormInstance, FormRules } from 'element-plus'
-import type { RuleForm } from '../types/form'
-import logo from '../assets/wave.png'
+import type { FormInstance, FormRules } from "element-plus";
+import type { RuleForm } from "../types/form";
+import logo from "../assets/wave.png";
+import { ElNotification } from "element-plus";
 // import phoneImage from '../assets/phone.png'
 
 const router = useRouter();
 const useUser = useUserStore();
 
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref<FormInstance>();
 const state = reactive({
-  formSize: 'default',
+  formSize: "default",
   isLogin: true,
   agreementChecked: false,
   ruleForm: {
-    email: '',
-    password: '',
-    username: '',
+    email: "",
+    password: "",
+    username: "",
   },
-})
+});
 
 const pageAction = {
   validatePass(rule: any, value: string, callback: (error?: Error) => void) {
-    if (value === '') {
-      callback(new Error(`${rule.field} cannot be empty`))
+    if (value === "") {
+      callback(new Error(`${rule.field} cannot be empty`));
     } else {
       if (!/^(?=.*[a-z])(?=.*\d)[^]{8,20}$/.test(value)) {
-        callback(new Error('需包含英文與數字，長度介於8~20位元'))
+        callback(new Error("需包含英文與數字，長度介於8~20位元"));
       } else {
-        callback()
+        callback();
       }
     }
   },
   async login(formEl: FormInstance | undefined) {
-    if (!formEl) return
+    if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         const loginResult = await useUser.loginUser({
           email: state.ruleForm.email,
           password: state.ruleForm.password,
-        }
-          
-        );
+        });
 
-        if (loginResult === 'success') {
+        if (loginResult === "success") {
           await router.replace("/");
         } else {
-          alert('登入失敗');
+          ElNotification({
+            title: "Error",
+            message: "登入失敗",
+            type: "error",
+          });
         }
       } else {
-        console.log('登入失敗', fields)
+        console.log("登入失敗", fields);
       }
-    })
+    });
   },
   async register(formEl: FormInstance | undefined) {
     if (!state.agreementChecked) {
-      alert("請先閱讀並同意隱私協議和使用規範");
+      ElNotification({
+            title: "Error",
+            message: "請先閱讀並同意隱私協議和使用規範",
+            type: "error",
+          });
       return;
     }
 
-    if (!formEl) return
+    if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        console.log('註冊成功', state.ruleForm);
+        console.log("註冊成功", state.ruleForm);
         await useUser.registerUser({
           email: state.ruleForm.email,
           password: state.ruleForm.password,
@@ -103,44 +139,45 @@ const pageAction = {
         });
         await router.replace("/");
       } else {
-        console.log('註冊失敗', fields)
+        console.log("註冊失敗", fields);
       }
-    })
+    });
   },
-}
+};
 
 const rules = reactive<FormRules<RuleForm>>({
   email: [
     {
       required: true,
-      message: '請輸入您的EMAIL',
-      trigger: 'blur',
+      message: "請輸入您的EMAIL",
+      trigger: "blur",
     },
     {
-      type: 'email',
-      message: '請輸入正確的EMAIL格式',
-      trigger: ['blur', 'change'],
+      type: "email",
+      message: "請輸入正確的EMAIL格式",
+      trigger: ["blur", "change"],
     },
   ],
   password: [
     {
       required: true,
-      message: '請輸入您的密碼',
-      trigger: 'change',
+      message: "請輸入您的密碼",
+      trigger: "change",
     },
     {
       validator: pageAction.validatePass,
-      trigger: 'change',
+      trigger: "change",
     },
   ],
   username: [
     {
       required: true,
-      message: '請輸入用戶名稱', trigger: 'blur'
+      message: "請輸入用戶名稱",
+      trigger: "blur",
     },
-    { min: 2, max: 8, message: '長度需介於2~8位元', trigger: 'blur' },
+    { min: 2, max: 8, message: "長度需介於2~8位元", trigger: "blur" },
   ],
-})
+});
 </script>
 <style scoped>
 .loginPage {
@@ -170,7 +207,7 @@ const rules = reactive<FormRules<RuleForm>>({
   width: 100px;
 }
 
-.loginForm>form {
+.loginForm > form {
   display: grid;
   row-gap: 24px;
   width: 100%;
@@ -188,9 +225,7 @@ input::placeholder {
 }
 
 .loginButton {
-  background: linear-gradient(89.93deg,
-      #00c2ff 0.06%,
-      #0047ff 105.68%);
+  background: linear-gradient(89.93deg, #00c2ff 0.06%, #0047ff 105.68%);
   padding: 12px 0;
   color: white;
   border: none;

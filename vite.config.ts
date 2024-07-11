@@ -3,5 +3,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: "umi"
+  base: process.env.NODE_ENV === "development" ? "/" : "umi",
 })

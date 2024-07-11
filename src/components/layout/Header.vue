@@ -22,9 +22,12 @@
         <div class="profileDropDown">
           <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="state.showDropdown = !state.showDropdown"
             :src="state.user.avatar" />
-          <ul v-show="state.showDropdown" @click="state.showDropdown = false" class="profileMenu">
+          <ul v-show="state.showDropdown" @click="state.showDropdown = false" 
+            class="profileMenu"
+            :class="generalStore.backgroundMode == 'sun' ? 'profileMenuLight' : 'profileMenuDark'"
+          >
             <li><router-link to="/profile">個人檔案</router-link></li>
-            <li><router-link to="/exchangeRate">匯率計算</router-link></li>
+            <!-- <li><router-link to="/exchangeRate">匯率計算</router-link></li> -->
             <li @click="pageAction.logout">登出</li>
           </ul>
         </div>
@@ -179,6 +182,16 @@ const pageAction = reactive({
 
 .profileMenu a:visited {
   color: inherit;
+}
+
+.profileMenuLight {
+  background: white;
+  color: black;
+}
+
+.profileMenuDark {
+  background: #333;
+  color: white;
 }
 
 .sunMode svg {
