@@ -28,12 +28,11 @@
 import { reactive, watch } from "vue";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
-import { useUserStore } from "../store/user";
 import { getUser } from "../utils/localStorage";
 
 const usePost = usePostStore();
-const useUser = useUserStore();
 const useGeneral = useGeneralStore();
+const user = getUser();
 
 interface State {
   description: string;
@@ -75,8 +74,6 @@ const pageAction = reactive<PageAction>({
   },
   // 發布貼文
   publishPost() {
-    const user = getUser();
-    console.log('內容', state, user)
     if (state.description) {
       usePost.uploadPost({
         image: state.image,
