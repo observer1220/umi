@@ -1,24 +1,24 @@
 <template>
   <div class="postContainer">
+    <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
     <div class="postInfo">
+      <div class="postDesc">
+        <p>
+          {{ post.description.length > 54 ? post.description.slice(0, 54) + "..." : post.description }}
+        </p>
+      </div>
       <div class="postMeta">
         <TheAvatar :src="post?.user?.avatar" />
         <span class="postUsername">{{ post.username }}</span>
         <span class="postPubDate">
           {{ dateToRelative(post.created_at) }}
         </span>
-        <PostActions :likes="likes" :comments="post.comments" :favors="favors" :likedByMe="likedByMe"
+        <PostActions :likes="likes" :comments="post.comments" :likedByMe="likedByMe"
           :favoredByMe="favoredByMe" @likeClick="usePost.toggleLike(post.id, useUser.user?.user_metadata?.username)"
           @favorClick="usePost.toggleFavor(post.id, useUser.user?.user_metadata?.username)"
           @commentsClick="usePost.showPostDetails(post.id)" />
       </div>
-      <div class="postDesc">
-        <p>
-          {{ post.description.length > 54 ? post.description.slice(0, 54) + "..." : post.description }}
-        </p>
-      </div>
     </div>
-    <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
   </div>
 </template>
 
@@ -58,15 +58,6 @@ const likedByMe = computed(() => {
   return props.post.liked_list.includes(useUser.user?.user_metadata?.username);
 });
 
-// 計算收藏數
-const favors = computed(() => {
-  if (!props.post.favored_list) {
-    return 0;
-  }
-
-  return props.post.favored_list.length;
-});
-
 // 比對使用者是否收藏
 const favoredByMe = computed(() => {
   if (!props.post.favored_list) {
@@ -80,14 +71,14 @@ const favoredByMe = computed(() => {
 <style scoped>
 .postContainer {
   width: 335px;
-  height: 480px;
+  height: 450px;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   margin-bottom: 0.5em;
 }
 
 .postInfo {
-  padding: 1em;
+  padding: 0 0.5em;
 }
 
 .postContainer>img {
@@ -104,7 +95,7 @@ const favoredByMe = computed(() => {
     "avatar name actions"
     "pubDate pubDate actions";
   grid-template-columns: 42px 1fr 3fr;
-  row-gap: 6px;
+  margin-top: 1em;
 }
 
 .postMeta .avatar {
@@ -128,8 +119,6 @@ const favoredByMe = computed(() => {
 }
 
 .postDesc {
-  margin-top: 1em;
   max-height: 100px;
-  white-space: pre-line;
 }
 </style>

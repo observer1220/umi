@@ -5,16 +5,8 @@
       <router-link to="/">
         <img src="../../assets/wave.png" style="height: 30px;" />
       </router-link>
-      <!-- 搜尋框 -->
-      <div class="searchInput">
-        <input type="text" @change="pageAction.searchPosts" placeholder="搜尋" />
-        <TheIcon icon="search" />
-      </div>
       <!-- 右側欄位 -->
       <div class="navItems">
-        <button @click="pageAction.publishPost">
-          <TheIcon icon="publish" />
-        </button>
         <!-- 下拉選單 -->
         <div class="profileDropDown">
           <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="state.showDropdown = !state.showDropdown"
@@ -45,37 +37,21 @@
 
 <script setup lang="ts">
 import { reactive, computed } from "vue";
-import TheIcon from "../TheIcon.vue";
 import TheAvatar from "../TheAvatar.vue";
 import { useRouter } from "vue-router";
 import { useGeneralStore } from '../../store/general'
-import { usePostStore } from '../../store/post'
 import { useUserStore } from '../../store/user'
 
 const router = useRouter();
 const generalStore = useGeneralStore();
-const postStore = usePostStore();
 const userStore = useUserStore();
 
 const state = reactive({
   showDropdown: false,
-  user: computed(() => userStore.user),
+  user: computed(() => userStore.user)
 });
 
 const pageAction = reactive({
-  publishPost() {
-    generalStore.changeShowPostUpload(true);
-  },
-  async searchPosts(event: Event) {
-    const target = event.target as HTMLInputElement;
-    await postStore.searchPosts(target.value);
-    router.push({
-      name: "search_result",
-      params: {
-        term: target.value,
-      },
-    });
-  },
   logout() {
     userStore.logoutUser();
     router.push("/login");
@@ -94,7 +70,7 @@ const pageAction = reactive({
   height: 80px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
 }
 
@@ -106,26 +82,6 @@ const pageAction = reactive({
 .navbar a {
   color: inherit;
   text-decoration: none;
-}
-
-.searchInput {
-  position: relative;
-}
-
-.searchInput>input {
-  width: 100%;
-  padding: 12px;
-  padding-left: 36px;
-  background: #f1f1f1;
-  border-radius: 14px;
-  border: none;
-}
-
-.searchInput>svg {
-  position: absolute;
-  left: 0;
-  top: 11px;
-  left: 12px;
 }
 
 .navItems {

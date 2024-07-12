@@ -25,10 +25,8 @@
       </el-scrollbar>
 
       <div class="actionsContainer">
-        <!-- {{ state.post }} -->
         <PostActions
           :likes="likes"
-          :favors="favors"
           :likedByMe="likedByMe"
           :favoredByMe="favoredByMe"
           :comments="state.post.comments"
@@ -122,15 +120,6 @@ const likedByMe = computed(() => {
   }
 
   return state.post.liked_list.includes(useUser.user?.user_metadata?.username);
-});
-
-// 計算收藏數
-const favors = computed(() => {
-  if (!state.post.favored_list) {
-    return 0;
-  }
-
-  return state.post.favored_list.length;
 });
 
 // 比對使用者是否收藏

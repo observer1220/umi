@@ -92,17 +92,27 @@ const pageAction = reactive<PageAction>({
   },
   // 發布貼文
   publishPost() {
-    if (state.description) {
-      usePost.uploadPost({
-        image: state.image,
-        description: state.description,
-        user_id: user.user_metadata.userId,
+    if (!state.image) {
+      ElNotification({
+        title: "Error",
+        message: "請上傳圖片",
+        type: "error",
       });
-    } else {
+    }
+
+    if (!state.description) {
       ElNotification({
         title: "Error",
         message: "貼文內容不可為空",
         type: "error",
+      });
+    }
+
+    if (state.image && state.description) {
+      usePost.uploadPost({
+        image: state.image,
+        description: state.description,
+        user_id: user.user_metadata.userId,
       });
     }
   },
