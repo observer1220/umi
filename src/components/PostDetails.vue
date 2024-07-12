@@ -25,10 +25,13 @@
       </el-scrollbar>
 
       <div class="actionsContainer">
+        <!-- {{ state.post }} -->
         <PostActions
-          :likes="state.post.liked_sum"
+          :likes="likes"
+          :favors="favors"
+          :likedByMe="likedByMe"
+          :favoredByMe="favoredByMe"
           :comments="state.post.comments"
-          :favors="state.post.favored_sum"
           @likeClick="
             () => {
               usePost.toggleLike(
@@ -43,8 +46,6 @@
               state.user.user_metadata?.username
             )
           "
-          :likedByMe="state.post.likedByMe"
-          :favoredByMe="state.post.favoredByMe"
         />
         <span class="postPubDate">
           {{ dateToRelative(state.post.created_at) }}
@@ -104,6 +105,42 @@ const pageAction = reactive({
 watch(state.comments, () => {
   state.content = "";
 });
+
+// 計算按讚數
+const likes = computed(() => {
+  if (!state.post.liked_list) {
+    return 0;
+  }
+
+  return state.post.liked_list.length;
+});
+
+// 比對使用者是否按過讚
+const likedByMe = computed(() => {
+  if (!state.post.liked_list) {
+    return false;
+  }
+
+  return state.post.liked_list.includes(useUser.user?.user_metadata?.username);
+});
+
+// 計算收藏數
+const favors = computed(() => {
+  if (!state.post.favored_list) {
+    return 0;
+  }
+
+  return state.post.favored_list.length;
+});
+
+// 比對使用者是否收藏
+const favoredByMe = computed(() => {
+  if (!state.post.favored_list) {
+    return false;
+  }
+
+  return state.post.favored_list.includes(useUser.user?.user_metadata?.username);
+});
 </script>
 
 <style scoped>
@@ -111,7 +148,7 @@ watch(state.comments, () => {
   width: 100%;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  /* padding: 5px; */
+  padding: 1em;
 }
 
 .postImage {
