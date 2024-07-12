@@ -10,9 +10,7 @@
         <TheIcon icon="search" />
       </div> -->
       <el-button @click="pageAction.publishPost">
-        <el-icon size="large" 
-          ><Plus
-        /></el-icon>
+        <img :src="postIcon" alt="" style="width: 30px;">
       </el-button>
     </div>
   </footer>
@@ -23,6 +21,7 @@ import { reactive } from "vue";
 import { useGeneralStore } from "../../store/general";
 import { usePostStore } from "../../store/post";
 import { useRouter } from "vue-router";
+import postIcon from "../../assets/postIcon.png";
 // import TheIcon from "../TheIcon.vue";
 
 const generalStore = useGeneralStore();
@@ -50,8 +49,8 @@ const pageAction = reactive({
 .footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  height: 50px;
   background-color: black;
   text-align: center;
 }
