@@ -34,7 +34,7 @@ const closeBtn = () => {
   top: 0;
   display: grid;
   place-items: center;
-
+  z-index: 1000;
 }
 
 .backdrop {
@@ -49,7 +49,7 @@ const closeBtn = () => {
 .modalContent {
   position: relative;
   background: white;
-  border-radius: 52px;
+  border-radius: 24px;
   overflow: hidden;
 }
 
@@ -57,7 +57,7 @@ const closeBtn = () => {
   position: absolute;
   background: none;
   border: none;
-  right: 24px;
-  top: 10px;
+  right: 20px;
+  top: 1em;
 }
 </style>

@@ -1,43 +1,66 @@
 <template>
   <TheModal @close="usePost.hidePostDetails">
-    <div class="postDetails" v-if="state.post">
-      <img class="postImage" :src="state.post.image" alt="" />
+    <div class="postDetailsContainer" v-if="state.post">
       <div class="postMeta">
         <div class="author">
           <TheAvatar :src="state.post?.user?.avatar" />
           <span>{{ state.post.username }}</span>
         </div>
-        <pre class="postDesc">
+      </div>
+      <img class="postImage" :src="state.post.image" alt="" />
+      <el-scrollbar>
+        <div class="postDesc">
           {{ state.post?.description }}
-        </pre>
-        <el-scrollbar>
-          <div class="comments">
-            <div class="comment" v-for="comment in state.comments">
-              <TheAvatar :src="comment.user?.avatar" />
-              <span class="user">{{ comment.username }}</span>
-              <span class="commentDate">
-                {{ dateToRelative(comment.created_at) }}
-              </span>
-              <p class="commentContent">{{ comment.content }}</p>
-            </div>
-          </div>
-        </el-scrollbar>
-
-        <div class="actions">
-          <PostActions :likes="state.post.liked_sum" :comments="state.post.comments" :favors="state.post.favored_sum"
-            @likeClick="() => {
-              usePost.toggleLike(state.post.id, state.user.user_metadata?.username)
-            }" @favorClick="usePost.toggleFavor(state.post.id, state.user.user_metadata?.username)"
-            :likedByMe="state.post.likedByMe" :favoredByMe="state.post.favoredByMe" />
-          <span class="postPubDate">
-            {{ dateToRelative(state.post.created_at) }}
-          </span>
-          <input type="text" name="comment" v-model="state.content" id="" class="commentInput" placeholder="請輸入您的留言..."
-            v-on:keyup.enter="pageAction.createComment" />
-          <button @click="pageAction.createComment" class="commentPubBtn">
-            發佈
-          </button>
         </div>
+        <div class="comments">
+          <div class="comment" v-for="comment in state.comments">
+            <TheAvatar :src="comment.user?.avatar" />
+            <span class="user">{{ comment.username }}</span>
+            <span class="commentDate">
+              {{ dateToRelative(comment.created_at) }}
+            </span>
+            <p class="commentContent">{{ comment.content }}</p>
+          </div>
+        </div>
+      </el-scrollbar>
+
+      <div class="actionsContainer">
+        <PostActions
+          :likes="state.post.liked_sum"
+          :comments="state.post.comments"
+          :favors="state.post.favored_sum"
+          @likeClick="
+            () => {
+              usePost.toggleLike(
+                state.post.id,
+                state.user.user_metadata?.username
+              );
+            }
+          "
+          @favorClick="
+            usePost.toggleFavor(
+              state.post.id,
+              state.user.user_metadata?.username
+            )
+          "
+          :likedByMe="state.post.likedByMe"
+          :favoredByMe="state.post.favoredByMe"
+        />
+        <span class="postPubDate">
+          {{ dateToRelative(state.post.created_at) }}
+        </span>
+        <input
+          type="text"
+          name="comment"
+          v-model="state.content"
+          id=""
+          class="commentInput"
+          placeholder="請輸入您的留言..."
+          v-on:keyup.enter="pageAction.createComment"
+        />
+        <button @click="pageAction.createComment" class="commentPubBtn">
+          發佈
+        </button>
       </div>
     </div>
   </TheModal>
@@ -66,7 +89,7 @@ const state = reactive({
 
 onMounted(async () => {
   state.post = usePost.postDetails();
-})
+});
 
 const pageAction = reactive({
   async createComment() {
@@ -74,57 +97,48 @@ const pageAction = reactive({
       content: state.content,
       postId: state.post.id,
       userId: state.user.user_metadata.userId,
-    })
+    });
   },
 });
 
 watch(state.comments, () => {
   state.content = "";
 });
-
 </script>
 
 <style scoped>
-.postDetails {
-  display: grid;
-  grid-template-columns: 1fr minmax(auto, 350px);
-  grid-template-rows: minmax(0, 1fr);
-  width: 95vw;
-  height: 95vh;
+.postDetailsContainer {
+  width: 100%;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  /* padding: 5px; */
 }
 
 .postImage {
   width: 100%;
-  height: 100%;
+  max-height: 300px;
   object-fit: cover;
 }
 
 .postMeta {
-  padding: 20px;
-  display: grid;
-  align-items: start;
-  grid-template-rows: max-content max-content 1fr max-content;
-  max-height: 100%;
-  height: 100%;
+  padding: 1em;
 }
 
 .author {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .postDesc {
-  width: 100%;
-  white-space: pre-wrap;
-  margin-top: 24px;
+  padding: 10px;
+  letter-spacing: 0.5px;
 }
 
 .comments {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: max-content;
-  grid-gap: 28px;
   align-items: start;
   overflow-y: auto;
   height: 100%;
@@ -138,7 +152,8 @@ watch(state.comments, () => {
   grid-template-columns: 34px 1fr 1fr;
   align-items: center;
   column-gap: 10px;
-  row-gap: 14px;
+  row-gap: 10px;
+  padding: 10px;
 }
 
 .commentDate {
@@ -151,17 +166,15 @@ watch(state.comments, () => {
   grid-area: comment;
 }
 
-.actions {
+.actionsContainer {
   border-top: 1px solid #eaeaea;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   align-items: center;
-  margin: 20px -24px 0px -24px;
-  padding: 20px 24px 0 24px;
-  row-gap: 16px;
+  padding: 0.5em;
+  /* row-gap: 16px; */
 }
 
-.postActions> :deep(svg) {
+.postActions > :deep(svg) {
   transform: scale(0.8125);
 }
 

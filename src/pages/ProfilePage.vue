@@ -1,8 +1,8 @@
 <template>
   <div class="profileContainer">
     <TheAvatar
-      :width="186"
-      :height="186"
+      :width="150"
+      :height="150"
       :src="state.user?.user_metadata.avatar"
     />
     <div class="profile">
@@ -29,7 +29,7 @@
   </div>
   <div class="tabContent">
     <p>總貼文數：{{ state.myPosts[state.currentTab].length }}篇</p>
-    <div class="posts">
+    <div class="postsContainer">
       <img
         v-for="post in state.myPosts[state.currentTab]"
         :src="post.image"
@@ -98,6 +98,7 @@ watch(
 
 <style scoped>
 .profileContainer {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10vw;
@@ -174,15 +175,15 @@ watch(
   margin-bottom: 32px;
 }
 
-.posts {
+.postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
 }
 
 .postImage {
   width: 100%;
-  height: 300px;
+  height: 240px;
   background: #eee;
   object-fit: contain;
 }

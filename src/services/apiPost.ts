@@ -23,7 +23,7 @@ export async function loadPosts() {
       username: user?.username,
     };
   });
-
+  
   return postsWithUsername;
 }
 
