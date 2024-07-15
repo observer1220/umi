@@ -9,6 +9,8 @@
           class="postContentInput"
           placeholder="請輸入貼文內容..."
           :autosize="{ minRows: 5 }"
+          show-word-limit
+          maxlength="140"
         />
         <span
           v-if="state.description.length === state.contentLimit"
@@ -58,6 +60,7 @@ interface State {
 interface PageAction {
   handleImageUpload(event: Event): void;
   publishPost(): void;
+  textToHTML(text: string): string;
 }
 
 const state = reactive<State>({
@@ -90,6 +93,9 @@ const pageAction = reactive<PageAction>({
       state.image = imageFile;
     }
   },
+  textToHTML(text: string) {
+    return text.replace(/\n/g, "<br>");
+  },
   // 發布貼文
   publishPost() {
     if (!state.image) {
@@ -111,7 +117,7 @@ const pageAction = reactive<PageAction>({
     if (state.image && state.description) {
       usePost.uploadPost({
         image: state.image,
-        description: state.description,
+        description: pageAction.textToHTML(state.description),
         user_id: user.user_metadata.userId,
       });
     }

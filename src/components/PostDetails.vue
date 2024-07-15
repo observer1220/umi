@@ -10,7 +10,7 @@
       <img class="postImage" :src="state.post.image" alt="" />
       <el-scrollbar>
         <div class="postDesc">
-          {{ state.post?.description }}
+          <p v-html="state.post?.description" />
         </div>
         <div class="comments">
           <div class="comment" v-for="comment in state.comments">
@@ -19,7 +19,7 @@
             <span class="commentDate">
               {{ dateToRelative(comment.created_at) }}
             </span>
-            <p class="commentContent">{{ comment.content }}</p>
+            <p class="commentContent" v-html="comment.content" />
           </div>
         </div>
       </el-scrollbar>

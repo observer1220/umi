@@ -3,9 +3,8 @@
     <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
     <div class="postInfo">
       <div class="postDesc">
-        <p>
-          {{ post.description.length > 54 ? post.description.slice(0, 54) + "..." : post.description }}
-        </p>
+        <span v-html="post.description.slice(0, 54)"></span>
+        <span v-if="post.description.length > 54">...</span>
       </div>
       <div class="postMeta">
         <TheAvatar :src="post?.user?.avatar" />
