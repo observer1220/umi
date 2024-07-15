@@ -3,33 +3,35 @@
     <nav class="navbar">
       <!-- LOGO -->
       <router-link to="/umi">
-        <img src="../../assets/wave.png" style="height: 30px;" />
+        <img src="../../assets/wave.png" style="height: 30px" />
       </router-link>
       <!-- 右側欄位 -->
       <div class="navItems">
         <!-- 下拉選單 -->
         <div class="profileDropDown">
-          <TheAvatar :width="42" :height="42" style="cursor: pointer" @click="state.showDropdown = !state.showDropdown"
-            :src="state.user.avatar" />
-          <ul v-show="state.showDropdown" @click="state.showDropdown = false" 
+          <TheAvatar
+            :width="42"
+            :height="42"
+            style="cursor: pointer"
+            @click="state.showDropdown = !state.showDropdown"
+            :src="state.user.avatar"
+          />
+          <ul
+            v-show="state.showDropdown"
+            @click="state.showDropdown = false"
             class="profileMenu"
-            :class="generalStore.backgroundMode == 'sun' ? 'profileMenuLight' : 'profileMenuDark'"
+            :class="
+              generalStore.backgroundMode == 'sun'
+                ? 'profileMenuLight'
+                : 'profileMenuDark'
+            "
           >
             <li><router-link to="/profile">個人檔案</router-link></li>
             <!-- <li><router-link to="/exchangeRate">匯率計算</router-link></li> -->
             <li @click="pageAction.logout">登出</li>
           </ul>
         </div>
-        <!-- Dark Mode -->
-        <button :class="generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'"
-          @click="generalStore.toggleBackgroundMode()">
-          <el-icon v-if="generalStore.backgroundMode == 'sun'" size="36">
-            <Sunrise />
-          </el-icon>
-          <el-icon v-else size="36">
-            <Moon />
-          </el-icon>
-        </button>
+
       </div>
     </nav>
   </header>
@@ -39,8 +41,8 @@
 import { reactive, computed } from "vue";
 import TheAvatar from "../TheAvatar.vue";
 import { useRouter } from "vue-router";
-import { useGeneralStore } from '../../store/general'
-import { useUserStore } from '../../store/user'
+import { useGeneralStore } from "../../store/general";
+import { useUserStore } from "../../store/user";
 
 const router = useRouter();
 const generalStore = useGeneralStore();
@@ -48,7 +50,7 @@ const userStore = useUserStore();
 
 const state = reactive({
   showDropdown: false,
-  user: computed(() => userStore.user)
+  user: computed(() => userStore.user),
 });
 
 const pageAction = reactive({
@@ -56,13 +58,14 @@ const pageAction = reactive({
     userStore.logoutUser();
     router.push("/login");
   },
-})
+});
 </script>
 
 <style scoped>
 .header {
   height: 80px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+  background-color: whitesmoke;
 }
 
 .navbar {
@@ -91,7 +94,7 @@ const pageAction = reactive({
   align-items: center;
 }
 
-.navItems>button {
+.navItems > button {
   border: none;
   background: none;
 }
@@ -145,14 +148,5 @@ const pageAction = reactive({
 .profileMenuDark {
   background: #333;
   color: white;
-}
-
-.sunMode svg {
-  color: #f1440f;
-}
-
-
-.backgroundMode svg {
-  color: #f1c40f;
 }
 </style>

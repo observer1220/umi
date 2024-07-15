@@ -3,10 +3,6 @@
     <slot />
   </div>
 </template>
-
-
-
-
 <style scoped>
 .container {
   max-width: 1200px;
