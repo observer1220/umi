@@ -47,7 +47,7 @@ const router = useRouter();
 
 const pageAction = reactive({
   reloadPage() {
-    location.reload();
+    router.push({ name: "home" })
   },
   publishPost() {
     generalStore.changeShowPostUpload(true);
