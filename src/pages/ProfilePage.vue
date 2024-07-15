@@ -67,7 +67,7 @@ const TABS = {
 const state = reactive({
   user: getUser(),
   tabs: [
-    { label: "我的", icon: "posts" },
+    { label: "貼文", icon: "posts" },
     { label: "喜歡", icon: "like" },
     { label: "收藏", icon: "favorite" },
   ],
@@ -189,15 +189,13 @@ watch(
 
 .postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .postImage {
   width: 100%;
-  height: 240px;
+  height: 400px;
   background: #eee;
-  object-fit: contain;
+  object-fit: cover;
 }
 </style>
-../services/post../services/apiPost

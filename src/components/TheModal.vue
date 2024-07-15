@@ -46,7 +46,7 @@ const closeBtn = () => {
 }
 
 .modalContent {
-  width: 400px;
+  width: 360px;
   position: relative;
   background: white;
   border-radius: 24px;

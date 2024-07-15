@@ -58,7 +58,7 @@ onMounted(() => {
 
 .postImage {
   width: 100%;
-  height: 300px;
+  height: 400px;
   background: #eee;
   object-fit: cover;
   cursor: pointer;
@@ -74,7 +74,7 @@ onMounted(() => {
   padding: 12px;
   padding-left: 36px;
 
-  background: #f1f1f1;
+  background: #e4e4e5;
   border-radius: 14px;
   border: none;
 }
