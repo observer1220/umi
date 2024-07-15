@@ -45,16 +45,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  console.log('目前路徑', to.name)
+  console.log('目前路徑', to.name, getJwtToken())
+  console.log('to.fullPath', to.fullPath);
 
   // 如果名稱不是login，且沒有jwtToken，就導到login
-  if (to.name !== "login" && !getJwtToken() && to.name === 'undefined') {
-    return { name: "login" };
+  if (to.name !== "login" && !getJwtToken()) {
+    return {
+      name: "login",
+      query: { redirect: to.fullPath }
+    }
   }
 
   // 如果名稱是login，且有jwtToken，就導到home
   if (to.name === "login" && getJwtToken()) {
-    return { name: "home" };
+    return {
+      name: "home"
+    };
   }
 });
 
