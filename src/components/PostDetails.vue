@@ -48,18 +48,18 @@
         <span class="postPubDate">
           {{ dateToRelative(state.post.created_at) }}
         </span>
-        <input
-          class="commentInput"
-          type="text"
-          name="comment"
-          v-model="state.content"
-          id=""
-          placeholder="請輸入您的留言..."
-          v-on:keyup.enter="pageAction.createComment"
-        />
-        <button @click="pageAction.createComment" class="commentPubBtn">
-          發佈
-        </button>
+          <input
+            class="commentInput"
+            type="text"
+            name="comment"
+            v-model="state.content"
+            id=""
+            placeholder="請輸入您的留言..."
+            v-on:keyup.enter="pageAction.createComment"
+          />
+          <button @click="pageAction.createComment" class="commentPubBtn">
+            發佈
+          </button>
       </div>
     </div>
   </TheModal>
@@ -74,6 +74,7 @@ import { dateToRelative } from "../utils/date";
 import { usePostStore } from "../store/post";
 import { useCommentStore } from "../store/comment";
 import { useUserStore } from "../store/user";
+import { ElNotification } from "element-plus";
 
 const usePost = usePostStore();
 const useComment = useCommentStore();
@@ -92,11 +93,19 @@ onMounted(async () => {
 
 const pageAction = reactive({
   async createComment() {
-    await useComment.addComment({
-      content: state.content,
-      postId: state.post.id,
-      userId: state.user.user_metadata.userId,
-    });
+    if (state.content === "") {
+      ElNotification({
+        title: "Error",
+        message: "貼文內容不可為空",
+        type: "error",
+      });
+    } else {
+      await useComment.addComment({
+        content: state.content,
+        postId: state.post.id,
+        userId: state.user.user_metadata.userId,
+      });
+    }
   },
 });
 

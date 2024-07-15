@@ -21,7 +21,11 @@ export const usePostStore = defineStore("post", () => {
   });
 
   const initializePosts = (posts: Post[]) => {
-    state.list = posts; 
+    // 排序貼文，最新的在最前面
+    posts.sort((a: any, b: any) => {
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    }); 
+    state.list = posts;
   };
 
   const toggleLike = async (postId: number, username: string) => {

@@ -116,8 +116,6 @@ export async function loadPostsByMe(userId: number) {
 
 // 喜歡貼文
 export async function likePost({ postId, username }: PostAction) {
-  console.log("postId, username", postId, username);
-
   const { data: post, error } = await supabase
     .from("post")
     .select("liked_list")
