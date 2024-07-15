@@ -58,6 +58,6 @@ const closeBtn = () => {
   background: none;
   border: none;
   right: 20px;
-  top: 1em;
+  top: 0.5em;
 }
 </style>

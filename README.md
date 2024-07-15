@@ -17,6 +17,7 @@
     - [] 新增好友
   - [] 即時對話功能 WebSocket Messenger
   - [] 多語系選單(中/英文)
+  - 限時動態
 - 個人檔案
   - [x] 編輯個人資料(update)
   - [x] 新增個人頭像(create、update)

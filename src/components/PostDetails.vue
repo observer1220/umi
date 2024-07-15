@@ -49,11 +49,11 @@
           {{ dateToRelative(state.post.created_at) }}
         </span>
         <input
+          class="commentInput"
           type="text"
           name="comment"
           v-model="state.content"
           id=""
-          class="commentInput"
           placeholder="請輸入您的留言..."
           v-on:keyup.enter="pageAction.createComment"
         />
@@ -128,7 +128,9 @@ const favoredByMe = computed(() => {
     return false;
   }
 
-  return state.post.favored_list.includes(useUser.user?.user_metadata?.username);
+  return state.post.favored_list.includes(
+    useUser.user?.user_metadata?.username
+  );
 });
 </script>
 
@@ -137,7 +139,7 @@ const favoredByMe = computed(() => {
   width: 100%;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  padding: 1em;
+  /* padding: 1em; */
 }
 
 .postImage {
@@ -147,7 +149,7 @@ const favoredByMe = computed(() => {
 }
 
 .postMeta {
-  padding: 1em;
+  padding: 0.5em;
 }
 
 .author {
@@ -196,8 +198,8 @@ const favoredByMe = computed(() => {
   border-top: 1px solid #eaeaea;
   display: grid;
   align-items: center;
-  padding: 0.5em;
-  /* row-gap: 16px; */
+  padding: 0.5em 1em;
+  row-gap: 0.5em;
 }
 
 .postActions > :deep(svg) {
