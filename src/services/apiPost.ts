@@ -64,7 +64,7 @@ export async function createPost({ image, description, user_id }: Post) {
   let imageName;
   let imagePath;
   if (image) {
-    imageName = `${Math.random()}-${image.name}`.replace("/", "");
+    imageName = `${Math.random()}-${image.name}`.replace("/umi", "");
     imagePath = `${supabaseUrl}/storage/v1/object/public/bored-images/${imageName}`;
   } else {
     imageName = "";

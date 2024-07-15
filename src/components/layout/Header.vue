@@ -2,7 +2,7 @@
   <header class="header">
     <nav class="navbar">
       <!-- LOGO -->
-      <router-link to="/">
+      <router-link to="/umi">
         <img src="../../assets/wave.png" style="height: 30px;" />
       </router-link>
       <!-- 右側欄位 -->
@@ -111,6 +111,7 @@ const pageAction = reactive({
   display: grid;
   row-gap: 18px;
   transform: translateY(18px);
+  z-index: 9999;
 }
 
 .profileMenu::before {

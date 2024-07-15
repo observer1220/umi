@@ -1,7 +1,7 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function uploadFile(file: File) {
-  const imageName = `${Math.random()}-${file.name}`.replace("/", "");
+  const imageName = `${Math.random()}-${file.name}`.replace("/umi", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/avatar-image/${imageName}`;
 
   const { error } = await supabase.storage

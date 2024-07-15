@@ -106,7 +106,7 @@ const pageAction = {
         });
 
         if (loginResult === "success") {
-          await router.replace("/");
+          await router.replace("/umi");
         } else {
           ElNotification({
             title: "Error",
@@ -138,7 +138,7 @@ const pageAction = {
           password: state.ruleForm.password,
           username: state.ruleForm.username,
         });
-        await router.replace("/");
+        await router.replace("/umi");
       } else {
         console.log("註冊失敗", fields);
       }
