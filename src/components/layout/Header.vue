@@ -5,53 +5,27 @@
       <router-link to="/umi">
         <img src="../../assets/wave.png" style="height: 30px" />
       </router-link>
+      <div class="brandName">
+        <h1><i>UMI</i></h1>
+      </div>
       <!-- 右側欄位 -->
       <div class="navItems">
-        <!-- 下拉選單 -->
-        <div class="profileDropDown">
-          <TheAvatar
-            :width="42"
-            :height="42"
-            style="cursor: pointer"
-            @click="state.showDropdown = !state.showDropdown"
-            :src="state.user.avatar"
-          />
-          <ul
-            v-show="state.showDropdown"
-            @click="state.showDropdown = false"
-            class="profileMenu"
-            :class="
-              generalStore.backgroundMode == 'sun'
-                ? 'profileMenuLight'
-                : 'profileMenuDark'
-            "
-          >
-            <li><router-link to="/profile">個人檔案</router-link></li>
-            <!-- <li><router-link to="/exchangeRate">匯率計算</router-link></li> -->
-            <li @click="pageAction.logout">登出</li>
-          </ul>
-        </div>
-
+        <button @click="pageAction.logout">
+          <img :src="logoutIcon" alt="" style="width: 30px" />
+        </button>
       </div>
     </nav>
   </header>
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from "vue";
-import TheAvatar from "../TheAvatar.vue";
+import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import { useGeneralStore } from "../../store/general";
 import { useUserStore } from "../../store/user";
+import logoutIcon from "../../assets/logoutIcon.png";
 
 const router = useRouter();
-const generalStore = useGeneralStore();
 const userStore = useUserStore();
-
-const state = reactive({
-  showDropdown: false,
-  user: computed(() => userStore.user),
-});
 
 const pageAction = reactive({
   logout() {
@@ -148,5 +122,10 @@ const pageAction = reactive({
 .profileMenuDark {
   background: #333;
   color: white;
+}
+
+.brandName {
+  user-select: none;
+  color: #333;
 }
 </style>
