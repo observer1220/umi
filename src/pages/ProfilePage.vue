@@ -1,8 +1,8 @@
 <template>
   <div class="profileContainer">
     <TheAvatar
-      :width="150"
-      :height="150"
+      :width="100"
+      :height="100"
       :src="state.user?.user_metadata.avatar"
     />
     <div class="profile">
@@ -114,6 +114,7 @@ watch(
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10vw;
+  margin-top: 1em
 }
 
 .avatar {

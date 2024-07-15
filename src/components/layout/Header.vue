@@ -37,7 +37,7 @@ const pageAction = reactive({
 
 <style scoped>
 .header {
-  height: 80px;
+  height: 60px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
   background-color: whitesmoke;
 }
@@ -47,7 +47,7 @@ const pageAction = reactive({
   justify-content: space-between;
   align-items: center;
   width: 80vw;
-  height: 80px;
+  height: 60px;
   margin: 0 auto;
 }
 
