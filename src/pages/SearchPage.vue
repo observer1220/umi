@@ -52,13 +52,13 @@ onMounted(() => {
 <style scoped>
 .postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* gap: 1em; */
 }
 
 .postImage {
   width: 100%;
-  height: 240px;
+  height: 300px;
   background: #eee;
   object-fit: cover;
   cursor: pointer;
@@ -66,7 +66,7 @@ onMounted(() => {
 
 .searchInput {
   position: relative;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .searchInput input {

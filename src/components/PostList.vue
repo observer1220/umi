@@ -94,7 +94,7 @@ const favoredByMe = computed(() => {
     "avatar name actions"
     "pubDate pubDate actions";
   grid-template-columns: 42px 1fr 3fr;
-  margin-top: 1em;
+  margin-top: 0.5em;
 }
 
 .postMeta .avatar {
