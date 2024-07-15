@@ -52,8 +52,7 @@ onMounted(() => {
 <style scoped>
 .postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  /* gap: 1em; */
+  grid-template-columns: 1fr 1fr;
 }
 
 .postImage {
@@ -66,6 +65,7 @@ onMounted(() => {
 
 .searchInput {
   position: relative;
+  margin-inline: 0.5em;
   margin-bottom: 0.5em;
 }
 
