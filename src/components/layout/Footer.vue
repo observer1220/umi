@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from "vue";
+import { reactive } from "vue";
 import { useGeneralStore } from "../../store/general";
 import { useUserStore } from "../../store/user";
 import { useRouter } from "vue-router";
