@@ -139,7 +139,7 @@ const favoredByMe = computed(() => {
   width: 100%;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  /* padding: 1em; */
+  padding: 1em;
 }
 
 .postImage {
