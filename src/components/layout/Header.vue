@@ -66,12 +66,12 @@ const pageAction = reactive({
 }
 
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 80vw;
   height: 80px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
 }
 
 .navbar svg {

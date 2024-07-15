@@ -21,7 +21,6 @@ export const usePostStore = defineStore("post", () => {
   });
 
   const initializePosts = (posts: Post[]) => {
-    console.log('initializePosts', posts);
     state.list = posts; 
   };
 

@@ -35,13 +35,15 @@
         :src="post.image"
         :key="post.id"
         class="postImage"
+        @click="goToPost(post.id)"
       />
     </div>
   </div>
+  <PostDetails v-if="state.showPostDetails" />
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { reactive, watch, computed } from "vue";
 import TheIcon from "../components/TheIcon.vue";
 import TheAvatar from "../components/TheAvatar.vue";
 import {
@@ -50,7 +52,12 @@ import {
   loadPostFavoredByMe,
 } from "../services/apiPost";
 import { getUser } from "../utils/localStorage";
+import { usePostStore } from "../store/post";
+import { useGeneralStore } from "../store/general";
+import PostDetails from "../components/PostDetails.vue";
 
+const usePost = usePostStore();
+const useGeneral = useGeneralStore();
 const TABS = {
   MY: 0,
   LIKED: 1,
@@ -66,7 +73,12 @@ const state = reactive({
   ],
   currentTab: TABS.MY,
   myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] } as any,
+  showPostDetails: computed(() => useGeneral.showPostDetails),
 });
+
+const goToPost = (postId: number) => {
+  usePost.showPostDetails(postId);
+};
 
 watch(
   () => state.currentTab,

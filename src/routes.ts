@@ -13,8 +13,8 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/search_result",
-    name: "search_result",
+    path: "/search",
+    name: "search",
     component: SearchPage,
   },
   {
