@@ -45,8 +45,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
+  console.log('目前路徑', to.name)
+
   // 如果名稱不是login，且沒有jwtToken，就導到login
-  if (to.name !== "login" && !getJwtToken()) {
+  if (to.name !== "login" && !getJwtToken() && to.name === 'undefined') {
     return { name: "login" };
   }
 
