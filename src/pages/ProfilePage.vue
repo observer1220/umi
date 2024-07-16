@@ -40,6 +40,7 @@
     </div>
   </div>
   <PostDetails v-if="state.showPostDetails" />
+  <PostUpload v-if="state.showPostUpload" />
 </template>
 
 <script setup lang="ts">
@@ -55,6 +56,7 @@ import { getUser } from "../utils/localStorage";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import PostDetails from "../components/PostDetails.vue";
+import PostUpload from "../components/PostUpload.vue";
 
 const usePost = usePostStore();
 const useGeneral = useGeneralStore();
@@ -74,6 +76,7 @@ const state = reactive({
   currentTab: TABS.MY,
   myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] } as any,
   showPostDetails: computed(() => useGeneral.showPostDetails),
+  showPostUpload: computed(() => useGeneral.showPostUpload),
 });
 
 const goToPost = (postId: number) => {
@@ -195,8 +198,7 @@ watch(
 
 .postImage {
   width: 100%;
-  height: 400px;
   background: #eee;
-  object-fit: cover;
+  object-fit: contain;
 }
 </style>

@@ -14,8 +14,8 @@
       @click="pageAction.goToPost(post.id)"
     />
   </div>
-  <!-- 貼文明細 -->
   <PostDetails v-if="state.showPostDetails" />
+  <PostUpload v-if="state.showPostUpload" />
 </template>
 
 <script setup lang="ts">
@@ -23,6 +23,7 @@ import { reactive, computed, onMounted } from "vue";
 import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import PostDetails from "../components/PostDetails.vue";
+import PostUpload from "../components/PostUpload.vue";
 import TheIcon from "../components/TheIcon.vue";
 
 const usePost: any = usePostStore();
@@ -31,6 +32,7 @@ const useGeneral = useGeneralStore();
 const state = reactive({
   searchResult: computed(() => usePost.state.searchResult),
   showPostDetails: computed(() => useGeneral.showPostDetails),
+  showPostUpload: computed(() => useGeneral.showPostUpload),
 });
 
 const pageAction = reactive({
@@ -57,9 +59,8 @@ onMounted(() => {
 
 .postImage {
   width: 100%;
-  height: 400px;
   background: #eee;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
 }
 
