@@ -65,9 +65,8 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
 import type { FormInstance, FormRules } from "element-plus";
 import type { RuleForm } from "../types/form";
-import logo from "../assets/wave.png";
 import { ElNotification } from "element-plus";
-// import phoneImage from '../assets/phone.png'
+import logo from "../assets/wave.png";
 
 const router = useRouter();
 const useUser = useUserStore();
@@ -78,8 +77,8 @@ const state = reactive({
   isLogin: true,
   agreementChecked: false,
   ruleForm: {
-    email: "",
-    password: "",
+    email: "test@gmail.com",
+    password: "test1234",
     username: "",
   },
 });
