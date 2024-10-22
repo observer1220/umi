@@ -1,6 +1,5 @@
 import supabase, { supabaseUrl } from "./supabase";
 import { Post, PostAction } from "../types/post";
-// import { getUser } from "../utils/localStorage";
 
 // 取得所有貼文
 export async function loadPosts() {
@@ -23,7 +22,7 @@ export async function loadPosts() {
       username: user?.username,
     };
   });
-  
+
   return postsWithUsername;
 }
 
@@ -141,7 +140,7 @@ export async function likePost({ postId, username }: PostAction) {
   if (updateError) {
     console.error(updateError);
     throw new Error("LikePost has error");
-  } 
+  }
 
   return !likedList.includes(username);
 }

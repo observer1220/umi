@@ -5,14 +5,11 @@ import { Comment } from "../types/comment";
 
 export const useCommentStore = defineStore("comment", () => {
   const list: any = ref([]);
-
   const initializeComments = (comments: any[]) => {
     list.value = comments;
   };
 
-  // 新增評論
   const addComment = async ({ content, postId, userId }: Comment) => {
-    // console.log("addComment", content, postId, userId);
     await createComment({ content, postId, userId });
     loadAllComments(postId);
     increaseCommentCount(postId);
