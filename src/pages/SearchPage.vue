@@ -9,7 +9,7 @@
     <img class="postImage" v-for="post in state.searchResult" :src="post.image" :key="post.id"
       @click="pageAction.goToPost(post.id)" />
   </div>
-  <NoResultsFound v-if="state.searchResult.length === 0" />
+  <NoResultsFound v-if="!state.isLoading && state.searchResult.length === 0" />
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
   <Loading v-if="state.isLoading" />
