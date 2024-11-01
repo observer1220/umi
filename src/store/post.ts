@@ -5,7 +5,6 @@ import {
   loadPosts,
   likePost,
   favorPost,
-  loadPostsByMe,
 } from "../services/apiPost";
 import { useGeneralStore } from "./general";
 import { useCommentStore } from "./comment";
