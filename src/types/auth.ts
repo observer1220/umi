@@ -3,7 +3,7 @@ export interface SignUpResponse {
     user: any;
     session: any;
   };
-  error: Error;
+  error: any;
 }
 
 export interface RegisterParams {
