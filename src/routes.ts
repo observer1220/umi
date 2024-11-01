@@ -8,7 +8,7 @@ import { getJwtToken } from "./utils/localStorage";
 
 const routes = [
   {
-    path: "/",
+    path: "/umi",
     name: "home",
     component: HomePage,
   },
