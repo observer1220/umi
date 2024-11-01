@@ -71,7 +71,7 @@ const favoredByMe = computed(() => {
 .postContainer {
   width: 335px;
   height: 450px;
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   margin-bottom: 0.5em;
 }
@@ -119,5 +119,6 @@ const favoredByMe = computed(() => {
 
 .postDesc {
   max-height: 100px;
+  font-size: 0.8rem;
 }
 </style>

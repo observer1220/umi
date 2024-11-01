@@ -1,7 +1,7 @@
 <template>
   <!-- 搜尋框 -->
   <div class="searchInput">
-    <input type="text" @change="pageAction.searchPosts" placeholder="搜尋" />
+    <input type="text" @change="pageAction.searchPosts" placeholder="Seach for something..." />
     <TheIcon icon="search" />
   </div>
   <!-- 顯示所有貼文 -->
@@ -16,6 +16,7 @@
   </div>
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
+  <Loading v-if="state.isLoading" />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +26,7 @@ import { useGeneralStore } from "../store/general";
 import PostDetails from "../components/PostDetails.vue";
 import PostUpload from "../components/PostUpload.vue";
 import TheIcon from "../components/TheIcon.vue";
+import Loading from "../components/Loading.vue";
 
 const usePost: any = usePostStore();
 const useGeneral = useGeneralStore();
@@ -33,6 +35,7 @@ const state = reactive({
   searchResult: computed(() => usePost.state.searchResult),
   showPostDetails: computed(() => useGeneral.showPostDetails),
   showPostUpload: computed(() => useGeneral.showPostUpload),
+  isLoading: computed(() => usePost.state.isLoading),
 });
 
 const pageAction = reactive({
@@ -54,7 +57,14 @@ onMounted(() => {
 <style scoped>
 .postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  /* Desktop 1fr 1fr 1fr */
+  grid-template-columns: 1fr 1fr 1fr;
+
+  /* Mobile 1fr 1fr */
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .postImage {
@@ -62,6 +72,17 @@ onMounted(() => {
   background: #eee;
   object-fit: contain;
   cursor: pointer;
+
+  /* Styled image outline */
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  margin: 0.1rem;
+
+  /* Hover effect */
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
 }
 
 .searchInput {

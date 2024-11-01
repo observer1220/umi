@@ -18,7 +18,7 @@ export const usePostStore = defineStore("post", () => {
     list: [],
     searchResult: [],
     currentId: null,
-    loading: false,
+    isLoading: false,
   });
 
   const initializePosts = (posts: Post[]) => {
@@ -56,13 +56,15 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const loadAllPosts = async () => {
-    state.loading = true;
+    state.isLoading = true;
     const posts = await loadPosts();
     initializePosts(posts);
-    state.loading = false;
+    state.isLoading = false;
   };
 
   const searchPosts = async (term: string) => {
+    state.isLoading = true;
+
     let posts = await loadPosts();
 
     // 過濾出包含搜尋字串的貼文
@@ -71,6 +73,7 @@ export const usePostStore = defineStore("post", () => {
     });
 
     setPostsSearchResult(posts);
+    state.isLoading = false;
   };
 
   const postDetails = (): Post | undefined => {

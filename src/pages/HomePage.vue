@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Loading v-if="state.loading" />
+    <Loading v-if="state.isLoading" />
     <PostList v-for="post in state.posts" :post="post" :key="post.id" />
     <PostDetails v-if="state.showPostDetails" />
     <PostUpload v-if="state.showPostUpload" />
@@ -22,7 +22,7 @@ const state = reactive({
   showPostUpload: computed(() => useGeneral.showPostUpload),
   showPostDetails: computed(() => useGeneral.showPostDetails),
   posts: computed(() => usePost.state.list) as any,
-  loading: computed(() => usePost.state.loading),
+  isLoading: computed(() => usePost.state.isLoading),
 });
 
 onMounted(() => {

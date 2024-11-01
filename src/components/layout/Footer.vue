@@ -2,16 +2,16 @@
   <footer class="footer">
     <div class="navItems">
       <button @click="pageAction.reloadPage">
-        <img :src="homeIcon" alt="" style="width: 30px" />
+        <img :src="homeIcon" alt="homeIcon" style="width: 30px" />
       </button>
       <button @click="pageAction.goToSearchPage">
-        <img :src="searchIcon" alt="" style="width: 30px" />
+        <img :src="searchIcon" alt="searchIcon" style="width: 30px" />
       </button>
       <button @click="pageAction.publishPost">
-        <img :src="postIcon" alt="" style="width: 30px" />
+        <img :src="postIcon" alt="postIcon" style="width: 30px" />
       </button>
       <button @click="pageAction.goToProfile">
-        <img :src="userIcon" alt="" style="width: 30px" />
+        <img :src="userIcon" alt="userIcon" style="width: 30px" />
       </button>
       <!-- Dark Mode -->
       <button
@@ -67,7 +67,7 @@ const pageAction = reactive({
 
 <style scoped>
 .footer {
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;

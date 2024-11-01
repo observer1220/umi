@@ -9,7 +9,7 @@ export interface PostState {
   list: Post[];
   searchResult: Post[];
   currentId: number | null;
-  loading: boolean;
+  isLoading: boolean;
 }
 
 export interface PostAction {

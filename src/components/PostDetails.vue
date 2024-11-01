@@ -96,7 +96,7 @@ const pageAction = reactive({
     if (state.content === "") {
       ElNotification({
         title: "Error",
-        message: "貼文內容不可為空",
+        message: "Post content cannot be empty",
         type: "error",
       });
     } else {
@@ -113,7 +113,7 @@ watch(state.comments, () => {
   state.content = "";
 });
 
-// 計算按讚數
+// Calculate the number of likes
 const likes = computed(() => {
   if (!state.post.liked_list) {
     return 0;
@@ -122,7 +122,7 @@ const likes = computed(() => {
   return state.post.liked_list.length;
 });
 
-// 比對使用者是否按過讚
+// Comapre if the user liked the post
 const likedByMe = computed(() => {
   if (!state.post.liked_list) {
     return false;
@@ -131,7 +131,7 @@ const likedByMe = computed(() => {
   return state.post.liked_list.includes(useUser.user?.user_metadata?.username);
 });
 
-// 比對使用者是否收藏
+// Compare if the user favored the post
 const favoredByMe = computed(() => {
   if (!state.post.favored_list) {
     return false;

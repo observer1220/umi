@@ -1,10 +1,6 @@
 <template>
   <div class="profileContainer">
-    <TheAvatar
-      :width="100"
-      :height="100"
-      :src="state.user?.user_metadata.avatar"
-    />
+    <TheAvatar :width="100" :height="100" :src="state.user?.user_metadata.avatar" />
     <div class="profile">
       <p class="name">
         <router-link to="/profile/edit">編輯個人資料</router-link>
@@ -16,13 +12,8 @@
     </div>
   </div>
   <div class="tabs">
-    <div
-      v-for="(tab, index) in state.tabs"
-      class="tab"
-      :class="{ active: index === state.currentTab }"
-      :key="index"
-      @click="state.currentTab = index"
-    >
+    <div v-for="(tab, index) in state.tabs" class="tab" :class="{ active: index === state.currentTab }" :key="index"
+      @click="state.currentTab = index">
       <TheIcon :icon="tab.icon" />
       <p>{{ tab.label }}</p>
     </div>
@@ -30,18 +21,13 @@
   <div class="tabContent">
     <p>總貼文數：{{ state.myPosts[state.currentTab].length }}篇</p>
     <div class="postsContainer">
-      <img
-        v-for="post in state.myPosts[state.currentTab]"
-        :src="post.image"
-        :key="post.id"
-        class="postImage"
-        @click="goToPost(post.id)"
-      />
+      <img v-for="post in state.myPosts[state.currentTab]" :src="post.image" :key="post.id" class="postImage"
+        @click="goToPost(post.id)" />
     </div>
   </div>
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
-  
+
 </template>
 
 <script setup lang="ts">
@@ -78,7 +64,7 @@ const state = reactive({
   myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] } as any,
   showPostDetails: computed(() => useGeneral.showPostDetails),
   showPostUpload: computed(() => useGeneral.showPostUpload),
-  loading: computed(() => usePost.state.loading),
+  isLoading: computed(() => usePost.state.isLoading),
 });
 
 const goToPost = (postId: number) => {
@@ -117,9 +103,9 @@ watch(
 .profileContainer {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 10vw;
-  margin-top: 1em
+  margin-top: 1em;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .avatar {
@@ -131,11 +117,11 @@ watch(
   align-items: center;
 }
 
-.profile .name > span {
+.profile .name>span {
   font-size: 26px;
 }
 
-.profile .name > a {
+.profile .name>a {
   color: #1da0ff;
   text-decoration: none;
 }
@@ -166,7 +152,7 @@ watch(
   cursor: pointer;
 }
 
-.tab > svg {
+.tab>svg {
   width: 32px;
   height: 32px;
   stroke: #8a9194;
@@ -178,16 +164,16 @@ watch(
   border-radius: 18px;
 }
 
-.tab.active > svg {
+.tab.active>svg {
   stroke: #1787d9;
   fill: #1787d9;
 }
 
-.tab.active > p {
+.tab.active>p {
   color: #1787d9;
 }
 
-.tabContent > p {
+.tabContent>p {
   text-align: center;
   font-weight: 600;
   margin-bottom: 32px;
@@ -195,12 +181,28 @@ watch(
 
 .postsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  /* Mobile 1fr 1fr */
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .postImage {
   width: 100%;
   background: #eee;
   object-fit: contain;
+
+  /* Styled image outline */
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  margin: 0.1rem;
+
+  /* Hover effect */
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
 }
 </style>
