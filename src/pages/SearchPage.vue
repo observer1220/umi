@@ -6,14 +6,10 @@
   </div>
   <!-- 顯示所有貼文 -->
   <div class="postsContainer">
-    <img
-      class="postImage"
-      v-for="post in state.searchResult"
-      :src="post.image"
-      :key="post.id"
-      @click="pageAction.goToPost(post.id)"
-    />
+    <img class="postImage" v-for="post in state.searchResult" :src="post.image" :key="post.id"
+      @click="pageAction.goToPost(post.id)" />
   </div>
+  <NoResultsFound v-if="state.searchResult.length === 0" />
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
   <Loading v-if="state.isLoading" />
@@ -27,6 +23,7 @@ import PostDetails from "../components/PostDetails.vue";
 import PostUpload from "../components/PostUpload.vue";
 import TheIcon from "../components/TheIcon.vue";
 import Loading from "../components/Loading.vue";
+import NoResultsFound from "../components/NoResultsFound.vue";
 
 const usePost: any = usePostStore();
 const useGeneral = useGeneralStore();
@@ -44,7 +41,7 @@ const pageAction = reactive({
   },
   searchPosts(event: Event) {
     const target = event.target as HTMLInputElement;
-    console.log(target.value);
+    // console.log(target.value);
     usePost.searchPosts(target.value);
   },
 });
@@ -101,10 +98,13 @@ onMounted(() => {
   border: none;
 }
 
-.searchInput > svg {
+.searchInput>svg {
   position: absolute;
   left: 0;
   top: 11px;
   left: 12px;
+
+  width: 20px;
+  height: 20px;
 }
 </style>

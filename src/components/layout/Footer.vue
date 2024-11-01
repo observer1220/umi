@@ -14,12 +14,8 @@
         <img :src="userIcon" alt="userIcon" style="width: 30px" />
       </button>
       <!-- Dark Mode -->
-      <button
-        :class="
-          generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'
-        "
-        @click="generalStore.toggleBackgroundMode()"
-      >
+      <button :class="generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'
+        " @click="generalStore.toggleBackgroundMode()">
         <el-icon v-if="generalStore.backgroundMode == 'sun'" size="36">
           <Sunrise />
         </el-icon>
@@ -73,7 +69,7 @@ const pageAction = reactive({
   width: 100%;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   z-index: 100;
 }
 
@@ -82,7 +78,7 @@ const pageAction = reactive({
   justify-content: space-around;
 }
 
-.navItems > button {
+.navItems>button {
   width: 50px;
   height: 50px;
   border: none;
