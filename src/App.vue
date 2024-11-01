@@ -21,6 +21,7 @@ import Footer from "./components/layout/Footer.vue";
 import { useGeneralStore } from "./store/general";
 const generalStore = useGeneralStore();
 </script>
+
 <style scoped>
 .whiteMode {
   background-color: whitesmoke;

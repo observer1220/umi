@@ -5,6 +5,7 @@ import {
   loadPosts,
   likePost,
   favorPost,
+  loadPostsByMe,
 } from "../services/apiPost";
 import { useGeneralStore } from "./general";
 import { useCommentStore } from "./comment";
@@ -18,13 +19,16 @@ export const usePostStore = defineStore("post", () => {
     list: [],
     searchResult: [],
     currentId: null,
+    loading: false,
   });
 
   const initializePosts = (posts: Post[]) => {
     // 排序貼文，最新的在最前面
     posts.sort((a: any, b: any) => {
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    }); 
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    });
     state.list = posts;
   };
 
@@ -34,7 +38,7 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const toggleFavor = async (postId: number, username: string) => {
-    await favorPost({ postId, username});
+    await favorPost({ postId, username });
     await loadAllPosts();
   };
 
@@ -53,8 +57,10 @@ export const usePostStore = defineStore("post", () => {
   };
 
   const loadAllPosts = async () => {
+    state.loading = true;
     const posts = await loadPosts();
     initializePosts(posts);
+    state.loading = false;
   };
 
   const searchPosts = async (term: string) => {
@@ -64,7 +70,7 @@ export const usePostStore = defineStore("post", () => {
     posts = posts.filter((post) => {
       return post.description.includes(term);
     });
-    
+
     setPostsSearchResult(posts);
   };
 

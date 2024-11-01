@@ -9,9 +9,10 @@ export interface PostState {
   list: Post[];
   searchResult: Post[];
   currentId: number | null;
+  loading: boolean;
 }
 
 export interface PostAction {
-  postId: number, 
-  username: string
+  postId: number;
+  username: string;
 }

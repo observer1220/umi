@@ -41,6 +41,7 @@
   </div>
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
+  
 </template>
 
 <script setup lang="ts">
@@ -77,6 +78,7 @@ const state = reactive({
   myPosts: { [TABS.MY]: [], [TABS.LIKED]: [], [TABS.FAVORED]: [] } as any,
   showPostDetails: computed(() => useGeneral.showPostDetails),
   showPostUpload: computed(() => useGeneral.showPostUpload),
+  loading: computed(() => usePost.state.loading),
 });
 
 const goToPost = (postId: number) => {
