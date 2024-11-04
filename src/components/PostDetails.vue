@@ -25,41 +25,27 @@
       </el-scrollbar>
 
       <div class="actionsContainer">
-        <PostActions
-          :likes="likes"
-          :likedByMe="likedByMe"
-          :favoredByMe="favoredByMe"
-          :comments="state.post.comments"
-          @likeClick="
-            () => {
-              usePost.toggleLike(
-                state.post.id,
-                state.user.user_metadata?.username
-              );
-            }
-          "
-          @favorClick="
-            usePost.toggleFavor(
+        <PostActions :likes="likes" :likedByMe="likedByMe" :favoredByMe="favoredByMe" :comments="state.post.comments"
+          @likeClick="() => {
+            usePost.toggleLike(
               state.post.id,
               state.user.user_metadata?.username
-            )
-          "
-        />
+            );
+          }
+            " @favorClick="
+              usePost.toggleFavor(
+                state.post.id,
+                state.user.user_metadata?.username
+              )
+              " />
         <span class="postPubDate">
           {{ dateToRelative(state.post.created_at) }}
         </span>
-          <input
-            class="commentInput"
-            type="text"
-            name="comment"
-            v-model="state.content"
-            id=""
-            placeholder="請輸入您的留言..."
-            v-on:keyup.enter="pageAction.createComment"
-          />
-          <button @click="pageAction.createComment" class="commentPubBtn">
-            發佈
-          </button>
+        <textarea class="commentInput" name="comment" v-model="state.content" placeholder="請輸入您的留言..."
+          v-on:keyup.enter="pageAction.createComment" />
+        <button @click="pageAction.createComment" class="commentPubBtn">
+          發佈
+        </button>
       </div>
     </div>
   </TheModal>
@@ -211,7 +197,7 @@ const favoredByMe = computed(() => {
   row-gap: 0.5em;
 }
 
-.postActions > :deep(svg) {
+.postActions> :deep(svg) {
   transform: scale(0.8125);
 }
 
