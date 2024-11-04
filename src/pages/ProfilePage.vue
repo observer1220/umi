@@ -20,10 +20,7 @@
   </div>
   <div class="tabContent">
     <p>總貼文數：{{ state.myPosts[state.currentTab].length }}篇</p>
-    <div class="postsContainer">
-      <img v-for="post in state.myPosts[state.currentTab]" :src="post.image" :key="post.id" class="postImage"
-        @click="goToPost(post.id)" />
-    </div>
+    <ImageList :posts="state.myPosts[state.currentTab]" />
   </div>
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
@@ -44,6 +41,7 @@ import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import PostDetails from "../components/PostDetails.vue";
 import PostUpload from "../components/PostUpload.vue";
+import ImageList from "../components/ImageList.vue";
 
 const usePost = usePostStore();
 const useGeneral = useGeneralStore();
@@ -66,10 +64,6 @@ const state = reactive({
   showPostUpload: computed(() => useGeneral.showPostUpload),
   isLoading: computed(() => usePost.state.isLoading),
 });
-
-const goToPost = (postId: number) => {
-  usePost.showPostDetails(postId);
-};
 
 watch(
   () => state.currentTab,
@@ -177,32 +171,5 @@ watch(
   text-align: center;
   font-weight: 600;
   margin-bottom: 32px;
-}
-
-.postsContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
-  /* Mobile 1fr 1fr */
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.postImage {
-  width: 100%;
-  background: #eee;
-  object-fit: contain;
-
-  /* Styled image outline */
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  margin: 0.1rem;
-
-  /* Hover effect */
-  &:hover {
-    transform: scale(1.02);
-    transition: transform 0.2s;
-  }
 }
 </style>

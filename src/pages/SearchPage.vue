@@ -5,11 +5,10 @@
     <TheIcon icon="search" />
   </div>
   <!-- 顯示所有貼文 -->
-  <div class="postsContainer">
-    <img class="postImage" v-for="post in state.searchResult" :src="post.image" :key="post.id"
-      @click="pageAction.goToPost(post.id)" />
-  </div>
+  <ImageList :posts="state.searchResult" />
+  <!-- 無搜尋結果 -->
   <NoResultsFound v-if="!state.isLoading && state.searchResult.length === 0" />
+  <!-- 顯示內頁 -->
   <PostDetails v-if="state.showPostDetails" />
   <PostUpload v-if="state.showPostUpload" />
   <Loading v-if="state.isLoading" />
@@ -24,6 +23,7 @@ import PostUpload from "../components/PostUpload.vue";
 import TheIcon from "../components/TheIcon.vue";
 import Loading from "../components/Loading.vue";
 import NoResultsFound from "../components/NoResultsFound.vue";
+import ImageList from "../components/ImageList.vue";
 
 const usePost: any = usePostStore();
 const useGeneral = useGeneralStore();
@@ -36,9 +36,9 @@ const state = reactive({
 });
 
 const pageAction = reactive({
-  goToPost(postId: number) {
-    usePost.showPostDetails(postId);
-  },
+  // goToPost(postId: number) {
+  //   usePost.showPostDetails(postId);
+  // },
   searchPosts(event: Event) {
     const target = event.target as HTMLInputElement;
     // console.log(target.value);
@@ -52,36 +52,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.postsContainer {
-  display: grid;
-
-  /* Desktop 1fr 1fr 1fr */
-  grid-template-columns: 1fr 1fr 1fr;
-
-  /* Mobile 1fr 1fr */
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.postImage {
-  width: 100%;
-  background: #eee;
-  object-fit: contain;
-  cursor: pointer;
-
-  /* Styled image outline */
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  margin: 0.1rem;
-
-  /* Hover effect */
-  &:hover {
-    transform: scale(1.02);
-    transition: transform 0.2s;
-  }
-}
-
 .searchInput {
   position: relative;
   margin-inline: 0.5em;

@@ -12,8 +12,8 @@
         <span class="postPubDate">
           {{ dateToRelative(post.created_at) }}
         </span>
-        <PostActions :likes="likes" :comments="post.comments" :likedByMe="likedByMe"
-          :favoredByMe="favoredByMe" @likeClick="usePost.toggleLike(post.id, useUser.user?.user_metadata?.username)"
+        <PostActions :likes="likes" :comments="post.comments" :likedByMe="likedByMe" :favoredByMe="favoredByMe"
+          @likeClick="usePost.toggleLike(post.id, useUser.user?.user_metadata?.username)"
           @favorClick="usePost.toggleFavor(post.id, useUser.user?.user_metadata?.username)"
           @commentsClick="usePost.showPostDetails(post.id)" />
       </div>

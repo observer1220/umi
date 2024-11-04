@@ -1,5 +1,5 @@
 <template>
-  <div class="container">NO RESULTS FOUND 🥹</div>
+  <div class="container">NO RESULTS FOUND🥹</div>
 </template>
 
 <style scoped>
@@ -8,8 +8,7 @@
   justify-content: center;
   align-items: center;
   height: 70vh;
-  font-size: 3rem;
-  color: red;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 </style>
