@@ -3,34 +3,17 @@
     <template #header>建立新貼文</template>
     <div class="container">
       <div class="postContent">
-        <el-input
-          v-model="state.description"
-          type="textarea"
-          class="postContentInput"
-          placeholder="請輸入貼文內容..."
-          :autosize="{ minRows: 5 }"
-          show-word-limit
-          maxlength="140"
-        />
-        <span
-          v-if="state.description.length === state.contentLimit"
-          class="contentLimit"
-          >Can't excess {{ state.contentLimit }} words</span
-        >
+        <el-input v-model="state.description" type="textarea" class="postContentInput" placeholder="請輸入貼文內容..."
+          :autosize="{ minRows: 5 }" show-word-limit maxlength="140" />
+        <span v-if="state.description.length === state.contentLimit" class="contentLimit">Can't excess {{
+          state.contentLimit }} words</span>
       </div>
-      <img v-if="state.imageObjUrl" :src="state.imageObjUrl" class="preview" />
-      <input
-        v-else
-        type="file"
-        accept="image/*"
-        @change="pageAction.handleImageUpload"
-      />
+      <img v-if="state.imageObjUrl" :src="state.imageObjUrl" class="preview" loading="lazy" />
+      <input v-else type="file" accept="image/*" @change="pageAction.handleImageUpload" />
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="useGeneral.changeShowPostUpload(false)"
-          >取消</el-button
-        >
+        <el-button @click="useGeneral.changeShowPostUpload(false)">取消</el-button>
         <el-button type="primary" @click="pageAction.publishPost">
           發佈
         </el-button>

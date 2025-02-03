@@ -68,7 +68,7 @@ const pageAction = reactive({
   align-items: center;
 }
 
-.navItems > button {
+.navItems>button {
   border: none;
   background: none;
 }

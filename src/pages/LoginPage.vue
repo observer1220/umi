@@ -1,55 +1,26 @@
 <template>
   <div class="loginPage">
     <div class="loginForm">
-      <img :src="logo" alt="" />
-      <el-form
-        ref="ruleFormRef"
-        :model="state.ruleForm"
-        :rules="rules"
-        :size="state.formSize"
-        @submit.prevent
-      >
+      <img :src="logo" alt="" loading="lazy" />
+      <el-form ref="ruleFormRef" :model="state.ruleForm" :rules="rules" :size="state.formSize" @submit.prevent>
         <el-form-item prop="email">
-          <el-input
-            v-model="state.ruleForm.email"
-            placeholder="EMAIL"
-            size="large"
-            type="email"
-          />
+          <el-input v-model="state.ruleForm.email" placeholder="EMAIL" size="large" type="email" />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="state.ruleForm.password"
-            placeholder="密碼(英文、數字8~20位元)"
-            type="password"
-            autocomplete="off"
-            size="large"
-          />
+          <el-input v-model="state.ruleForm.password" placeholder="密碼(英文、數字8~20位元)" type="password" autocomplete="off"
+            size="large" />
         </el-form-item>
         <el-form-item prop="username" v-if="!state.isLogin">
-          <el-input
-            v-model="state.ruleForm.username"
-            placeholder="用戶名稱"
-            size="large"
-          />
+          <el-input v-model="state.ruleForm.username" placeholder="用戶名稱" size="large" />
         </el-form-item>
         <div v-if="!state.isLogin" class="agreement">
-          <el-checkbox
-            v-model="state.agreementChecked"
-            label="勾選表示同意隱私協議和使用規範"
-            size="large"
-            border
-          />
+          <el-checkbox v-model="state.agreementChecked" label="勾選表示同意隱私協議和使用規範" size="large" border />
         </div>
-        <button
-          type="submit"
-          class="loginButton"
-          @click="
-            state.isLogin
-              ? pageAction.login(ruleFormRef)
-              : pageAction.register(ruleFormRef)
-          "
-        >
+        <button type="submit" class="loginButton" @click="
+          state.isLogin
+            ? pageAction.login(ruleFormRef)
+            : pageAction.register(ruleFormRef)
+          ">
           {{ state.isLogin ? "登入" : "註冊" }}
         </button>
         <p @click="state.isLogin = !state.isLogin" class="info">
@@ -121,10 +92,10 @@ const pageAction = {
   async register(formEl: FormInstance | undefined) {
     if (!state.agreementChecked) {
       ElNotification({
-            title: "Error",
-            message: "請先閱讀並同意隱私協議和使用規範",
-            type: "error",
-          });
+        title: "Error",
+        message: "請先閱讀並同意隱私協議和使用規範",
+        type: "error",
+      });
       return;
     }
 
@@ -207,7 +178,7 @@ const rules = reactive<FormRules<RuleForm>>({
   width: 100px;
 }
 
-.loginForm > form {
+.loginForm>form {
   display: grid;
   row-gap: 24px;
   width: 100%;

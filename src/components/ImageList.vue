@@ -1,7 +1,7 @@
 <template>
   <div class="imageContainer">
-    <img class="imageClass" v-for="post in posts" :src="post.image" :key="post.id"
-      @click="pageAction.goToPost(post.id)" />
+    <img class="imageClass" v-for="post in posts" :src="post.image" :key="post.id" @click="pageAction.goToPost(post.id)"
+      loading="lazy" />
   </div>
 </template>
 

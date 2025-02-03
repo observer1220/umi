@@ -1,6 +1,7 @@
 <template>
   <div class="postContainer">
-    <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)" />
+    <img v-if="post.image" class="postImage" :src="post.image" @click="usePost.showPostDetails(post.id)"
+      loading="lazy" />
     <div class="postInfo">
       <div class="postDesc">
         <span v-html="post.description.slice(0, 54)"></span>

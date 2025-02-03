@@ -46,11 +46,15 @@ const closeBtn = () => {
 }
 
 .modalContent {
-  width: 360px;
+  width: 380px;
   position: relative;
   background: white;
   border-radius: 24px;
   overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    width: 480px;
+  }
 }
 
 .closeBtn {

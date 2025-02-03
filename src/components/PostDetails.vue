@@ -7,7 +7,7 @@
           <span>{{ state.post.username }}</span>
         </div>
       </div>
-      <img class="postImage" :src="state.post.image" alt="" />
+      <img class="postImage" :src="state.post.image" alt="" loading="lazy" />
       <el-scrollbar>
         <div class="postDesc">
           <p v-html="state.post?.description" />
