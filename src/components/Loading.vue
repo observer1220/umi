@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { FunnelIcon } from '@heroicons/vue/24/outline';
-
 </script>
 
 <style scoped>

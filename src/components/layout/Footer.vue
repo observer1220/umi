@@ -2,26 +2,22 @@
   <footer class="footer">
     <div class="navItems">
       <button @click="pageAction.reloadPage">
-        <img :src="homeIcon" alt="homeIcon" style="width: 30px" />
+        <HomeIcon style="width: 36px" />
       </button>
       <button @click="pageAction.goToSearchPage">
-        <img :src="searchIcon" alt="searchIcon" style="width: 30px" />
+        <MagnifyingGlassIcon style="width: 36px" />
       </button>
       <button @click="pageAction.publishPost">
-        <img :src="postIcon" alt="postIcon" style="width: 30px" />
+        <PlusCircleIcon style="width: 36px" />
       </button>
       <button @click="pageAction.goToProfile">
-        <img :src="userIcon" alt="userIcon" style="width: 30px" />
+        <UserIcon style="width: 36px" />
       </button>
       <!-- Dark Mode -->
       <button :class="generalStore.backgroundMode == 'sun' ? 'sunMode' : 'backgroundMode'
         " @click="generalStore.toggleBackgroundMode()">
-        <el-icon v-if="generalStore.backgroundMode == 'sun'" size="36">
-          <Sunrise />
-        </el-icon>
-        <el-icon v-else size="36">
-          <Moon />
-        </el-icon>
+        <SunIcon v-if="generalStore.backgroundMode == 'sun'" style="width: 36px" />
+        <MoonIcon v-else style="width: 36px" />
       </button>
     </div>
   </footer>
@@ -32,10 +28,7 @@ import { reactive } from "vue";
 import { useGeneralStore } from "../../store/general";
 import { useUserStore } from "../../store/user";
 import { useRouter } from "vue-router";
-import postIcon from "../../assets/postIcon.png";
-import searchIcon from "../../assets/searchIcon.png";
-import homeIcon from "../../assets/homeIcon.png";
-import userIcon from "../../assets/userIcon.png";
+import { HomeIcon, MagnifyingGlassIcon, PlusCircleIcon, UserIcon, SunIcon, MoonIcon } from '@heroicons/vue/24/outline';
 
 const generalStore = useGeneralStore();
 const userStore = useUserStore();
@@ -68,9 +61,9 @@ const pageAction = reactive({
   left: 0;
   width: 100%;
   text-align: center;
-  /* background-color: #a6e1fa; */
   backdrop-filter: blur(5px);
   z-index: 100;
+  /* background-color: #a6e1fa; */
 }
 
 .navItems {
