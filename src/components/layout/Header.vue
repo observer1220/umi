@@ -39,7 +39,6 @@ const pageAction = reactive({
 .header {
   height: 60px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
-  /* background-color: #a6e1fa; */
 }
 
 .navbar {
@@ -116,6 +115,5 @@ const pageAction = reactive({
 
 .brandName {
   user-select: none;
-  color: #333;
 }
 </style>

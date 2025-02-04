@@ -2,3 +2,22 @@
   --primary-color: #0077cc; /* 代表海洋的深邃，適合作為主要背景色，能夠讓界面更穩重、專業 */
   --secondary-color: #a6e1fa; /* 代表浪花的輕盈感，適合作為輔助背景或局部區塊的底色，使畫面更具層次感 */
 }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+input,
+textarea {
+  font-size: 1rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}

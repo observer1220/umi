@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import "./assets/base.css";
+import "./style.css";
 import Header from "./components/layout/Header.vue";
 import Container from "./components/layout/Container.vue";
 import Footer from "./components/layout/Footer.vue";
@@ -25,13 +25,13 @@ const generalStore = useGeneralStore();
 <style scoped>
 .whiteMode {
   background-color: #f5f5f5;
-  color: black;
+  color: #333;
   transition: all 0.5s ease-in-out;
 }
 
 .darkMode {
   background-color: #333;
-  color: white;
+  color: #f5f5f5;
   transition: all 0.5s ease-in-out;
 }
 </style>
