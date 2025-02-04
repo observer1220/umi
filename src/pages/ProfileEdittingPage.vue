@@ -2,7 +2,7 @@
   <div>
     <h2 class="title">編輯個人資料</h2>
     <div class="changeAvatar">
-      <TheAvatar :width="48" :height="48" :src="profileData.avatar" />
+      <Avatar :width="48" :height="48" :src="profileData.avatar" />
       <TheButton>上傳頭像</TheButton>
       <input type="file" class="inputFile" @change="pageAction.uploadAvatar" />
     </div>
@@ -32,8 +32,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import TheButton from "../components/TheButton.vue";
-import TheAvatar from "../components/TheAvatar.vue";
+import TheButton from "../components/Button.vue";
+import Avatar from "../components/Avatar.vue";
 import { computed, reactive } from "vue";
 import { uploadFile } from "../services/apiFile";
 import { useUserStore } from '../store/user'
@@ -61,7 +61,7 @@ const pageAction = reactive({
   async uploadAvatar(event: Event) {
     const target = event.target as HTMLInputElement;
     const file = target.files ? target.files[0] : null;
-    
+
     if (file) {
       const url = await uploadFile(file);
       profileData.avatar = url;

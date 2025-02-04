@@ -1,8 +1,8 @@
 <template>
   <!-- 搜尋框 -->
   <div class="searchInput">
-    <input type="text" @change="pageAction.searchPosts" placeholder="Seach for something..." />
-    <TheIcon icon="search" />
+    <Icon icon="search" class="searchIcon" />
+    <input type="text" @input="pageAction.searchPosts" placeholder="Search for something..." />
   </div>
   <!-- 顯示所有貼文 -->
   <ImageList :posts="state.searchResult" />
@@ -20,7 +20,7 @@ import { usePostStore } from "../store/post";
 import { useGeneralStore } from "../store/general";
 import PostDetails from "../components/PostDetails.vue";
 import PostUpload from "../components/PostUpload.vue";
-import TheIcon from "../components/TheIcon.vue";
+import Icon from "../components/Icon.vue";
 import Loading from "../components/Loading.vue";
 import NoResultsFound from "../components/NoResultsFound.vue";
 import ImageList from "../components/ImageList.vue";
@@ -62,8 +62,6 @@ onMounted(() => {
   width: 100%;
   padding: 12px;
   padding-left: 36px;
-
-  background: #e4e4e5;
   border-radius: 14px;
   border: none;
 }

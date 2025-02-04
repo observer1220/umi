@@ -39,7 +39,7 @@ const pageAction = reactive({
 .header {
   height: 60px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
-  background-color: whitesmoke;
+  /* background-color: #a6e1fa; */
 }
 
 .navbar {
@@ -112,16 +112,6 @@ const pageAction = reactive({
 
 .profileMenu a:visited {
   color: inherit;
-}
-
-.profileMenuLight {
-  background: white;
-  color: black;
-}
-
-.profileMenuDark {
-  background: #333;
-  color: white;
 }
 
 .brandName {

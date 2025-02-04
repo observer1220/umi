@@ -68,7 +68,7 @@ const pageAction = reactive({
   left: 0;
   width: 100%;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.5);
+  /* background-color: #a6e1fa; */
   backdrop-filter: blur(5px);
   z-index: 100;
 }

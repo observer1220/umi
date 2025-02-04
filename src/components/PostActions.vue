@@ -1,17 +1,17 @@
 <template>
   <div class="postActions">
-    <TheIcon icon="like" @click="emit('likeClick')" :fill="likedByMe ? '#FF3C3C' : 'none'"
+    <Icon icon="like" @click="emit('likeClick')" :fill="likedByMe ? '#FF3C3C' : 'none'"
       :stroke="likedByMe ? '#FF3C3C' : '#000000'" />
     <span>{{ Number(likes) > 0 ? `${likes}個讚` : "" }}</span>
-    <TheIcon icon="comment" @click="emit('commentsClick')" fill="none" stroke="#000000" /><span>{{ comments || ""
-    }}</span>
-    <TheIcon icon="favorite" @click="emit('favorClick')" :fill="favoredByMe ? '#FFD12E' : 'none'"
+    <Icon icon="comment" @click="emit('commentsClick')" fill="none" stroke="#000000" /><span>{{ comments || ""
+      }}</span>
+    <Icon icon="favorite" @click="emit('favorClick')" :fill="favoredByMe ? '#FFD12E' : 'none'"
       :stroke="favoredByMe ? '#FFD12E' : '#000000'" />
   </div>
 </template>
 
 <script setup lang="ts">
-import TheIcon from "./TheIcon.vue";
+import Icon from "./Icon.vue";
 
 defineProps({
   likes: Number,

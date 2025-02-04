@@ -1,6 +1,6 @@
 <template>
   <div class="profileContainer">
-    <TheAvatar :width="100" :height="100" :src="state.user?.user_metadata.avatar" />
+    <Avatar :width="100" :height="100" :src="state.user?.user_metadata.avatar" />
     <div class="profile">
       <p class="name">
         <router-link to="/profile/edit">編輯個人資料</router-link>
@@ -14,7 +14,7 @@
   <div class="tabs">
     <div v-for="(tab, index) in state.tabs" class="tab" :class="{ active: index === state.currentTab }" :key="index"
       @click="state.currentTab = index">
-      <TheIcon :icon="tab.icon" />
+      <Icon :icon="tab.icon" />
       <p>{{ tab.label }}</p>
     </div>
   </div>
@@ -29,8 +29,8 @@
 
 <script setup lang="ts">
 import { reactive, watch, computed } from "vue";
-import TheIcon from "../components/TheIcon.vue";
-import TheAvatar from "../components/TheAvatar.vue";
+import Icon from "../components/Icon.vue";
+import Avatar from "../components/Avatar.vue";
 import {
   loadPostsByMe,
   loadPostLikedByMe,

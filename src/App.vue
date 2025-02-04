@@ -24,13 +24,13 @@ const generalStore = useGeneralStore();
 
 <style scoped>
 .whiteMode {
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   color: black;
   transition: all 0.5s ease-in-out;
 }
 
 .darkMode {
-  background-color: rgb(68, 66, 66);
+  background-color: #333;
   color: white;
   transition: all 0.5s ease-in-out;
 }

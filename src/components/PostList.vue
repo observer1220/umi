@@ -8,7 +8,7 @@
         <span v-if="post.description.length > 54">...</span>
       </div>
       <div class="postMeta">
-        <TheAvatar :src="post?.user?.avatar" />
+        <Avatar :src="post?.user?.avatar" />
         <span class="postUsername">{{ post.username }}</span>
         <span class="postPubDate">
           {{ dateToRelative(post.created_at) }}
@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import TheAvatar from "../components/TheAvatar.vue";
+import Avatar from "../components/Avatar.vue";
 import PostActions from "../components/PostActions.vue";
 import { dateToRelative } from "../utils/date";
 import { usePostStore } from "../store/post";

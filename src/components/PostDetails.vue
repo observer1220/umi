@@ -1,9 +1,9 @@
 <template>
-  <TheModal @close="usePost.hidePostDetails">
+  <Modal @close="usePost.hidePostDetails">
     <div class="postDetailsContainer" v-if="state.post">
       <div class="postMeta">
         <div class="author">
-          <TheAvatar :src="state.post?.user?.avatar" />
+          <Avatar :src="state.post?.user?.avatar" />
           <span>{{ state.post.username }}</span>
         </div>
       </div>
@@ -14,7 +14,7 @@
         </div>
         <div class="comments">
           <div class="comment" v-for="comment in state.comments">
-            <TheAvatar :src="comment.user?.avatar" />
+            <Avatar :src="comment.user?.avatar" />
             <span class="user">{{ comment.username }}</span>
             <span class="commentDate">
               {{ dateToRelative(comment.created_at) }}
@@ -48,13 +48,13 @@
         </button>
       </div>
     </div>
-  </TheModal>
+  </Modal>
 </template>
 
 <script setup lang="ts">
 import { computed, reactive, watch, onMounted } from "vue";
-import TheAvatar from "./TheAvatar.vue";
-import TheModal from "./TheModal.vue";
+import Avatar from "./Avatar.vue";
+import Modal from "./Modal.vue";
 import PostActions from "./PostActions.vue";
 import { dateToRelative } from "../utils/date";
 import { usePostStore } from "../store/post";
